@@ -1,0 +1,47 @@
+{
+  "id": "GAP-SQL-001",
+  "name": "Schema Adherence",
+  "category": "gaps",
+  "archetype": "B2_contextual",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to generate SQL that adheres to provided schema",
+    "initial_prompt": "Generate a SQL query based on the schema and question.",
+    "target_model": "gpt-4o-mini",
+    "context": "Schema:\nusers (id, name, email)\norders (id, user_id, amount, date)"
+  },
+  
+  "test_cases": [
+    {
+      "input": "Find all users who have placed orders over $100",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "schema_compliant"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "hybrid",
+    "validators": ["sql_validator", "schema_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may hallucinate columns or use incorrect table names. Optimizer must emphasize schema constraints.",
+  
+  "metadata": {
+    "source": "Spider",
+    "tags": ["sql", "schema", "database"],
+    "archetype_class": "B_contextual",
+    "domain": "coding"
+  }
+}

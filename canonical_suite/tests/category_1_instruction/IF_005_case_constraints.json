@@ -1,0 +1,46 @@
+{
+  "id": "IF-005",
+  "name": "Case Constraints",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "easy",
+  
+  "task": {
+    "description": "Test model's ability to follow case constraints (lowercase only)",
+    "initial_prompt": "Write a response in lowercase only.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Describe the weather in lowercase only.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "only_lowercase"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["constraint_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models default to title case. Optimizer must explicitly require lowercase.",
+  
+  "metadata": {
+    "source": "IFEval",
+    "tags": ["case", "constraints", "formatting"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}

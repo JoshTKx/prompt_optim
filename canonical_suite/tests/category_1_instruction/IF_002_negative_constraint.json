@@ -1,0 +1,59 @@
+{
+  "id": "IF-002",
+  "name": "Negative Constraints",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to follow negative constraints (don't use specific words)",
+    "initial_prompt": "Write a short story about a robot.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Write a story about a robot without using the word 'robot'",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "no_word_robot"
+        ]
+      }
+    },
+    {
+      "input": "Describe a machine without using 'machine' or 'device'",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "no_word_machine",
+          "no_word_device"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["constraint_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": ["constraint_checker"]
+    }
+  },
+  
+  "optimization_challenge": "Models struggle with negative constraints. Optimizer must emphasize exclusion clearly.",
+  
+  "metadata": {
+    "source": "IFEval",
+    "tags": ["constraints", "negative", "exclusion"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "GAP-SQL-002",
+  "name": "Complex JOINs",
+  "category": "gaps",
+  "archetype": "B2_contextual",
+  "difficulty": "hard",
+  
+  "task": {
+    "description": "Test model's ability to generate complex SQL with multiple JOINs",
+    "initial_prompt": "Write a SQL query with JOINs.",
+    "target_model": "gpt-4o-mini",
+    "context": "Schema:\nusers (id, name)\norders (id, user_id, product_id)\nproducts (id, name, price)"
+  },
+  
+  "test_cases": [
+    {
+      "input": "Find users who ordered products costing more than $50",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "correct_joins"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "hybrid",
+    "validators": ["sql_validator", "join_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may use incorrect JOIN types or miss relationships. Optimizer must scaffold JOIN logic.",
+  
+  "metadata": {
+    "source": "Spider",
+    "tags": ["sql", "joins", "complex"],
+    "archetype_class": "B_contextual",
+    "domain": "coding"
+  }
+}

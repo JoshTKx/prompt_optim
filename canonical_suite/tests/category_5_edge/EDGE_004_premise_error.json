@@ -1,0 +1,47 @@
+{
+  "id": "EDGE-004",
+  "name": "Premise Error",
+  "category": "edge",
+  "archetype": "C2_causal_reasoning",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's handling of questions with false premises",
+    "initial_prompt": "Answer the question accurately.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "When did Obama meet Washington?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_premise_error",
+          "corrects_false_assumption"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["premise_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 3
+    }
+  },
+  
+  "optimization_challenge": "Models may answer false premises as if true. Optimizer must prompt for premise validation.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["edge", "premise", "reasoning"],
+    "archetype_class": "C_reasoning",
+    "domain": "general"
+  }
+}

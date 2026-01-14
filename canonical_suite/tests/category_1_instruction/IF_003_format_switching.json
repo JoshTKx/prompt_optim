@@ -1,0 +1,46 @@
+{
+  "id": "IF-003",
+  "name": "Format Switching",
+  "category": "instruction_following",
+  "archetype": "A2_format_specific",
+  "difficulty": "hard",
+  
+  "task": {
+    "description": "Test model's ability to convert between formats (CSV to XML)",
+    "initial_prompt": "Convert the following data to XML format.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Convert this CSV to XML:\nname,age,city\nJohn,30,NYC\nJane,25,LA",
+      "expected_output": {
+        "type": "structured",
+        "format": "xml",
+        "validation": "xml_parser",
+        "constraints": [
+          "valid_xml_structure"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "hybrid",
+    "validators": ["xml_parser", "structure_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may output pseudo-XML or incorrect structure. Optimizer must specify exact XML format requirements.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["format", "conversion", "xml"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}

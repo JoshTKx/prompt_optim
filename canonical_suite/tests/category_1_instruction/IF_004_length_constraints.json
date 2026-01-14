@@ -1,0 +1,46 @@
+{
+  "id": "IF-004",
+  "name": "Length Constraints",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to follow exact length constraints",
+    "initial_prompt": "Write a summary in exactly 3 sentences.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Summarize quantum computing in exactly 3 sentences.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "length_checker",
+        "constraints": [
+          "sentence_count_equals_3"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["length_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models often exceed or fall short of exact counts. Optimizer must emphasize precision.",
+  
+  "metadata": {
+    "source": "IFEval",
+    "tags": ["length", "constraints", "precision"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}

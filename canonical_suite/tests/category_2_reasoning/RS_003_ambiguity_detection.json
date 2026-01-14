@@ -1,0 +1,44 @@
+{
+  "id": "RS-003",
+  "name": "Ambiguity Detection",
+  "category": "reasoning",
+  "archetype": "C3_ambiguity_handling",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to detect and handle ambiguity",
+    "initial_prompt": "Identify any ambiguity in the following statement and explain it.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "She liked the cake. Who is 'she'?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["ambiguity_detector"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may assume context or miss ambiguity. Optimizer must prompt for explicit identification.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["ambiguity", "reasoning", "language"],
+    "archetype_class": "C_reasoning",
+    "domain": "general"
+  }
+}

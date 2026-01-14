@@ -1,0 +1,44 @@
+{
+  "id": "RS-005",
+  "name": "Tokenization Trap",
+  "category": "reasoning",
+  "archetype": "C3_ambiguity_handling",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to handle tokenization-sensitive tasks",
+    "initial_prompt": "Count the letters in the given word.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "How many letters are in the word 'strawberry'?",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "correctness_checker",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["correctness_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may count tokens instead of characters. Optimizer must clarify 'letters' vs 'tokens'.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["tokenization", "counting", "reasoning"],
+    "archetype_class": "C_reasoning",
+    "domain": "general"
+  }
+}

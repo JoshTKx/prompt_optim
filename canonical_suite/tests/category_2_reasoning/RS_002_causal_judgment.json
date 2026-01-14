@@ -1,0 +1,44 @@
+{
+  "id": "RS-002",
+  "name": "Causal Judgment",
+  "category": "reasoning",
+  "archetype": "C2_causal_reasoning",
+  "difficulty": "hard",
+  
+  "task": {
+    "description": "Test model's ability to reason about causality",
+    "initial_prompt": "Determine if there is a causal relationship and explain why.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Every time I wear my red shirt, my team wins. Does wearing the red shirt cause my team to win?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["reasoning_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may confuse correlation with causation. Optimizer must prompt for careful analysis.",
+  
+  "metadata": {
+    "source": "CausalBench",
+    "tags": ["causality", "reasoning", "correlation"],
+    "archetype_class": "C_reasoning",
+    "domain": "logic"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "RS-001",
+  "name": "Boolean Logic Expressions",
+  "category": "reasoning",
+  "archetype": "C1_logical_reasoning",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to evaluate complex boolean expressions",
+    "initial_prompt": "Evaluate the following boolean expression and explain your reasoning.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Evaluate: (A AND B) OR (NOT A AND C) where A=true, B=false, C=true",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["correctness_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may skip steps or make calculation errors. Optimizer must add chain-of-thought scaffolding.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["logic", "boolean", "reasoning"],
+    "archetype_class": "C_reasoning",
+    "domain": "logic"
+  }
+}

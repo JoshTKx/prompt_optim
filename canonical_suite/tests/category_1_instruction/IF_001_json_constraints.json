@@ -1,0 +1,60 @@
+{
+  "id": "IF-001",
+  "name": "JSON Constraints",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to output only valid JSON without markdown fencing",
+    "initial_prompt": "Generate a list of 5 cities in JSON format.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "List 5 major cities in Europe",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "valid_json_parse",
+        "constraints": [
+          "no_markdown_fencing",
+          "array_length_equals_5"
+        ]
+      }
+    },
+    {
+      "input": "List 5 capitals in Asia",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "valid_json_parse",
+        "constraints": [
+          "no_markdown_fencing",
+          "array_length_equals_5"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["json_parser", "constraint_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": ["json_parser"]
+    }
+  },
+  
+  "optimization_challenge": "Models often wrap JSON in markdown code blocks. Optimizer must add explicit constraint.",
+  
+  "metadata": {
+    "source": "IFEval",
+    "tags": ["formatting", "constraints", "json"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}

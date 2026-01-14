@@ -1,0 +1,48 @@
+{
+  "id": "GAP-EXT-001",
+  "name": "Standard NER",
+  "category": "gaps",
+  "archetype": "B1_extraction",
+  "difficulty": "easy",
+  
+  "task": {
+    "description": "Test model's ability to extract named entities",
+    "initial_prompt": "Extract all named entities from the text.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Apple Inc. is headquartered in Cupertino, California. Tim Cook is the CEO.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "entity_format_correct"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "hybrid",
+    "validators": ["entity_extractor", "f1_scorer"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "f1_threshold": 0.8
+    }
+  },
+  
+  "optimization_challenge": "Models may miss entities or extract incorrectly. Optimizer must specify entity types and format.",
+  
+  "metadata": {
+    "source": "CoNLL-2003",
+    "tags": ["ner", "extraction", "entities"],
+    "archetype_class": "B_contextual",
+    "domain": "extraction"
+  }
+}

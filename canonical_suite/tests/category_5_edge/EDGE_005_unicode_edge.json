@@ -1,0 +1,44 @@
+{
+  "id": "EDGE-005",
+  "name": "Unicode Edge Cases",
+  "category": "edge",
+  "archetype": "A1_simple",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's handling of unicode and special characters",
+    "initial_prompt": "Process the input text.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Count characters in: café 🎉 中文",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "correctness_checker",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["correctness_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 3
+    }
+  },
+  
+  "optimization_challenge": "Models may miscount unicode characters. Optimizer must clarify character vs byte counting.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["edge", "unicode", "encoding"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}

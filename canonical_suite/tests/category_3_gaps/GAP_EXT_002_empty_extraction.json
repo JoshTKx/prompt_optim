@@ -1,0 +1,47 @@
+{
+  "id": "GAP-EXT-002",
+  "name": "Empty Extraction",
+  "category": "gaps",
+  "archetype": "B1_extraction",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to return empty list when no entities found",
+    "initial_prompt": "Extract entities from the text. Return empty list if none found.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "The weather is nice today.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "empty_list_when_no_entities"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "deterministic",
+    "validators": ["entity_extractor"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may hallucinate entities when none exist. Optimizer must emphasize returning empty list.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["extraction", "empty", "hallucination"],
+    "archetype_class": "B_contextual",
+    "domain": "extraction"
+  }
+}

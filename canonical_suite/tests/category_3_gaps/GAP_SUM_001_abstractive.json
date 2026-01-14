@@ -1,0 +1,44 @@
+{
+  "id": "GAP-SUM-001",
+  "name": "Abstractive Summarization",
+  "category": "gaps",
+  "archetype": "B3_summarization",
+  "difficulty": "medium",
+  
+  "task": {
+    "description": "Test model's ability to generate abstractive summaries",
+    "initial_prompt": "Summarize the following text.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "Summarize: The quick brown fox jumps over the lazy dog. The dog was sleeping. The fox was fast.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["faithfulness_checker", "coherence_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may copy verbatim or miss key points. Optimizer must emphasize abstractive synthesis.",
+  
+  "metadata": {
+    "source": "XSum",
+    "tags": ["summarization", "abstractive", "generation"],
+    "archetype_class": "B_contextual",
+    "domain": "general"
+  }
+}

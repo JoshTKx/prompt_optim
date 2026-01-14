@@ -1,0 +1,20 @@
+# Core dependencies
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+
+# LLM clients (OpenRouter uses OpenAI-compatible API)
+openai>=1.0.0
+
+# Utilities
+tenacity>=8.0.0  # For retry logic
+tqdm>=4.66.0  # Progress bars
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
+# Logging and monitoring
+structlog>=23.0.0
+
+# JSON validation
+jsonschema>=4.20.0

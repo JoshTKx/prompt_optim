@@ -1,0 +1,44 @@
+{
+  "id": "RS-004",
+  "name": "Math Olympiad Problem",
+  "category": "reasoning",
+  "archetype": "C1_logical_reasoning",
+  "difficulty": "hard",
+  
+  "task": {
+    "description": "Test model's ability to solve multi-step math problems",
+    "initial_prompt": "Solve this math problem step by step.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "If x + y = 10 and x^2 + y^2 = 58, what is x * y?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": []
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["correctness_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4
+    }
+  },
+  
+  "optimization_challenge": "Models may skip steps or make algebraic errors. Optimizer must enforce step-by-step reasoning.",
+  
+  "metadata": {
+    "source": "Omni-MATH",
+    "tags": ["math", "algebra", "reasoning"],
+    "archetype_class": "C_reasoning",
+    "domain": "logic"
+  }
+}

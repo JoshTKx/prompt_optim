@@ -1,0 +1,47 @@
+{
+  "id": "EDGE-001",
+  "name": "Empty Input",
+  "category": "edge",
+  "archetype": "A1_simple",
+  "difficulty": "easy",
+  
+  "task": {
+    "description": "Test model's handling of empty input",
+    "initial_prompt": "Process the user's input.",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  
+  "test_cases": [
+    {
+      "input": "",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "graceful_handling",
+          "no_error"
+        ]
+      }
+    }
+  ],
+  
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": ["error_checker"],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 3
+    }
+  },
+  
+  "optimization_challenge": "Models may error on empty input. Optimizer must add edge case handling.",
+  
+  "metadata": {
+    "source": "Custom",
+    "tags": ["edge", "empty", "robustness"],
+    "archetype_class": "A_directive",
+    "domain": "general"
+  }
+}
