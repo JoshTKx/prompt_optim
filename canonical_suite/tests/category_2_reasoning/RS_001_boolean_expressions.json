@@ -1,44 +1,130 @@
 {
   "id": "RS-001",
-  "name": "Boolean Logic Expressions",
+  "name": "Cross-Border Supply Chain Priority Resolution with Regulatory Conflicts",
   "category": "reasoning",
   "archetype": "C1_logical_reasoning",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to evaluate complex boolean expressions",
-    "initial_prompt": "Evaluate the following boolean expression and explain your reasoning.",
+    "description": "Test model's ability to evaluate complex hierarchical supply chain routing decisions with conflicting trade regulations, carrier priority rules, customs requirements, and temporal embargo conditions across multiple policy layers and jurisdictional constraints",
+    "initial_prompt": "determine routing",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Evaluate: (A AND B) OR (NOT A AND C) where A=true, B=false, C=true",
+      "input": "Analyze shipping route priority: Base Logistics Policy states 'Route approved IF (cost_efficient OR expedited_required) AND NOT (embargoed_country OR customs_blacklist)'. Regional Trade Agreement modifies this to 'Route approved ONLY IF ((tariff_free_corridor AND border_preauthenticated) XOR (diplomatic_exemption NAND security_flagged)) OR (emergency_medical_goods AND NOT dual_use_technology)'. Customs Enforcement Override states 'IF sanctions_active THEN NOT (diplomatic_exemption) takes absolute precedence, UNLESS humanitarian_waiver_granted'. Given: cost_efficient=true, expedited_required=false, embargoed_country=false, customs_blacklist=true, tariff_free_corridor=true, border_preauthenticated=false, diplomatic_exemption=true, security_flagged=true, emergency_medical_goods=false, dual_use_technology=false, sanctions_active=true, humanitarian_waiver_granted=false. Determine if route is approved. Show hierarchical evaluation with all operator definitions and precedence layers.",
       "expected_output": {
         "type": "structured",
         "format": "text",
         "validation": "llm_judge",
-        "constraints": []
+        "constraints": [
+          "hierarchical_precedence_applied",
+          "regulatory_override_recognized",
+          "step_by_step_clause_evaluation",
+          "correct_final_determination",
+          "all_boolean_operators_defined",
+          "conflicting_provisions_identified",
+          "temporal_order_respected",
+          "conditional_logic_properly_evaluated"
+        ]
+      }
+    },
+    {
+      "input": "Evaluate warehouse inventory allocation: Primary Distribution Policy allocates IF (demand_score >= threshold_value) AND ((geographic_proximity XOR strategic_reserve_requirement) OR (customer_tier_premium AND NOT stockout_risk)). Subsidiary Override states 'allocation modified IF (regional_quota_exceeded IMPLIES (redistribute_to_zone_B NOR prioritize_zone_C)) AND (perishable_goods XOR hazmat_classification)'. Corporate Sustainability Mandate states 'NOT (carbon_footprint_excessive OR unethical_supplier) supersedes all allocation rules, UNLESS revenue_critical_client'. Given: demand_score=85, threshold_value=80, geographic_proximity=false, strategic_reserve_requirement=false, customer_tier_premium=true, stockout_risk=true, regional_quota_exceeded=true, redistribute_to_zone_B=true, prioritize_zone_C=false, perishable_goods=true, hazmat_classification=true, carbon_footprint_excessive=false, unethical_supplier=true, revenue_critical_client=true. Define all operators (>=, XOR, NOR, IMPLIES, UNLESS) then evaluate allocation decision across three policy layers.",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "three_tier_precedence_evaluation",
+          "all_operators_explicitly_defined",
+          "step_by_step_reasoning",
+          "correct_final_answer",
+          "override_mechanics_explained",
+          "comparison_operators_handled",
+          "exception_clauses_evaluated",
+          "ambiguities_identified"
+        ]
+      }
+    },
+    {
+      "input": "Determine carrier selection in multi-modal transport: Standard Carrier Policy selects IF (reliability_rating > 4.0) AND ((delivery_speed_acceptable NAND insurance_required) OR (cost_under_budget NOR premium_service_needed)). International Shipping Addendum modifies to 'carrier selected ONLY IF ((customs_certified XOR port_authority_approved) AND (track_record_violations < 2)) IMPLIES (NOT (political_instability_risk OR piracy_zone))'. Emergency Procurement Clause states 'IF (supply_chain_disruption AND critical_component) THEN override all carrier restrictions, UNLESS (safety_certification_expired OR regulatory_ban_active)'. Given: reliability_rating=4.5, delivery_speed_acceptable=true, insurance_required=true, cost_under_budget=false, premium_service_needed=false, customs_certified=true, port_authority_approved=true, track_record_violations=1, political_instability_risk=true, piracy_zone=false, supply_chain_disruption=true, critical_component=true, safety_certification_expired=false, regulatory_ban_active=true. First define all operators (>, <, NAND, NOR, XOR, IMPLIES, UNLESS), then evaluate carrier selection using correct four-layer precedence.",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "all_operators_correctly_defined",
+          "conditional_override_logic_applied",
+          "hierarchical_evaluation_shown",
+          "four_layer_precedence_respected",
+          "step_by_step_reasoning",
+          "correct_final_carrier_determination",
+          "emergency_clause_conditions_verified",
+          "implication_operator_handled",
+          "comparison_operators_evaluated",
+          "unless_exception_properly_applied"
+        ]
+      }
+    },
+    {
+      "input": "Assess trade compliance for product classification: Base Tariff Schedule classifies IF (material_composition_primary AND (manufacturing_origin_domestic OR trade_agreement_eligible)) AND NOT (restricted_technology OR dual_use_item). Harmonized System Update modifies to 'classification valid ONLY IF ((hs_code_digits_match >= 6) XOR (expert_ruling_obtained AND NOT (pending_appeal OR classification_disputed))) AND ((value_threshold_exceeded IMPLIES additional_documentation_required) NAND temporary_admission_claimed)'. Sanctions Screening Protocol states 'IF (entity_on_denied_list OR ownership_sanctioned_country) THEN immediate_classification_denial regardless of other provisions, UNLESS (specific_license_granted AND (compliance_audit_passed OR government_preapproval))'. Export Control Regulation adds 'NOT (end_user_military OR destination_embargoed) takes precedence over Harmonized System, but NOT over Sanctions Screening'. Given: material_composition_primary=true, manufacturing_origin_domestic=false, trade_agreement_eligible=true, restricted_technology=false, dual_use_item=true, hs_code_digits_match=8, expert_ruling_obtained=true, pending_appeal=false, classification_disputed=true, value_threshold_exceeded=true, additional_documentation_required=true, temporary_admission_claimed=false, entity_on_denied_list=false, ownership_sanctioned_country=true, specific_license_granted=true, compliance_audit_passed=false, government_preapproval=true, end_user_military=true, destination_embargoed=false. Evaluate classification across all four regulatory layers with complete precedence hierarchy, define all operators, and show intermediate evaluations for each layer.",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "five_layer_precedence_hierarchy",
+          "sanctions_override_absolute_priority_established",
+          "all_operators_defined_upfront",
+          "step_by_step_layer_evaluation",
+          "correct_final_classification_determination",
+          "conditional_logic_properly_handled",
+          "comparison_operators_evaluated",
+          "unless_exception_logic_applied",
+          "relative_precedence_between_layers_explained",
+          "intermediate_results_shown_for_each_layer",
+          "conflicting_provisions_reconciled"
+        ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["correctness_checker"],
+    "validators": [
+      "correctness_checker",
+      "reasoning_checker",
+      "precedence_hierarchy_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "correctness_checker",
+        "reasoning_checker",
+        "precedence_hierarchy_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may skip steps or make calculation errors. Optimizer must add chain-of-thought scaffolding.",
-  
+  "optimization_challenge": "Models may collapse multi-layer regulatory hierarchies into single evaluations, fail to recognize absolute precedence of sanctions and safety regulations over commercial policies, skip explicit operator definitions, mishandle complex XOR and NAND operations in nested conditions, ignore UNLESS exception clauses, fail to show intermediate layer evaluations, incorrectly apply IMPLIES conditional logic, or treat all policy layers as equal weight. Optimizer must enforce upfront definition of all logical and comparison operators, mandate explicit precedence hierarchy establishment with relative priorities between layers, require layer-by-layer evaluation with intermediate results documented, ensure regulatory and sanctions provisions are recognized as superseding commercial terms, properly handle conditional overrides and exception clauses, and verify that comparison operators and nested boolean logic are evaluated correctly before being used in higher-level expressions.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["logic", "boolean", "reasoning"],
+    "source": "regenerated",
+    "tags": [
+      "supply_chain",
+      "logistics",
+      "trade_compliance",
+      "routing",
+      "precedence",
+      "hierarchical_reasoning",
+      "regulatory_logic",
+      "multi_layer_evaluation",
+      "boolean_operators",
+      "conditional_logic",
+      "sanctions",
+      "customs"
+    ],
     "archetype_class": "C_reasoning",
-    "domain": "logic"
+    "domain": "supply_chain_logistics"
   }
 }

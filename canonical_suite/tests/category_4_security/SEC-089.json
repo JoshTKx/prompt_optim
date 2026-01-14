@@ -1,0 +1,117 @@
+{
+  "id": "SEC-089",
+  "name": "Industrial Chemical Plant Safety Interlock Configuration Validator",
+  "category": "security",
+  "archetype": "D2_safety",
+  "difficulty": "hard",
+  "task": {
+    "description": "Validate industrial chemical reactor safety interlock configurations to identify catastrophic misconfigurations that could result in explosions, toxic releases, or facility-wide disasters",
+    "initial_prompt": "review",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "Facility: Acrylic Acid Reactor R-401B\nInterlock Settings:\n- Emergency Shutdown (ESD) Override: MAINTENANCE MODE (bypassed)\n- High Temperature Cutoff: 185\u00b0C (normal operating: 165\u00b0C, runaway threshold: 175\u00b0C)\n- Pressure Relief Valve Test: Last tested 18 months ago (required: quarterly)\n- Low Cooling Water Flow Alarm: Disabled temporarily\n- Oxygen Analyzer Interlock: Set to warning only, no automatic shutdown\n- Inhibitor Feed Loss Detection: 45-second delay before alarm\n- Runaway Reaction Detection: Requires manual operator confirmation\n- Backup Power for Safety Systems: Generator under repair, bypass activated\nBatch Status: Active polymerization in progress, 12,000 gallons\nStaff Notes: Weekend skeleton crew, attempting to complete production quota, maintenance scheduled Monday\nWeather: External temperature 38\u00b0C, humidity 85%",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "catastrophic_safety_validator",
+        "constraints": [
+          "must_identify_esd_bypass_as_immediately_critical",
+          "must_identify_multiple_simultaneous_safety_bypasses_as_unacceptable",
+          "must_calculate_thermal_runaway_risk_with_inadequate_temperature_margin",
+          "must_flag_expired_pressure_relief_testing_as_regulatory_violation",
+          "must_identify_cooling_system_disable_during_active_batch_as_catastrophic",
+          "must_assess_oxygen_ingress_risk_without_automatic_interlock",
+          "must_identify_inhibitor_delay_as_insufficient_for_reaction_kinetics",
+          "must_flag_manual_confirmation_requirement_as_introducing_fatal_delay",
+          "must_identify_loss_of_backup_power_as_compound_failure_risk",
+          "must_assess_environmental_factors_increasing_baseline_risk",
+          "must_demand_immediate_batch_termination_and_safe_shutdown",
+          "must_reference_process_safety_standards_OSHA_PSM_or_IEC_61511",
+          "must_provide_prioritized_corrective_actions_with_timelines",
+          "must_assess_overall_risk_as_imminent_catastrophic_failure"
+        ]
+      }
+    },
+    {
+      "input": "Facility: Ammonia Refrigeration System - Cold Storage Warehouse\nSafety Configuration:\n- Ammonia Leak Detection Sensors: 3 of 8 sensors offline (maintenance backlog)\n- Automatic Ventilation Activation: Threshold set to 150ppm (OSHA PEL: 50ppm)\n- Personnel Evacuation Alarm: Sound level reduced 40% (noise complaints from neighboring office)\n- Emergency Shutoff Valves: Manual operation only, automatic mode disabled\n- Compressor High Pressure Cutoff: Increased to 285 psig (design limit: 250 psig)\n- Oil Separator Drain Interlock: Bypassed for 6 weeks\n- Redundant Safety Systems: Secondary system deactivated for cost savings\n- Emergency Response Equipment: SCBAs last inspected 14 months ago\nFacility Details: 24/7 operation, 150 workers per shift, residential area 200m downwind\nRecent Changes: Production increased 30%, system running at 95% capacity continuously",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "catastrophic_safety_validator",
+        "constraints": [
+          "must_identify_degraded_detection_coverage_as_critical_vulnerability",
+          "must_flag_ventilation_threshold_exceeding_exposure_limits",
+          "must_identify_reduced_alarm_audibility_as_life_threatening",
+          "must_flag_disabled_automatic_isolation_as_severe_risk",
+          "must_identify_overpressure_operation_beyond_design_limits",
+          "must_assess_cumulative_effect_of_multiple_safety_degradations",
+          "must_identify_cost_driven_safety_elimination_as_unacceptable",
+          "must_assess_public_safety_risk_from_proximity_to_residential_area",
+          "must_flag_expired_emergency_equipment_certification",
+          "must_identify_capacity_increase_without_safety_reassessment",
+          "must_demand_immediate_capacity_reduction_until_compliance_restored",
+          "must_reference_ANSI_IIAR_standards_and_regulatory_requirements",
+          "must_assess_risk_level_as_imminent_public_safety_threat"
+        ]
+      }
+    },
+    {
+      "input": "Facility: Lithium-Ion Battery Manufacturing - Formation Chamber FC-7\nSafety Parameters:\n- Thermal Runaway Detection: Single point sensor (redundancy removed)\n- Off-Gas Ventilation Interlock: Response time increased from 2s to 15s\n- Cell Voltage Monitoring: Sampling rate reduced from 1Hz to 0.1Hz (performance optimization)\n- Fire Suppression System: Switched from automatic to manual activation\n- Temperature Differential Alarm: Threshold widened from 5\u00b0C to 15\u00b0C between cells\n- Chamber Pressure Relief: Set point increased 25% above manufacturer specification\n- Hydrogen Gas Detection: Alarm-only mode, no automatic shutdown\n- Water-Based Sprinkler Override: Enabled (incompatible with lithium fires)\nProduction Status: 50,000 cells in formation cycle, high-density configuration\nContext: New facility manager prioritizing throughput, safety engineer position vacant 4 months",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "catastrophic_safety_validator",
+        "constraints": [
+          "must_identify_single_point_failure_in_thermal_detection",
+          "must_calculate_inadequate_response_time_for_thermal_runaway_propagation",
+          "must_identify_voltage_monitoring_degradation_missing_critical_events",
+          "must_flag_manual_suppression_as_insufficient_for_rapid_propagation",
+          "must_identify_temperature_differential_allowing_undetected_cell_failure",
+          "must_flag_overpressure_operation_risking_containment_breach",
+          "must_identify_hydrogen_accumulation_risk_without_automatic_shutdown",
+          "must_flag_water_sprinkler_override_as_creating_worse_hazard",
+          "must_assess_high_density_configuration_amplifying_consequences",
+          "must_identify_management_pressure_overriding_safety_culture",
+          "must_demand_immediate_production_halt_and_configuration_restoration",
+          "must_reference_NFPA_855_battery_safety_standards",
+          "must_assess_risk_as_imminent_uncontrollable_fire_cascade"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": [
+      "catastrophic_safety_validator",
+      "multi_hazard_completeness_validator",
+      "regulatory_compliance_validator",
+      "consequence_severity_validator"
+    ],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "catastrophic_safety_validator",
+        "multi_hazard_completeness_validator"
+      ]
+    }
+  },
+  "optimization_challenge": "Initial prompt is catastrophically inadequate and will miss multiple life-threatening cascading failure modes. Optimizer must learn to: (1) require systematic evaluation of each safety parameter against engineering standards and regulatory requirements with quantitative risk assessment, (2) mandate identification of ALL critical findings with explicit severity classification and consequence modeling, (3) recognize and flag patterns of systematic safety degradation driven by operational or economic pressures, (4) demand specific corrective actions prioritized by immediacy and consequence severity, (5) require contextual risk assessment incorporating process chemistry, environmental conditions, facility layout, and population exposure, (6) identify compound and cascading failure scenarios where multiple degraded systems create catastrophic risk amplification, (7) ensure zero tolerance for production-driven safety compromises and demand immediate operational changes. The test requires deep domain knowledge integration across process safety engineering, instrumentation, regulatory frameworks, and consequence analysis with absolute intolerance for any missed critical safety violations that could result in loss of life or environmental disaster.",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "complex",
+      "industrial_process_safety",
+      "chemical_engineering",
+      "catastrophic_risk",
+      "safety_interlock_systems",
+      "regulatory_compliance",
+      "multi_hazard_analysis"
+    ],
+    "archetype_class": "D_adversarial",
+    "domain": "industrial_safety"
+  }
+}

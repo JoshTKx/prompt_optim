@@ -1,46 +1,134 @@
 {
   "id": "IF-005",
-  "name": "Case Constraints",
+  "name": "Conditional Formatting in Scientific Research Publications",
   "category": "instruction_following",
   "archetype": "A3_constraint_heavy",
-  "difficulty": "easy",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to follow case constraints (lowercase only)",
-    "initial_prompt": "Write a response in lowercase only.",
+    "description": "Test model's ability to apply highly complex conditional formatting rules based on semantic content types in academic and scientific contexts, with nested categorization and hierarchical precedence requirements",
+    "initial_prompt": "format this",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Describe the weather in lowercase only.",
+      "input": "Write an abstract for a climate science research paper studying coral reef bleaching patterns in the Great Barrier Reef. Use UPPERCASE for all species names (scientific binomial nomenclature), lowercase_with_underscores for all statistical methods and p-values, Title Case For All Chemical Compounds and environmental parameters, and normal sentence case for hypotheses and conclusions. Include at least 6 different elements (species, statistics, compounds, parameters, hypothesis, conclusion).",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "constraint_checker",
         "constraints": [
-          "only_lowercase"
+          "species_names_uppercase",
+          "statistical_methods_snake_case",
+          "p_values_snake_case",
+          "chemical_compounds_title_case",
+          "environmental_parameters_title_case",
+          "hypotheses_normal_case",
+          "conclusions_normal_case",
+          "binomial_nomenclature_preserved",
+          "hierarchical_precedence_applied"
+        ]
+      }
+    },
+    {
+      "input": "Create a museum exhibition catalog entry for a contemporary art installation featuring interactive digital sculptures. Use kebab-case for all artwork titles and artist movements, SCREAMING_SNAKE_CASE for all technical specifications (dimensions, materials, digital formats), italics_lowercase for all critical theory terminology and philosophical concepts, and Proper Title Case for curator names and institution names. Describe at least 4 artworks with their specifications.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "artwork_titles_kebab_case",
+          "art_movements_kebab_case",
+          "technical_specs_screaming_snake_case",
+          "dimensions_screaming_snake_case",
+          "materials_screaming_snake_case",
+          "theory_terms_italics_lowercase",
+          "philosophical_concepts_italics_lowercase",
+          "curator_names_title_case",
+          "institution_names_title_case",
+          "consistent_semantic_categorization"
+        ]
+      }
+    },
+    {
+      "input": "Draft a software engineering sprint retrospective for a blockchain development team working on decentralized finance protocols. Use PascalCase for all class names and component names, UPPER_SNAKE_CASE for all constants and environment variables, camelCase for all function names and method calls, lowercase for all programming language keywords and data types, and normal sentence case for team feedback and action items. Include at least 5 technical elements and 3 team observations.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "class_names_pascal_case",
+          "component_names_pascal_case",
+          "constants_upper_snake_case",
+          "environment_vars_upper_snake_case",
+          "function_names_camel_case",
+          "method_calls_camel_case",
+          "keywords_lowercase",
+          "data_types_lowercase",
+          "feedback_normal_case",
+          "action_items_normal_case",
+          "programming_conventions_respected",
+          "multiple_simultaneous_case_patterns"
+        ]
+      }
+    },
+    {
+      "input": "Compose a agricultural commodity trading report for winter wheat futures across global markets. Use ALL CAPS for all commodity ticker symbols and exchange codes, Title Case for Geographic Regions and Port Names, lowercase with periods for all price metrics (e.g., price.per.bushel, volume.traded), snake_case_lowercase for all weather conditions and crop quality indicators, and normal sentence case for market analysis and predictions. Include at least 4 markets, 3 price points, and 2 weather factors.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "ticker_symbols_all_caps",
+          "exchange_codes_all_caps",
+          "geographic_regions_title_case",
+          "port_names_title_case",
+          "price_metrics_lowercase_dots",
+          "volume_metrics_lowercase_dots",
+          "weather_conditions_snake_case",
+          "quality_indicators_snake_case",
+          "market_analysis_normal_case",
+          "predictions_normal_case",
+          "dot_notation_for_metrics",
+          "conflicting_category_resolution"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "deterministic",
-    "validators": ["constraint_checker"],
+    "validators": [
+      "constraint_checker",
+      "case_analyzer",
+      "semantic_categorizer",
+      "precedence_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "constraint_checker",
+        "case_analyzer",
+        "semantic_categorizer",
+        "precedence_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models default to title case. Optimizer must explicitly require lowercase.",
-  
+  "optimization_challenge": "Models fail catastrophically with multi-level conditional formatting that requires understanding domain-specific semantic hierarchies and applying precedence rules when elements belong to multiple categories simultaneously. They struggle with specialized notation systems (kebab-case, dot.notation, SCREAMING_SNAKE_CASE) and inconsistently apply rules when technical terms overlap with natural language. Optimizer must provide explicit hierarchical precedence rules for category conflicts, include domain-specific examples for each semantic category, specify exact formatting patterns with visual examples, implement multi-stage verification for nested conditions, and handle edge cases where single elements span multiple semantic categories with clear resolution strategies.",
   "metadata": {
-    "source": "IFEval",
-    "tags": ["case", "constraints", "formatting"],
+    "source": "regenerated",
+    "tags": [
+      "case",
+      "constraints",
+      "conditional_formatting",
+      "semantic_hierarchies",
+      "precedence_rules",
+      "domain_specific",
+      "multi_notation",
+      "nested_categories"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "multi_domain_academic_technical"
   }
 }

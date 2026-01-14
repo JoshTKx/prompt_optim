@@ -1,59 +1,166 @@
 {
   "id": "IF-002",
-  "name": "Negative Constraints",
+  "name": "Multi-Domain Lexical Minefield Navigation",
   "category": "instruction_following",
   "archetype": "A3_constraint_heavy",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to follow negative constraints (don't use specific words)",
-    "initial_prompt": "Write a short story about a robot.",
+    "description": "Test model's ability to navigate extremely complex cascading lexical exclusions across finance, legal, technology, and culinary domains while maintaining precision, avoiding phonetically similar words, and respecting multiple simultaneous grammatical restrictions",
+    "initial_prompt": "explain",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Write a story about a robot without using the word 'robot'",
+      "input": "Write a 280-word explanation of cryptocurrency blockchain technology without using any words containing 'crypt', 'block', 'chain', 'digital', 'virtual', 'coin', 'token', 'ledger', 'trans', 'decrypt', 'encrypt', or any words with the suffix '-ology' or '-graphy', and avoid all words that rhyme with 'mine' or 'hash'",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "constraint_checker",
         "constraints": [
-          "no_word_robot"
+          "no_word_containing_crypt",
+          "no_word_containing_block",
+          "no_word_containing_chain",
+          "no_word_digital",
+          "no_word_virtual",
+          "no_word_coin",
+          "no_word_token",
+          "no_word_ledger",
+          "no_word_containing_trans",
+          "no_word_decrypt",
+          "no_word_encrypt",
+          "no_suffix_ology",
+          "no_suffix_graphy",
+          "no_rhymes_with_mine",
+          "no_rhymes_with_hash",
+          "word_count_approximately_280",
+          "maintains_technical_accuracy",
+          "maintains_coherence",
+          "explanation_remains_comprehensive"
         ]
       }
     },
     {
-      "input": "Describe a machine without using 'machine' or 'device'",
+      "input": "Describe a courtroom trial proceeding without using 'judge', 'jury', 'lawyer', 'attorney', 'court', 'law', 'legal', 'trial', 'case', 'witness', 'testimony', 'evidence', 'guilty', 'innocent', or any words beginning with 'judic-' or 'litig-', and without using any past tense verbs ending in '-ed'",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "constraint_checker",
         "constraints": [
+          "no_word_judge",
+          "no_word_jury",
+          "no_word_lawyer",
+          "no_word_attorney",
+          "no_word_court",
+          "no_word_law",
+          "no_word_legal",
+          "no_word_trial",
+          "no_word_case",
+          "no_word_witness",
+          "no_word_testimony",
+          "no_word_evidence",
+          "no_word_guilty",
+          "no_word_innocent",
+          "no_prefix_judic",
+          "no_prefix_litig",
+          "no_past_tense_ed_verbs",
+          "maintains_procedural_accuracy",
+          "minimum_120_words",
+          "maintains_coherence"
+        ]
+      }
+    },
+    {
+      "input": "Explain how artificial intelligence neural networks learn without using 'artificial', 'intelligence', 'neural', 'network', 'learn', 'train', 'data', 'algorithm', 'machine', 'computer', 'model', 'pattern', or any words containing 'AI', and without using any words with double letters (like 'process', 'pattern', 'algorithm')",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "no_word_artificial",
+          "no_word_intelligence",
+          "no_word_neural",
+          "no_word_network",
+          "no_word_learn",
+          "no_word_train",
+          "no_word_data",
+          "no_word_algorithm",
           "no_word_machine",
-          "no_word_device"
+          "no_word_computer",
+          "no_word_model",
+          "no_word_pattern",
+          "no_word_containing_AI",
+          "no_words_with_double_letters",
+          "maintains_technical_accuracy",
+          "explanation_remains_clear",
+          "minimum_150_words"
+        ]
+      }
+    },
+    {
+      "input": "Write a 200-word guide to preparing and serving espresso without using 'coffee', 'espresso', 'brew', 'grind', 'bean', 'water', 'hot', 'cup', 'drink', 'caffeine', 'steam', 'pressure', or any words containing 'ital' (italian, vital), and without using any verbs in imperative mood (commands like 'place', 'insert', 'turn')",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "constraint_checker",
+        "constraints": [
+          "no_word_coffee",
+          "no_word_espresso",
+          "no_word_brew",
+          "no_word_grind",
+          "no_word_bean",
+          "no_word_water",
+          "no_word_hot",
+          "no_word_cup",
+          "no_word_drink",
+          "no_word_caffeine",
+          "no_word_steam",
+          "no_word_pressure",
+          "no_word_containing_ital",
+          "no_imperative_mood_verbs",
+          "word_count_approximately_200",
+          "guide_remains_followable",
+          "maintains_procedural_accuracy",
+          "maintains_coherence"
         ]
       }
     }
   ],
-  
   "evaluation": {
-    "method": "deterministic",
-    "validators": ["constraint_checker"],
+    "method": "hybrid",
+    "validators": [
+      "constraint_checker",
+      "coherence_checker",
+      "semantic_accuracy_checker",
+      "phonetic_similarity_checker"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
       "minimum_score": 4,
-      "required_validators": ["constraint_checker"]
+      "required_validators": [
+        "constraint_checker",
+        "coherence_checker",
+        "semantic_accuracy_checker"
+      ],
+      "all_constraints_must_pass": true,
+      "zero_tolerance_for_violations": true,
+      "phonetic_violations_count_as_failures": true
     }
   },
-  
-  "optimization_challenge": "Models struggle with negative constraints. Optimizer must emphasize exclusion clearly.",
-  
+  "optimization_challenge": "Models catastrophically fail with compound constraint sets that include: (1) morphological restrictions (prefixes/suffixes/infixes), (2) phonetic similarity constraints (rhyming, homophones), (3) orthographic patterns (double letters, letter sequences), and (4) grammatical mood/tense exclusions. Optimizer must learn to: (1) generate exhaustive forbidden word lists including all morphological variants and phonetic cousins, (2) provide rich alternative vocabulary banks organized by semantic field, (3) explicitly warn about grammatical category restrictions and provide reformulation strategies, (4) suggest sentence structure templates that avoid banned grammatical moods/tenses, (5) validate phonetic and orthographic patterns beyond simple string matching, (6) maintain domain-specific technical accuracy while working within severe linguistic constraints, and (7) provide concrete examples of acceptable phrasings for complex concepts.",
   "metadata": {
-    "source": "IFEval",
-    "tags": ["constraints", "negative", "exclusion"],
+    "source": "regenerated",
+    "tags": [
+      "morphological_constraints",
+      "phonetic_constraints",
+      "orthographic_patterns",
+      "grammatical_mood_restriction",
+      "cross_domain_complexity",
+      "compound_exclusions",
+      "technical_precision",
+      "lexical_minefield"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "cross_domain"
   }
 }

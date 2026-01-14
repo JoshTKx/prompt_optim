@@ -1,0 +1,145 @@
+{
+  "id": "IF-3047",
+  "name": "Enterprise-Grade Smart City Infrastructure Management System with Multi-Jurisdictional Compliance",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "hard",
+  "task": {
+    "description": "Generate a comprehensive JSON schema for a multi-city smart infrastructure orchestration platform that handles complex IoT sensor networks, real-time traffic optimization algorithms, environmental compliance monitoring across regulatory frameworks, multi-tenant energy grid management with renewable integration, predictive maintenance scheduling, public safety incident response coordination, data sovereignty requirements (CCPA, PIPEDA, APPs), blockchain-verified audit trails for municipal spending, citizen engagement portals with accessibility standards, and complete infrastructure lifecycle management while maintaining NIST Cybersecurity Framework compliance and ISO 27001 certification requirements",
+    "initial_prompt": "smart city",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "Generate a complete JSON schema for smart city infrastructure project 'METRO-2024-GRID-089' with the following requirements: 5-tier infrastructure hierarchy (sensors, edge-computing, aggregation-layer, control-center, cloud-archive), adaptive traffic optimization with 3:2:1 priority weighting for emergency-vehicles:public-transit:private-vehicles and dynamic signal timing adjustments (15s, 30s, 45s, 60s, 90s intervals), sensor deployment criteria requiring coverage density of 12 nodes per square kilometer, latency requirements under 50ms for critical systems, environmental monitoring thresholds (PM2.5 <35 \u03bcg/m\u00b3, NO2 <100 ppb, noise <65 dB during daytime), exclusion of deployment in flood-risk zones above FEMA 100-year classification, incident classification using NIMS ICS-400 framework with severity escalation (Level 1-5 municipal emergency scale), mandatory reporting timelines (critical infrastructure failure within 15 minutes, environmental violations within 4 hours to EPA/local authorities), citizen portal versioning system supporting 15 languages (English, Spanish, Mandarin, Arabic, French, German, Portuguese, Russian, Japanese, Korean, Hindi, Vietnamese, Tagalog, Italian, Polish) with WCAG 2.1 Level AAA accessibility and biometric authentication, data anonymization with AES-256 encryption for PII, support for CCPA (California), PIPEDA (Canada), APPs (Australia), LGPD (Brazil) compliance frameworks, real-time energy monitoring dashboard with configurable demand-response triggers (peak-shaving at 85% grid capacity, load-shedding using priority-based algorithm), municipal contract tracking for 127 vendor agreements across 6 metropolitan regions with renewal alerts 90 days prior, comprehensive audit trail with immutable distributed ledger verification, quantum-resistant cryptographic signatures, and 50-year retention for municipal archival requirements.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "complex_infrastructure_schema_validator",
+        "constraints": [
+          "Must include project_id field exactly matching 'METRO-2024-GRID-089'",
+          "Must contain infrastructure_hierarchy array with exactly 5 tiers: sensors, edge-computing, aggregation-layer, control-center, cloud-archive with tier_level, processing_capacity, and redundancy_requirements fields",
+          "Must have traffic_optimization object with priority_weighting set to '3:2:1', vehicle_classes array containing emergency-vehicles, public-transit, private-vehicles, and signal_timing_intervals array containing [15, 30, 45, 60, 90] in seconds",
+          "Must include deployment_criteria object with coverage_density_per_sqkm set to 12, latency_requirement_ms set to 50, and minimum_redundancy_factor field",
+          "Must have environmental_monitoring object with threshold_limits array containing at least 3 entries including pm2_5_ugm3 with max_value 35, no2_ppb with max_value 100, and noise_db_daytime with max_value 65",
+          "Must contain exclusion_zones array with flood_risk_classification object specifying fema_classification set to '100-year' and deployment_prohibited boolean true",
+          "Must include incident_classification_schema with framework set to 'NIMS ICS-400', severity_scale array with levels 1-5 mapped to municipal emergency descriptions, and escalation_protocols object with critical_infrastructure_minutes set to 15 and environmental_violation_hours set to 4",
+          "Must have regulatory_reporting array with at least 2 entries: EPA and local_authorities with jurisdiction, incident_types, and submission_requirements fields",
+          "Must contain citizen_portal object with versioning_system, supported_languages array containing exactly 15 languages (English, Spanish, Mandarin, Arabic, French, German, Portuguese, Russian, Japanese, Korean, Hindi, Vietnamese, Tagalog, Italian, Polish), accessibility_standard set to 'WCAG 2.1 Level AAA', and biometric_authentication boolean set to true",
+          "Must include data_protection object with encryption_method set to 'AES-256', pii_anonymization boolean true, and compliance_frameworks array with exactly 4 entries: CCPA, PIPEDA, APPs, LGPD each with jurisdiction and requirements fields",
+          "Must have energy_management object with real_time_monitoring boolean true, demand_response_triggers object containing peak_shaving_threshold_percentage set to 85, load_shedding_algorithm set to 'priority-based', and grid_capacity_monitoring field",
+          "Must contain vendor_management object with contract_count set to 127, metropolitan_regions_count set to 6, renewal_alert_days set to 90, and contract_tracking_array structure",
+          "Must include audit_system object with immutability_method set to 'distributed ledger', cryptographic_standard set to 'quantum-resistant', tamper_evident boolean true, retention_years set to 50, and verification_protocol field",
+          "Must have cybersecurity_compliance object with nist_framework_compliant boolean set to true and iso_27001_certified boolean set to true",
+          "Schema must be valid JSON with proper nesting depth of at least 6 levels",
+          "Must include at least 18 top-level properties in the schema",
+          "All numeric thresholds, timelines, ratios, and counts must exactly match specified values",
+          "Must have data_quality_assurance object with validation_rules array containing at least 8 sensor calibration and data integrity checks"
+        ]
+      }
+    },
+    {
+      "input": "Create a JSON schema for cross-border supply chain financing platform 'FINTECH-TRADE-2024-LC-041' requiring: multi-currency settlement (USD, EUR, GBP, JPY, CNY, SGD, AUD) with real-time forex rate integration and hedging instrument support, letter of credit workflow automation with UCP 600 compliance, documentary credit verification using OCR and ML-based fraud detection with 99.7% accuracy threshold, trade partner risk scoring using Altman Z-score and Beneish M-score with automatic credit limit adjustments, blockchain-based bill of lading tokenization with smart contract escrow release conditions, customs documentation generation supporting HS Code classification for 15,000+ product categories, Incoterms 2020 rule implementation (EXW, FCA, FAS, FOB, CFR, CIF, CPT, CIP, DAP, DPU, DDP), sanctions screening against OFAC, EU, UN consolidated lists with real-time updates, AML transaction monitoring with configurable threshold rules (single transaction >$10,000, cumulative daily >$50,000, velocity anomaly detection), multi-jurisdiction tax calculation engine supporting VAT, GST, customs duties across 45 countries, dispute resolution workflow with arbitration clause templates and ICC rules integration, working capital optimization with dynamic discounting (0.5%-3.5% APR based on early payment terms), insurance certificate integration with cargo, credit, and political risk coverage validation.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "complex_infrastructure_schema_validator",
+        "constraints": [
+          "Must include platform_id field exactly matching 'FINTECH-TRADE-2024-LC-041'",
+          "Must contain multi_currency_support object with supported_currencies array containing exactly 7 currencies: USD, EUR, GBP, JPY, CNY, SGD, AUD with real_time_forex boolean true and hedging_instruments array",
+          "Must have letter_of_credit_workflow object with compliance_standard set to 'UCP 600', automation_enabled boolean true, and workflow_stages array with at least 5 stages",
+          "Must include document_verification object with ocr_enabled boolean true, ml_fraud_detection boolean true, accuracy_threshold_percentage set to 99.7, and verification_methods array",
+          "Must contain risk_assessment object with scoring_models array containing altman_z_score and beneish_m_score with automatic_credit_adjustment boolean true and recalculation_frequency field",
+          "Must have blockchain_integration object with bill_of_lading_tokenization boolean true, smart_contract_escrow boolean true, and release_conditions array with at least 3 conditions",
+          "Must include customs_documentation object with hs_code_classification boolean true, supported_product_categories_count set to 15000 or greater, and auto_generation_enabled boolean true",
+          "Must contain incoterms_support object with version set to '2020', supported_rules array containing exactly 11 terms: EXW, FCA, FAS, FOB, CFR, CIF, CPT, CIP, DAP, DPU, DDP with definitions and obligation_matrix",
+          "Must have sanctions_screening object with screening_lists array containing OFAC, EU, UN with real_time_updates boolean true and screening_frequency field",
+          "Must include aml_monitoring object with transaction_thresholds object containing single_transaction_usd set to 10000, cumulative_daily_usd set to 50000, velocity_anomaly_detection boolean true, and alert_workflow array",
+          "Must contain tax_calculation_engine object with multi_jurisdiction boolean true, supported_countries_count set to 45, tax_types array including VAT, GST, customs_duties, and real_time_calculation boolean true",
+          "Must have dispute_resolution object with arbitration_templates array, icc_rules_integration boolean true, and resolution_workflow with stages and timeframes",
+          "Must include working_capital_optimization object with dynamic_discounting boolean true, apr_range object with minimum_percentage set to 0.5 and maximum_percentage set to 3.5, and early_payment_terms array",
+          "Must contain insurance_integration object with coverage_types array including cargo, credit, political_risk with certificate_validation boolean true and automated_claims_workflow field",
+          "Must have trade_finance_compliance with kyc_verification, beneficial_ownership_tracking, and transaction_reporting fields",
+          "Schema must include platform_type field set to 'cross_border_trade_finance'",
+          "Must contain at least 17 top-level properties",
+          "All percentage values, currency amounts, and numeric thresholds must exactly match specifications"
+        ]
+      }
+    },
+    {
+      "input": "Design a JSON schema for nationwide educational credential verification system 'EDU-VERIFY-2024-BLOCK-013' with: multi-institutional blockchain consortium requiring participation of 450 universities across 12 state systems, tamper-proof digital diploma issuance with W3C Verifiable Credentials standard and DID (Decentralized Identifier) integration, academic transcript schema supporting 200+ degree programs with course-level granularity including grades (A+ through F, Pass/Fail, Credit/No-Credit), credit hour calculations with semester/quarter/trimester conversions, transfer credit articulation engine with course equivalency mapping across 2,500 institutional agreements, competency-based education (CBE) badge integration with metadata for skill taxonomies aligned to O*NET and ESCO frameworks, international credential evaluation with WES, ECE, NACES member agency integration, accreditation status verification against CHEA and DOE databases with real-time validity checks, student consent management with FERPA compliance and granular sharing permissions (transcript release, degree verification, enrollment verification), employer API integration with rate limiting (1,000 requests/hour per organization), background check provider partnerships with turnaround SLA of 72 hours, continuous enrollment verification with semester-based status updates, scholarship eligibility tracking with GPA thresholds (Dean's List >3.5, academic probation <2.0), athletic eligibility certification with NCAA Eligibility Center integration, credential revocation mechanism with blockchain-anchored proof of revocation and notification workflows, lifetime learner profile aggregating credentials from K-12, higher education, professional certifications, and micro-credentials with unified learner record (ULR) format.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "complex_infrastructure_schema_validator",
+        "constraints": [
+          "Must include system_id field exactly matching 'EDU-VERIFY-2024-BLOCK-013'",
+          "Must contain blockchain_consortium object with participating_institutions_count set to 450, state_systems_count set to 12, consensus_mechanism, and node_distribution fields",
+          "Must have digital_diploma_issuance object with tamper_proof boolean true, standard set to 'W3C Verifiable Credentials', did_integration boolean true, and cryptographic_signature_method field",
+          "Must include transcript_schema object with supported_degree_programs_count set to 200 or greater, grading_systems array containing letter_grades (A+ through F), pass_fail, credit_no_credit, and course_level_granularity boolean true",
+          "Must contain credit_calculations object with semester_hours, quarter_hours, trimester_hours conversion_factors and standardization_method field",
+          "Must have transfer_credit_engine object with articulation_agreements_count set to 2500, course_equivalency_mapping boolean true, and automated_evaluation_workflow array",
+          "Must include competency_based_education object with badge_integration boolean true, skill_taxonomies array containing O*NET and ESCO with metadata_schema and alignment_verification fields",
+          "Must contain international_evaluation object with credential_evaluation_agencies array including WES, ECE, NACES with integration_api and evaluation_standards fields",
+          "Must have accreditation_verification object with databases array containing CHEA and DOE with real_time_validity_check boolean true and status_update_frequency field",
+          "Must include consent_management object with ferpa_compliant boolean true, granular_permissions array containing transcript_release, degree_verification, enrollment_verification, and audit_trail_required boolean true",
+          "Must contain employer_api object with rate_limiting object having requests_per_hour set to 1000, per_organization boolean true, and authentication_method field",
+          "Must have background_check_integration object with provider_partnerships array, turnaround_sla_hours set to 72, and verification_workflow stages",
+          "Must include enrollment_verification object with continuous_monitoring boolean true, semester_based_updates boolean true, and status_change_notifications array",
+          "Must contain academic_standing_tracking object with gpa_thresholds object having deans_list_minimum set to 3.5, academic_probation_maximum set to 2.0, and automated_eligibility_determination boolean true",
+          "Must have athletic_eligibility object with ncaa_integration boolean true, eligibility_center_api, and compliance_verification_workflow field",
+          "Must include revocation_mechanism object with blockchain_anchored boolean true, proof_of_revocation_protocol, notification_workflows array, and irreversibility_guarantee boolean true",
+          "Must contain unified_learner_record object with credential_aggregation array including k12, higher_education, professional_certifications, micro_credentials with ulr_format_compliant boolean true",
+          "Must have data_privacy_framework with student_data_protection, third_party_sharing_controls, and retention_policies fields",
+          "Schema must include verification_type field set to 'educational_credentials'",
+          "Must contain at least 19 top-level properties",
+          "All numeric thresholds, counts, GPA values, and time specifications must exactly match requirements"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "deterministic",
+    "validators": [
+      "json_syntax_validator",
+      "schema_completeness_validator",
+      "nested_structure_validator",
+      "constraint_adherence_validator",
+      "field_value_validator",
+      "numeric_precision_validator",
+      "array_cardinality_validator",
+      "compliance_framework_validator",
+      "cryptographic_standard_validator"
+    ],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "json_syntax_validator",
+        "schema_completeness_validator",
+        "constraint_adherence_validator",
+        "numeric_precision_validator",
+        "array_cardinality_validator"
+      ]
+    }
+  },
+  "optimization_challenge": "The initial prompt is catastrophically inadequate, consisting of only two words that provide zero guidance on infrastructure complexity. The optimizer must learn to: (1) explicitly specify multi-layered technical architectures across distributed systems with exact performance metrics and latency requirements, (2) enumerate precise numeric thresholds with scientific units, percentages, and statistical boundaries across diverse measurement domains, (3) mandate complex nested objects for algorithmic optimization with priority weighting, dynamic scheduling, and real-time adaptation mechanisms, (4) require exact versioning systems for standards and compliance frameworks (NIMS ICS-400, UCP 600, W3C Verifiable Credentials, Incoterms 2020), (5) specify minimum cardinality for arrays with exact counts for languages, currencies, jurisdictions, and institutional agreements, (6) demand integration of multiple external systems (regulatory databases, blockchain networks, API rate limiting, ML fraud detection), (7) enforce temporal constraints with specific minute/hour/day windows for incident reporting and SLA compliance, (8) require specialized domain terminology and classification systems (HS Codes, FEMA flood classifications, NCAA eligibility, academic grading scales), (9) mandate cryptographic methods including quantum-resistant signatures and distributed ledger verification, and (10) specify retention periods spanning decades with immutability and audit requirements. Success requires transforming a two-word prompt into highly technical, multi-paragraph specifications with enumerated technical, regulatory, algorithmic, and compliance constraints that reflect real-world enterprise system complexity across smart city infrastructure, trade finance, and educational technology domains.",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "smart_city",
+      "infrastructure",
+      "iot_networks",
+      "trade_finance",
+      "supply_chain",
+      "educational_technology",
+      "blockchain",
+      "compliance_frameworks",
+      "multi_jurisdictional",
+      "enterprise_systems"
+    ],
+    "archetype_class": "A_directive",
+    "domain": "enterprise_infrastructure"
+  }
+}

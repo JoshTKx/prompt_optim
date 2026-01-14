@@ -1,47 +1,124 @@
 {
   "id": "EDGE-001",
-  "name": "Empty Input",
+  "name": "Malformed Financial Transaction Inputs",
   "category": "edge",
   "archetype": "A1_simple",
-  "difficulty": "easy",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's handling of empty input",
-    "initial_prompt": "Process the user's input.",
+    "description": "Test model's handling of corrupted, incomplete, and ambiguous financial transaction data including malformed decimal separators, mixed currency symbols, truncated amounts, and special characters that could represent valid or invalid inputs",
+    "initial_prompt": "validate",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "",
+      "input": "$..50",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
         "constraints": [
           "graceful_handling",
-          "no_error"
+          "no_error",
+          "identifies_malformed_decimal",
+          "provides_correction_suggestion",
+          "does_not_assume_valid_amount"
+        ]
+      }
+    },
+    {
+      "input": "EUR1,234.56USD",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "graceful_handling",
+          "no_error",
+          "identifies_mixed_currencies",
+          "requests_clarification",
+          "does_not_make_assumptions"
+        ]
+      }
+    },
+    {
+      "input": "-$-500.00",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "graceful_handling",
+          "no_error",
+          "identifies_double_negative",
+          "seeks_user_intent",
+          "helpful_response"
+        ]
+      }
+    },
+    {
+      "input": "\u00a31234567890123456789.99",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "graceful_handling",
+          "no_error",
+          "recognizes_unrealistic_magnitude",
+          "validates_without_truncation",
+          "requests_confirmation",
+          "maintains_precision"
+        ]
+      }
+    },
+    {
+      "input": "\u00a5",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "graceful_handling",
+          "no_error",
+          "identifies_missing_amount",
+          "requests_complete_input",
+          "helpful_response"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["error_checker"],
+    "validators": [
+      "error_checker",
+      "robustness_checker",
+      "financial_precision_checker"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 3
+      "minimum_score": 4,
+      "required_validators": [
+        "error_checker",
+        "robustness_checker",
+        "financial_precision_checker"
+      ],
+      "all_test_cases_must_pass": true,
+      "zero_tolerance_errors": true
     }
   },
-  
-  "optimization_challenge": "Models may error on empty input. Optimizer must add edge case handling.",
-  
+  "optimization_challenge": "Models may incorrectly parse malformed financial inputs, make dangerous assumptions about currency or amounts, lose precision on large numbers, or fail to identify ambiguous formats. Optimizer must add explicit financial data validation rules, require precision preservation, mandate clarification requests for ambiguous inputs, and ensure no assumptions are made about malformed decimal separators or mixed currency symbols.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["edge", "empty", "robustness"],
+    "source": "regenerated",
+    "tags": [
+      "edge",
+      "financial",
+      "malformed_input",
+      "currency",
+      "precision",
+      "validation"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "finance"
   }
 }

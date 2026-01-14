@@ -1,233 +1,399 @@
-"""Dynamic Golden Set - automatically capture and use successful examples."""
+"""Golden Set - stores high-scoring test cases with best prompts for regression prevention."""
 import json
+import shutil
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 from pathlib import Path
 from dataclasses import dataclass, asdict
-import hashlib
 from utils.logging_utils import setup_logging
 from utils.metrics import get_metrics_collector
+from config.optimization_config import OptimizationConfig
 
 logger = setup_logging()
 metrics = get_metrics_collector()
 
 
 @dataclass
-class GoldenExample:
-    """A golden example from a successful test case."""
-    example_id: str
+class GoldenSetEntry:
+    """A golden set entry storing the best prompt for a test case."""
     test_case_id: str
-    prompt: str
-    input: str
-    output: str
-    score: float
-    captured_at: datetime
-    metadata: Dict[str, Any] = None
+    test_input: Dict[str, Any]  # Original test input
+    expected_output: Dict[str, Any]  # Output that scored >= threshold
+    best_prompt: str  # Complete prompt text that achieved this score
+    score: float  # Score achieved by best_prompt
+    threshold: float  # Threshold used (default 85.0)
+    timestamp: str  # ISO format timestamp
+    optimization_run_id: str  # ID of the optimization run that produced this
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
-        data = asdict(self)
-        data['captured_at'] = self.captured_at.isoformat()
-        return data
+        return asdict(self)
     
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'GoldenExample':
+    def from_dict(cls, data: Dict[str, Any]) -> 'GoldenSetEntry':
         """Create from dictionary."""
-        data['captured_at'] = datetime.fromisoformat(data['captured_at'])
         return cls(**data)
-    
-    def similarity_hash(self) -> str:
-        """Compute hash for similarity checking."""
-        content = f"{self.test_case_id}:{self.input}:{self.output}"
-        return hashlib.sha256(content.encode()).hexdigest()[:16]
 
 
 class GoldenSetManager:
-    """Manages dynamic golden set of successful examples."""
+    """Manages golden set of high-scoring test cases with best prompts."""
     
-    def __init__(self, storage_path: Optional[Path] = None, min_score: float = 85.0):
+    def __init__(
+        self,
+        storage_path: Optional[Path] = None,
+        threshold: float = None,
+        regression_enabled: bool = None,
+        regression_pass_rate: float = None
+    ):
         """
         Initialize golden set manager.
         
         Args:
-            storage_path: Path to store golden examples
-            min_score: Minimum score to capture (default: 85.0)
+            storage_path: Path to store golden set JSON file
+            threshold: Minimum score to add to golden set (defaults to config)
+            regression_enabled: Enable regression testing (defaults to config)
+            regression_pass_rate: Minimum pass rate for regression (defaults to config)
         """
+        # Use config defaults if not provided
+        self.threshold = threshold or OptimizationConfig.GOLDEN_SET_THRESHOLD
+        self.regression_enabled = regression_enabled if regression_enabled is not None else OptimizationConfig.REGRESSION_CHECK_ENABLED
+        self.regression_pass_rate = regression_pass_rate or OptimizationConfig.REGRESSION_PASS_RATE_THRESHOLD
+        
+        # Set up storage path
         if storage_path is None:
-            storage_path = Path(__file__).parent.parent / "outputs" / "golden_sets"
-        self.storage_path = Path(storage_path)
+            storage_path = Path(__file__).parent.parent / OptimizationConfig.GOLDEN_SET_PATH
+        else:
+            storage_path = Path(storage_path)
+        
+        # Ensure directory exists
+        self.storage_path = storage_path.parent if storage_path.suffix == '.json' else storage_path
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
-        self.min_score = min_score
-        self._examples: Dict[str, List[GoldenExample]] = {}  # test_case_id -> examples
+        # Set file path
+        if storage_path.suffix == '.json':
+            self.golden_set_file = storage_path
+        else:
+            self.golden_set_file = self.storage_path / "golden_set.json"
+        
+        # Load existing golden set
+        self._entries: Dict[str, GoldenSetEntry] = {}  # test_case_id -> entry
         self._load_existing()
-    
-    def should_capture(
-        self,
-        test_case_id: str,
-        score: float,
-        output: str,
-        novelty_threshold: float = 0.3
-    ) -> bool:
-        """
-        Determine if an example should be captured.
-        
-        Criteria:
-        1. Score >= min_score (excellent performance)
-        2. Not too similar to existing examples (novel)
-        3. Not already in golden set (avoid duplicates)
-        
-        Args:
-            test_case_id: Test case identifier
-            score: Output score
-            output: Output text
-            novelty_threshold: Minimum similarity difference to consider novel
-        
-        Returns:
-            True if should capture
-        """
-        # Must meet minimum score
-        if score < self.min_score:
-            return False
-        
-        # Check for novelty
-        existing = self._examples.get(test_case_id, [])
-        if not existing:
-            return True  # First example for this test case
-        
-        # Check similarity to existing examples
-        output_hash = hashlib.sha256(output.encode()).hexdigest()[:16]
-        for ex in existing:
-            if ex.similarity_hash() == output_hash:
-                return False  # Too similar, skip
-        
-        # Limit examples per test case (prevent bloat)
-        if len(existing) >= 5:
-            # Only capture if significantly better than worst existing
-            worst_score = min(ex.score for ex in existing)
-            if score <= worst_score:
-                return False
-        
-        return True
-    
-    def capture(
-        self,
-        test_case_id: str,
-        prompt: str,
-        input_text: str,
-        output: str,
-        score: float,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> Optional[GoldenExample]:
-        """
-        Capture a golden example if it meets criteria.
-        
-        Returns:
-            GoldenExample if captured, None otherwise
-        """
-        if not self.should_capture(test_case_id, score, output):
-            return None
-        
-        example_id = f"{test_case_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
-        example = GoldenExample(
-            example_id=example_id,
-            test_case_id=test_case_id,
-            prompt=prompt,
-            input=input_text,
-            output=output,
-            score=score,
-            captured_at=datetime.utcnow(),
-            metadata=metadata or {}
-        )
-        
-        # Add to collection
-        if test_case_id not in self._examples:
-            self._examples[test_case_id] = []
-        self._examples[test_case_id].append(example)
-        
-        # Persist
-        self._save_examples(test_case_id)
         
         logger.info(
-            "Golden example captured",
-            example_id=example_id,
-            test_case_id=test_case_id,
-            score=score
+            "GoldenSetManager initialized",
+            threshold=self.threshold,
+            regression_enabled=self.regression_enabled,
+            total_entries=len(self._entries),
+            storage_path=str(self.golden_set_file)
         )
-        metrics.increment("golden_set.captured", tags={"test_case": test_case_id})
-        
-        return example
     
-    def get_examples(
+    def _load_existing(self):
+        """Load existing golden set from disk."""
+        if not self.golden_set_file.exists():
+            logger.debug("Golden set file does not exist, starting fresh", path=str(self.golden_set_file))
+            return
+        
+        try:
+            with open(self.golden_set_file, 'r') as f:
+                data = json.load(f)
+            
+            # Load entries
+            entries_data = data.get('entries', [])
+            for entry_data in entries_data:
+                entry = GoldenSetEntry.from_dict(entry_data)
+                self._entries[entry.test_case_id] = entry
+            
+            logger.info(
+                "Golden set loaded",
+                total_entries=len(self._entries),
+                version=data.get('version', 'unknown'),
+                last_updated=data.get('last_updated', 'unknown')
+            )
+        except Exception as e:
+            logger.error(f"Error loading golden set: {e}", path=str(self.golden_set_file))
+            self._entries = {}
+    
+    def _save_to_disk(self):
+        """Save golden set to disk with backup."""
+        try:
+            # Create backup before saving
+            if self.golden_set_file.exists():
+                backup_path = self.storage_path / f"golden_set_backup_{datetime.now().strftime('%Y%m%d')}.json"
+                shutil.copy2(self.golden_set_file, backup_path)
+                logger.debug("Created golden set backup", backup_path=str(backup_path))
+            
+            # Save current state
+            data = {
+                "version": "1.0",
+                "total_entries": len(self._entries),
+                "threshold": self.threshold,
+                "last_updated": datetime.now().isoformat(),
+                "entries": [entry.to_dict() for entry in self._entries.values()]
+            }
+            
+            with open(self.golden_set_file, 'w') as f:
+                json.dump(data, f, indent=2)
+            
+            logger.debug("Golden set saved", path=str(self.golden_set_file), entries=len(self._entries))
+        except Exception as e:
+            logger.error(f"Error saving golden set: {e}", path=str(self.golden_set_file))
+    
+    def add_or_update(
         self,
         test_case_id: str,
-        limit: int = 3,
-        min_score: Optional[float] = None
-    ) -> List[GoldenExample]:
+        test_input: Dict[str, Any],
+        expected_output: Dict[str, Any],
+        best_prompt: str,
+        score: float,
+        optimization_run_id: str
+    ) -> str:
         """
-        Get golden examples for a test case.
+        Add or update a golden set entry.
+        
+        Only adds if score >= threshold.
+        If entry exists, updates only if new score > existing score.
         
         Args:
             test_case_id: Test case identifier
-            limit: Maximum number of examples
-            min_score: Optional minimum score filter
+            test_input: Original test input
+            expected_output: Output that achieved the score
+            best_prompt: Prompt that achieved this score
+            score: Score achieved
+            optimization_run_id: ID of the optimization run
         
         Returns:
-            List of golden examples (sorted by score, descending)
+            "added", "updated", or "skipped" (with reason)
         """
-        examples = self._examples.get(test_case_id, [])
+        # Check threshold
+        if score < self.threshold:
+            logger.debug(
+                "Golden set: Skipped (below threshold)",
+                test_case_id=test_case_id,
+                score=score,
+                threshold=self.threshold
+            )
+            return f"skipped (score {score:.1f} < threshold {self.threshold:.1f})"
         
-        if min_score:
-            examples = [ex for ex in examples if ex.score >= min_score]
+        # Check if entry exists
+        existing = self._entries.get(test_case_id)
         
-        # Sort by score descending
-        examples.sort(key=lambda x: x.score, reverse=True)
+        if existing is None:
+            # New entry
+            entry = GoldenSetEntry(
+                test_case_id=test_case_id,
+                test_input=test_input,
+                expected_output=expected_output,
+                best_prompt=best_prompt,
+                score=score,
+                threshold=self.threshold,
+                timestamp=datetime.now().isoformat(),
+                optimization_run_id=optimization_run_id
+            )
+            self._entries[test_case_id] = entry
+            self._save_to_disk()
+            
+            logger.info(
+                "Golden set: Added",
+                test_case_id=test_case_id,
+                score=score
+            )
+            metrics.increment("golden_set.added", tags={"test_case": test_case_id})
+            return "added"
         
-        return examples[:limit]
+        elif score > existing.score:
+            # Update with better score
+            entry = GoldenSetEntry(
+                test_case_id=test_case_id,
+                test_input=test_input,
+                expected_output=expected_output,
+                best_prompt=best_prompt,
+                score=score,
+                threshold=self.threshold,
+                timestamp=datetime.now().isoformat(),
+                optimization_run_id=optimization_run_id
+            )
+            old_score = existing.score
+            self._entries[test_case_id] = entry
+            self._save_to_disk()
+            
+            logger.info(
+                "Golden set: Updated",
+                test_case_id=test_case_id,
+                old_score=old_score,
+                new_score=score
+            )
+            metrics.increment("golden_set.updated", tags={"test_case": test_case_id})
+            return "updated"
+        
+        else:
+            # Keep existing (higher or equal score)
+            logger.debug(
+                "Golden set: Kept existing",
+                test_case_id=test_case_id,
+                existing_score=existing.score,
+                new_score=score
+            )
+            return f"skipped (existing score {existing.score:.1f} >= new score {score:.1f})"
+    
+    def get_entry(self, test_case_id: str) -> Optional[GoldenSetEntry]:
+        """Get golden set entry for a test case."""
+        return self._entries.get(test_case_id)
+    
+    def get_all_entries(self) -> List[GoldenSetEntry]:
+        """Get all golden set entries."""
+        return list(self._entries.values())
+    
+    def test_regression(
+        self,
+        prompt: str,
+        llm_client,
+        judge,
+        specification,
+        cost_tracker,
+        target_model: str = None
+    ) -> Dict[str, Any]:
+        """
+        Test a prompt against golden set for regression.
+        
+        Args:
+            prompt: Prompt to test
+            llm_client: LLM client for testing
+            judge: Judge instance
+            specification: Output specification
+            cost_tracker: Cost tracker instance
+        
+        Returns:
+            Dict with passing_golden, total_golden, regression_pass_rate, results
+        """
+        if not self.regression_enabled or len(self._entries) == 0:
+            return {
+                "enabled": False,
+                "passing_golden": 0,
+                "total_golden": 0,
+                "regression_pass_rate": 1.0,
+                "results": []
+            }
+        
+        results = []
+        passing = 0
+        total = len(self._entries)
+        
+        logger.info(
+            "Running regression test on golden set",
+            prompt_hash=hash(prompt) % 10000,
+            total_cases=total
+        )
+        
+        for entry in self._entries.values():
+            try:
+                # Extract test input from entry
+                # test_input is stored as a dict with "input" key
+                if isinstance(entry.test_input, dict):
+                    test_input_str = entry.test_input.get("input", "")
+                else:
+                    # Fallback for old format
+                    test_input_str = str(entry.test_input)
+                
+                if not test_input_str:
+                    logger.warning(
+                        "Golden set entry missing test input",
+                        test_case_id=entry.test_case_id
+                    )
+                    results.append({
+                        "test_case_id": entry.test_case_id,
+                        "score": 0.0,
+                        "passed": False,
+                        "error": "Missing test input"
+                    })
+                    continue
+                
+                # Construct full prompt with test input
+                full_prompt = f"{prompt}\n\nInput: {test_input_str}"
+                
+                # Generate output using LLM client directly
+                model_to_use = target_model or (llm_client.target_model if hasattr(llm_client, 'target_model') else "openai/gpt-4o-mini")
+                output = llm_client.complete(
+                    model=model_to_use,
+                    prompt=full_prompt,
+                    temperature=0.7,
+                    max_tokens=2000
+                )
+                
+                # Create a test result structure for the judge
+                test_result = [{
+                    "input": test_input_str,
+                    "output": output,
+                    "expected": entry.expected_output,
+                    "success": True
+                }]
+                
+                # Judge the result
+                feedback = judge.evaluate_batch(test_result, specification)
+                score = feedback.average_score
+                
+                passed = score >= self.threshold
+                if passed:
+                    passing += 1
+                
+                results.append({
+                    "test_case_id": entry.test_case_id,
+                    "score": score,
+                    "passed": passed,
+                    "threshold": self.threshold
+                })
+                
+            except Exception as e:
+                logger.warning(
+                    "Error testing golden set entry",
+                    test_case_id=entry.test_case_id,
+                    error=str(e)
+                )
+                results.append({
+                    "test_case_id": entry.test_case_id,
+                    "score": 0.0,
+                    "passed": False,
+                    "error": str(e)
+                })
+        
+        regression_pass_rate = passing / total if total > 0 else 1.0
+        
+        logger.info(
+            "Regression check: {}/{} golden cases passed ({:.1%})".format(
+                passing, total, regression_pass_rate
+            ),
+            passing=passing,
+            total=total,
+            pass_rate=regression_pass_rate
+        )
+        metrics.gauge("golden_set.regression_pass_rate", regression_pass_rate)
+        
+        return {
+            "enabled": True,
+            "passing_golden": passing,
+            "total_golden": total,
+            "regression_pass_rate": regression_pass_rate,
+            "results": results
+        }
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get golden set statistics."""
-        total_examples = sum(len(examples) for examples in self._examples.values())
-        avg_score = 0.0
-        if total_examples > 0:
-            all_scores = [
-                ex.score
-                for examples in self._examples.values()
-                for ex in examples
-            ]
-            avg_score = sum(all_scores) / len(all_scores)
+        if len(self._entries) == 0:
+            return {
+                "total_entries": 0,
+                "threshold": self.threshold,
+                "average_score": 0.0,
+                "min_score": 0.0,
+                "max_score": 0.0
+            }
+        
+        scores = [entry.score for entry in self._entries.values()]
         
         return {
-            "total_examples": total_examples,
-            "test_cases_covered": len(self._examples),
-            "average_score": round(avg_score, 2),
-            "min_score_threshold": self.min_score,
-            "by_test_case": {
-                tc_id: len(examples)
-                for tc_id, examples in self._examples.items()
-            }
+            "total_entries": len(self._entries),
+            "threshold": self.threshold,
+            "average_score": round(sum(scores) / len(scores), 2),
+            "min_score": round(min(scores), 2),
+            "max_score": round(max(scores), 2),
+            "regression_enabled": self.regression_enabled,
+            "regression_pass_rate_threshold": self.regression_pass_rate
         }
-    
-    def _load_existing(self):
-        """Load existing golden examples from storage."""
-        for json_file in self.storage_path.glob("*.json"):
-            test_case_id = json_file.stem
-            try:
-                with open(json_file, 'r') as f:
-                    data = json.load(f)
-                    examples = [GoldenExample.from_dict(ex) for ex in data.get('examples', [])]
-                    self._examples[test_case_id] = examples
-            except Exception as e:
-                logger.error(f"Error loading golden set {json_file}: {e}")
-    
-    def _save_examples(self, test_case_id: str):
-        """Save examples for a test case."""
-        examples = self._examples.get(test_case_id, [])
-        json_file = self.storage_path / f"{test_case_id}.json"
-        data = {
-            "test_case_id": test_case_id,
-            "examples": [ex.to_dict() for ex in examples],
-            "updated_at": datetime.utcnow().isoformat()
-        }
-        with open(json_file, 'w') as f:
-            json.dump(data, f, indent=2)

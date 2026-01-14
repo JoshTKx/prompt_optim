@@ -1,44 +1,139 @@
 {
   "id": "RS-003",
-  "name": "Ambiguity Detection",
+  "name": "Financial Regulatory Compliance Ambiguity Detection",
   "category": "reasoning",
   "archetype": "C3_ambiguity_handling",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to detect and handle ambiguity",
-    "initial_prompt": "Identify any ambiguity in the following statement and explain it.",
+    "description": "Test model's ability to detect and handle multiple types of ambiguity in financial regulatory language including jurisdictional scope ambiguity, conditional trigger ambiguity, quantifier scope, temporal boundary ambiguity, and definitional vagueness that could lead to compliance violations or regulatory arbitrage",
+    "initial_prompt": "review",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "She liked the cake. Who is 'she'?",
+      "input": "Financial institutions must report transactions exceeding $10,000 conducted by beneficial owners in foreign jurisdictions within 48 hours or face sanctions. Identify all types of ambiguity present and explain how each could lead to different compliance interpretations or regulatory exposure.",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
-        "constraints": []
+        "constraints": [
+          "identifies_prepositional_phrase_attachment_ambiguity_foreign_jurisdictions",
+          "identifies_quantifier_scope_ambiguity_exceeding_threshold",
+          "identifies_temporal_boundary_ambiguity_48_hours_start_point",
+          "identifies_referential_ambiguity_beneficial_owners",
+          "identifies_conjunction_scope_conducted_by_versus_located_in",
+          "identifies_aggregation_ambiguity_single_vs_multiple_transactions",
+          "explains_compliance_consequences_each_interpretation",
+          "lists_minimum_five_distinct_ambiguities",
+          "does_not_assume_standard_regulatory_interpretation",
+          "addresses_boundary_cases_for_threshold_application"
+        ]
+      }
+    },
+    {
+      "input": "Investment advisors may recommend securities to qualified clients with documented risk assessments using approved methodologies. Identify all syntactic and semantic ambiguities and provide every possible interpretation with structural analysis and regulatory risk assessment.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_prepositional_phrase_attachment_with_documented_risk_assessments",
+          "identifies_prepositional_phrase_attachment_using_approved_methodologies",
+          "identifies_modifier_scope_qualified_clients",
+          "identifies_temporal_ambiguity_when_documentation_required",
+          "provides_minimum_six_interpretations",
+          "explains_structural_differences_between_readings_with_parse_trees",
+          "addresses_cascading_modifier_scope_interactions",
+          "explains_fiduciary_duty_implications_each_reading",
+          "analyzes_regulatory_violation_risks_per_interpretation",
+          "does_not_default_to_single_parsing"
+        ]
+      }
+    },
+    {
+      "input": "The fund manager shall rebalance portfolio allocations quarterly or when individual asset classes deviate from target weightings by more than 5% as determined by the oversight committee. Identify all temporal, logical, conditional, and quantifier ambiguities with formal representations where applicable.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_temporal_scope_ambiguity_quarterly_calculation_period",
+          "identifies_logical_operator_precedence_or_conjunction",
+          "identifies_quantifier_scope_individual_vs_aggregate_deviation",
+          "identifies_referential_ambiguity_determined_timing",
+          "identifies_conditional_trigger_ambiguity_deviation_measurement_point",
+          "identifies_comparative_baseline_ambiguity_target_weightings",
+          "provides_formal_logical_representations_with_operator_precedence",
+          "explains_trigger_condition_variations_with_examples",
+          "addresses_collective_vs_distributive_readings_asset_classes",
+          "analyzes_cumulative_vs_instantaneous_deviation_interpretations",
+          "does_not_assume_conventional_precedence",
+          "explains_fiduciary_implications_delayed_detection"
+        ]
+      }
+    },
+    {
+      "input": "The acquisition agreement entitles shareholders to receive consideration for shares held continuously during the measurement period excluding those acquired through employee compensation plans or transferred between affiliated entities. Identify all ambiguities including referential, temporal scope, exclusion scope, and definitional vagueness with valuation impact analysis.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_temporal_scope_ambiguity_measurement_period_boundaries",
+          "identifies_temporal_continuity_ambiguity_held_continuously",
+          "identifies_exclusion_scope_ambiguity_clause_attachment",
+          "identifies_referential_ambiguity_affiliated_entities_definition",
+          "identifies_definitional_vagueness_employee_compensation_plans",
+          "identifies_conjunction_scope_acquired_through_versus_transferred",
+          "identifies_temporal_ambiguity_when_exclusions_determined",
+          "explains_multiple_temporal_interpretations_with_timelines",
+          "analyzes_valuation_impact_per_interpretation_with_scenarios",
+          "addresses_edge_cases_partial_period_holdings",
+          "addresses_edge_cases_entity_affiliation_changes_during_period",
+          "analyzes_litigation_risks_per_interpretation",
+          "does_not_resolve_ambiguity_arbitrarily",
+          "provides_quantitative_impact_examples_where_possible"
+        ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["ambiguity_detector"],
+    "validators": [
+      "ambiguity_detector",
+      "interpretation_checker",
+      "regulatory_reasoning_validator",
+      "formal_logic_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "ambiguity_detector",
+        "interpretation_checker",
+        "regulatory_reasoning_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may assume context or miss ambiguity. Optimizer must prompt for explicit identification.",
-  
+  "optimization_challenge": "Models tend to apply standard financial regulatory interpretations based on common practice, miss compound ambiguities where multiple attachment points and scope interactions create exponential interpretation possibilities, fail to recognize how temporal boundaries and measurement periods interact with conditional triggers, assume conventional operator precedence without acknowledging alternatives, and resolve definitional vagueness using industry norms rather than identifying it as ambiguity. Optimizer must force explicit enumeration of all ambiguity types including multi-level interactions between prepositional phrase attachments and quantifier scopes, require formal structural analysis with parse trees or logical formulas showing how different parsings yield different meanings, demand explanation of practical financial and regulatory consequences with quantitative impact examples for each interpretation, prevent premature disambiguation based on regulatory custom or industry practice, and ensure recognition that edge cases around temporal boundaries and aggregation methods represent genuine ambiguity rather than mere technicalities.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["ambiguity", "reasoning", "language"],
+    "source": "regenerated",
+    "tags": [
+      "ambiguity",
+      "reasoning",
+      "financial_regulation",
+      "compliance",
+      "scope",
+      "temporal",
+      "quantifier",
+      "semantic",
+      "syntactic",
+      "conditional_logic",
+      "jurisdictional"
+    ],
     "archetype_class": "C_reasoning",
-    "domain": "general"
+    "domain": "financial_regulatory_compliance"
   }
 }

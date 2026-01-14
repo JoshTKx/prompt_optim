@@ -18,7 +18,7 @@ test_case = CanonicalTestCase(
     difficulty="easy",
     task={
         "initial_prompt": "Generate a list of 3 fruits in JSON format.",
-        "target_model": "openai/gpt-4o-mini",
+        "target_model": "google/gemini-3-flash-preview",
         "context": None
     },
     test_cases=[

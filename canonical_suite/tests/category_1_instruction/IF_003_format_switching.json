@@ -1,46 +1,181 @@
 {
   "id": "IF-003",
-  "name": "Format Switching",
+  "name": "Multi-Domain Financial Instrument & Derivative Contract Structuring",
   "category": "instruction_following",
   "archetype": "A2_format_specific",
   "difficulty": "hard",
-  
   "task": {
-    "description": "Test model's ability to convert between formats (CSV to XML)",
-    "initial_prompt": "Convert the following data to XML format.",
+    "description": "Test model's ability to extract and transform complex financial derivatives, structured products, algorithmic trading configurations, and cross-border investment agreements into strictly validated JSON schemas with multi-currency handling, temporal event sequences, nested counterparty hierarchies, and precision-critical financial calculations",
+    "initial_prompt": "convert to json",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Convert this CSV to XML:\nname,age,city\nJohn,30,NYC\nJane,25,LA",
+      "input": "Extract this interest rate swap confirmation to structured JSON:\nTrade Confirmation #IRS-2024-LDN-8847392 | Trade Date: 2024-02-14T10:47:23Z | Effective Date: 2024-02-16 | Maturity: 2034-02-16 (10Y) | Party A: \"Soci\u00e9t\u00e9 G\u00e9n\u00e9rale S.A.\" (LEI: O2RNE8IBXP4R0TD8PU41, Registered: Paris, France) | Party B: Meridian Asset Management Ltd. (LEI: 213800D1EI4B9WTWWD28, Jurisdiction: Cayman Islands, Tax Residency: Ireland) | Notional: EUR 47,500,000.00 | Party A Pays: Fixed 3.847% per annum, Act/360, Modified Following, TARGET calendar | Party B Pays: Floating EUR-EURIBOR-Reuters 6M + 0.125% spread, Act/360, Modified Following, reset semi-annually | Payment Frequency: Party A annual (16-Feb), Party B semi-annual (16-Feb, 16-Aug) | Business Day Convention: Modified Following with TARGET & London calendars | Calculation Agent: Party A | Break Clauses: Optional termination by either party on 2029-02-16 with 90 days notice, mid-market valuation by three dealers (Deutsche Bank AG, BNP Paribas S.A., Barclays Bank PLC), arithmetic mean less highest | CSA: ISDA 2016 VM CSA (IA/CSD), Independent Amounts: Party A posts EUR 1,250,000.00, Party B posts EUR 950,000.00, Threshold: EUR 500,000.00, MTA: EUR 100,000.00 | Netting: ISDA 2002 Master Agreement dated 2019-08-22 | Governing Law: English Law | Documentation: 2021 ISDA Definitions, 2006 ISDA Definitions (rate options)",
       "expected_output": {
         "type": "structured",
-        "format": "xml",
-        "validation": "xml_parser",
+        "format": "json",
+        "validation": "json_schema_validator",
         "constraints": [
-          "valid_xml_structure"
+          "valid_json_syntax",
+          "iso8601_datetime_with_utc_timezone_for_trade_timestamp",
+          "iso8601_date_format_for_effective_and_maturity_dates",
+          "duration_expressed_in_iso8601_period_notation",
+          "lei_codes_preserved_exactly_as_20_character_strings",
+          "counterparty_objects_with_nested_jurisdiction_and_tax_residency",
+          "notional_amount_as_decimal_string_with_exact_precision",
+          "currency_codes_iso_4217_standard",
+          "percentage_rates_as_decimal_not_float_or_string_percentage",
+          "day_count_convention_as_structured_enum",
+          "floating_rate_index_with_tenor_and_spread_separated",
+          "payment_frequency_as_structured_schedule_objects",
+          "business_day_calendars_as_array_of_standard_codes",
+          "break_clause_with_notice_period_and_valuation_methodology_nested",
+          "dealer_panel_as_array_with_aggregation_method_specified",
+          "collateral_terms_with_differentiated_party_amounts",
+          "monetary_thresholds_as_decimal_strings_with_currency",
+          "agreement_references_with_version_year_and_execution_date",
+          "special_characters_in_entity_names_properly_escaped",
+          "temporal_event_sequence_logically_ordered"
+        ]
+      }
+    },
+    {
+      "input": "Transform this structured credit product termsheet to compliance-validated JSON:\nProduct: Bespoke Synthetic CDO Tranche | ISIN: XS2847392018 | Issuer: Atlas Structured Finance SPV IX (Ireland) | Arranger: Goldman Sachs International (LEI: W22LROWP2IHZNBB6K528) | Issue Date: 2024-03-01 | Maturity: 2029-06-15 (5Y 3M 14D) | Reference Portfolio: 125 names, Investment Grade Corporate CDS (avg rating: BBB+/Baa1), Notional: USD 2,850,000,000.00 | Geographic: North America 42.3%, Europe 38.7%, Asia-Pacific 19.0% | Sector: Financials 28.5%, Industrials 23.8%, Technology 18.2%, Consumer 15.7%, Energy 9.3%, Telecom 4.5% | Tranche: Mezzanine [15%-25% attachment], Size: USD 285,000,000.00 | Coupon: 475 bps per annum (4.75%), Quarterly payments (15-Mar/Jun/Sep/Dec), Act/360 | Credit Events: Bankruptcy, Failure to Pay (USD 1,000,000 threshold, 3 day grace), Restructuring (Mod-Mod-R) | Determination Committee: ISDA Americas | Calculation Agent: Goldman Sachs International | Waterfall Priority: (1) Senior fees & expenses, (2) Super-senior tranche (0%-3%), (3) Senior tranche (3%-15%), (4) This tranche (15%-25%), (5) Junior tranche (25%-35%), (6) Equity (35%-100%) | Ratings: Moody's: Ba2 (sf), S&P: BB (sf), Fitch: BB+ (sf) | Listing: Irish Stock Exchange | Eligible Investors: QIB under Rule 144A, non-U.S. persons under Reg S | Minimum Denomination: USD 250,000 + integral multiples of USD 1,000 | Settlement: T+3, Euroclear/Clearstream",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "json_schema_validator",
+        "constraints": [
+          "valid_json_syntax",
+          "isin_code_validation_format_and_checksum",
+          "lei_codes_as_strings_with_exact_formatting",
+          "iso8601_dates_for_issue_and_maturity",
+          "duration_in_iso8601_period_format_with_years_months_days",
+          "reference_portfolio_composition_as_nested_objects",
+          "percentage_allocations_as_decimals_summing_to_unity",
+          "sector_breakdown_with_validation_of_total_percentage",
+          "attachment_points_as_decimal_range_object",
+          "notional_amounts_as_decimal_strings_maintaining_precision",
+          "basis_points_converted_to_decimal_percentage_equivalents",
+          "payment_schedule_with_day_count_convention_structured",
+          "credit_event_definitions_as_typed_array_with_thresholds",
+          "monetary_thresholds_with_currency_and_grace_periods",
+          "waterfall_priority_as_ordered_array_with_attachment_ranges",
+          "credit_ratings_with_agency_scale_and_qualifier_separated",
+          "investor_eligibility_as_regulatory_framework_references",
+          "denomination_structure_with_minimum_and_increment_amounts",
+          "settlement_infrastructure_as_array_of_systems",
+          "unicode_ampersands_and_special_characters_escaped",
+          "geographic_region_percentages_validated_for_completeness"
+        ]
+      }
+    },
+    {
+      "input": "Convert this algorithmic trading strategy configuration to validated JSON schema:\nStrategy ID: VWAP-MOM-ARB-v3.8.2 | Deployment: 2024-01-22T06:00:00-05:00 (NYSE pre-market) | Trading Entity: QuantEdge Alpha Fund LP (CFTC: 0284751, NFA: P284751) | Execution Venue: Primary: NYSE, NASDAQ, CBOE BZX | Secondary: IEX, ARCA | Dark Pools: Sigma-X, Liquidnet (max 15% ADV) | Universe: S&P 500 constituents + Russell 2000 (market cap > USD 500M, avg daily volume > 2.5M shares, spread < 0.15%) | Signal Generation: Momentum (20/50/200 SMA crossover, RSI 14-period threshold 30/70) + Mean Reversion (Bollinger Bands 2\u03c3, 20-period) + Volume Profile (VWAP deviation \u00b11.5%) | Entry Conditions: Momentum Z-score > 2.3 AND Volume > 1.8x 20-day avg AND Spread < 0.08% | Position Sizing: Kelly Criterion 0.25 fractional, max single position 3.5% NAV, sector limit 25% NAV, correlation matrix constraint (max 0.65 pairwise) | Risk Limits: Portfolio VaR 95% confidence < 2.8% daily, max drawdown trigger -7.5% (auto-liquidate), beta to SPX 0.85-1.15 band | Execution: TWAP/VWAP adaptive (participation rate 8%-15%), slice interval 45-180 seconds, min slice 100 shares, max slice 5% ADV | Order Types: Limit IOC (70%), Limit Day (25%), Market on Close (5% rebalance only) | Latency Budget: Signal-to-order 850\u03bcs (p95), Order-to-exchange 2.3ms (p99) | Rebalancing: Continuous intraday, full portfolio optimization 15:45 ET | Backtest Metrics (2022-01-01 to 2023-12-31): Sharpe 1.87, Sortino 2.34, Max DD -11.2%, Win Rate 58.3%, Avg Win/Loss 1.43, Calmar 2.15 | Capital: USD 47,500,000.00 (committed), leverage max 1.3x gross, 1.15x net",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "json_schema_validator",
+        "constraints": [
+          "valid_json_syntax",
+          "semantic_version_format_for_strategy_id",
+          "iso8601_timestamp_with_timezone_for_deployment",
+          "regulatory_identifiers_as_strings_with_prefix_labels",
+          "execution_venues_categorized_by_type_with_constraints",
+          "universe_definition_with_quantitative_filter_criteria",
+          "monetary_thresholds_as_decimal_strings_with_currency",
+          "share_volume_as_integers_not_floats",
+          "percentage_values_as_precise_decimals_throughout",
+          "signal_generation_as_nested_array_of_indicator_objects",
+          "technical_indicator_parameters_structured_with_periods_and_thresholds",
+          "entry_conditions_as_logical_expression_tree_or_array",
+          "position_sizing_methodology_with_formula_reference_and_parameters",
+          "risk_limits_with_confidence_levels_and_trigger_actions",
+          "execution_strategy_with_time_intervals_and_participation_ranges",
+          "order_type_distribution_as_percentage_array_summing_to_unity",
+          "latency_measurements_with_percentile_specifications_and_units",
+          "backtest_period_as_iso8601_date_range",
+          "performance_metrics_as_decimal_values_with_metric_name_keys",
+          "leverage_ratios_differentiated_by_gross_and_net",
+          "correlation_constraints_as_matrix_parameters",
+          "time_intervals_in_seconds_or_microseconds_with_explicit_units",
+          "greek_letters_and_mathematical_symbols_properly_encoded"
+        ]
+      }
+    },
+    {
+      "input": "Transform this cross-border private equity investment agreement to structured JSON:\nTransaction: Series C Preferred Equity Investment | Target: NeuralPath AI Systems Private Limited (CIN: U72900KA2019PTC128847, Incorporated: Karnataka, India, 2019-03-15) | Lead Investor: Sequoia Capital India Growth Fund IV (Mauritius) Ltd. (Registration: C184729, Tax Residency: Mauritius, Beneficial Owner Disclosure: Form DPT-3 filed) | Co-Investors: Accel India V (Mauritius) Ltd. (23.7% participation), Tiger Global Private Investment Partners XII (Cayman) (18.5% participation) | Investment Amount: USD 87,500,000.00 (INR equivalent calculated at RBI reference rate on closing date \u00b10.25% band) | Securities: 8,750,000 Series C Compulsorily Convertible Preference Shares (CCPS), Issue Price: USD 10.00/share, Par Value: INR 10.00/share | Pre-Money Valuation: USD 312,500,000.00 (fully-diluted, treasury method for options) | Post-Money: USD 400,000,000.00 | Liquidation Preference: 1.5x non-participating with Series B/A pari passu, Dividend: 8% cumulative non-compounding (payable only on liquidation or redemption) | Conversion: Automatic on IPO (> USD 500M valuation, > USD 150M proceeds) or QSO (> USD 450M valuation), Optional after 18 months, Ratio: 1:1 subject to anti-dilution (broad-based weighted average) | Board Composition: 7 seats (3 founders, 2 investor directors, 2 independent), Observer rights for co-investors | Protective Provisions: Supermajority 75% Series C consent for: liquidation, M&A, new senior securities, budget variance > 25%, capital expenditure > USD 5M, debt > USD 15M | Vesting: Founder shares 4-year vest, 1-year cliff, acceleration on change of control (50% single-trigger, 100% double-trigger) | Closing Conditions: FIPB/RBI approval, IT/GST compliance certificates, IP assignment completion, key employee retention (CTO, VP Eng minimum 24-month commitment) | Governing Law: Singapore International Arbitration Centre (SIAC), Indian Contract Act 1872, FEMA regulations | Closing Date: 2024-04-15 (long-stop: 2024-06-30)",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "json_schema_validator",
+        "constraints": [
+          "valid_json_syntax",
+          "cin_format_validation_for_indian_corporate_identifier",
+          "iso8601_dates_for_incorporation_and_closing",
+          "lei_or_jurisdiction_specific_registration_as_strings",
+          "multi_jurisdiction_entity_structure_with_tax_residency",
+          "investment_amount_with_dual_currency_and_fx_mechanism",
+          "share_counts_as_integers_not_strings_or_floats",
+          "price_per_share_as_decimal_string_with_currency_specified",
+          "valuation_methodology_explicitly_stated_with_dilution_treatment",
+          "liquidation_preference_multiple_and_participation_rights_structured",
+          "dividend_terms_with_rate_compounding_and_payment_trigger",
+          "conversion_triggers_as_conditional_array_with_thresholds",
+          "anti_dilution_mechanism_specified_with_formula_type",
+          "board_composition_as_seat_allocation_object_by_category",
+          "protective_provisions_with_consent_threshold_and_action_list",
+          "vesting_schedule_with_cliff_and_acceleration_triggers",
+          "closing_conditions_as_array_of_precedent_objects",
+          "regulatory_framework_references_with_jurisdiction_and_statute",
+          "long_stop_date_differentiated_from_target_closing",
+          "percentage_participation_as_decimals_validated_for_total",
+          "monetary_thresholds_in_multiple_currencies_with_conversion_notes",
+          "special_characters_in_entity_names_escaped",
+          "unicode_currency_symbols_avoided_in_favor_of_iso_codes",
+          "temporal_commitment_periods_in_months_with_explicit_units"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "hybrid",
-    "validators": ["xml_parser", "structure_checker"],
+    "validators": [
+      "json_schema_validator",
+      "data_type_checker",
+      "precision_preservation_checker",
+      "financial_calculation_validator",
+      "regulatory_compliance_checker"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "json_schema_validator",
+        "precision_preservation_checker",
+        "financial_calculation_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may output pseudo-XML or incorrect structure. Optimizer must specify exact XML format requirements.",
-  
+  "optimization_challenge": "Models will fail by: (1) converting precise financial decimals (basis points, percentages, rates) to lossy floating-point representations destroying calculation accuracy, (2) treating LEI codes and regulatory identifiers as integers causing format corruption, (3) flattening complex nested counterparty structures losing jurisdiction and tax residency hierarchies, (4) using inconsistent date/timestamp formats across multi-timezone financial events, (5) failing to preserve exact ISIN/CIN validation formats and checksums, (6) incorrectly parsing multi-component consideration structures (cash + equity + conversion rights), (7) losing precision in percentage allocations that must sum to 100%, (8) treating currency amounts without explicit ISO 4217 codes causing ambiguity, (9) dropping temporal validity constraints for optional exercise periods and break clauses, (10) mixing measurement units (microseconds vs milliseconds, basis points vs percentages) without explicit labeling, (11) failing to structure conditional logic trees for conversion triggers and protective provisions, (12) losing waterfall priority ordering in payment structures, (13) incorrectly handling dual-currency amounts with FX conversion mechanisms. Optimizer must: mandate JSON Schema Draft 7 with strict type discrimination and format validation, require ISO 8601 for all temporal data with explicit timezone handling across jurisdictions, enforce decimal string representation for ALL financial values (rates, amounts, percentages) to maintain precision, specify deeply nested object hierarchies for counterparties with LEI/jurisdiction/tax residency separation, demand explicit unit objects for time intervals (specify \u03bcs/ms/s), preserve regulatory identifiers as strings with format validation patterns, structure multi-leg financial terms as separate typed objects with verifiable arithmetic relationships, implement conditional schema validation for trigger-based provisions, use ISO 4217 currency codes exclusively avoiding symbols, validate percentage arrays for completeness (sum to 1.0), and maintain strict ordering for priority waterfalls and temporal sequences.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["format", "conversion", "xml"],
+    "source": "regenerated",
+    "tags": [
+      "format",
+      "json_schema",
+      "financial_instruments",
+      "derivatives",
+      "cross_border_investment",
+      "precision_critical",
+      "multi_currency",
+      "regulatory_compliance",
+      "complex_nested_structures",
+      "temporal_sequences"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "financial_markets_investment"
   }
 }

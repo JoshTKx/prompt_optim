@@ -26,6 +26,9 @@ class LLMClient:
             base_url=LLMConfig.OPENROUTER_BASE_URL,
             default_headers=LLMConfig.get_headers()
         )
+        
+        # Track total cost
+        self.total_cost: float = 0.0
     
     @handle_errors(severity=ErrorSeverity.HIGH, log_error=True, reraise=True)
     @retry_with_backoff(
@@ -104,17 +107,23 @@ class LLMClient:
             if result is None:
                 raise ValueError(f"Empty response from model {model}")
             
-            # Log usage if available
+            # Log usage if available and calculate cost
             if hasattr(response, 'usage') and response.usage:
                 usage = response.usage
+                cost = self._calculate_cost(usage, model)
+                self.total_cost += cost
+                
                 logger.debug(
                     "LLM usage",
                     prompt_tokens=usage.prompt_tokens,
                     completion_tokens=usage.completion_tokens,
-                    total_tokens=usage.total_tokens
+                    total_tokens=usage.total_tokens,
+                    cost_usd=round(cost, 4),
+                    total_cost_usd=round(self.total_cost, 4)
                 )
                 metrics.record("llm.tokens.prompt", usage.prompt_tokens, tags={"model": model})
                 metrics.record("llm.tokens.completion", usage.completion_tokens, tags={"model": model})
+                metrics.record("llm.cost", cost, tags={"model": model})
             
             return result
         
@@ -122,6 +131,22 @@ class LLMClient:
             duration = time.time() - start_time
             metrics.histogram("llm.duration", duration, tags={"model": model})
             logger.debug("LLM completion finished", model=model, duration_seconds=duration)
+    
+    def _calculate_cost(self, usage, model: str) -> float:
+        """
+        Calculate actual cost based on usage from API response.
+        
+        Args:
+            usage: Usage object from API response (with prompt_tokens, completion_tokens)
+            model: Model identifier
+        
+        Returns:
+            Cost in USD
+        """
+        prompt_tokens = usage.prompt_tokens if hasattr(usage, 'prompt_tokens') else 0
+        completion_tokens = usage.completion_tokens if hasattr(usage, 'completion_tokens') else 0
+        
+        return self.estimate_cost(model, prompt_tokens, completion_tokens)
     
     def estimate_cost(self, model: str, prompt_tokens: int, completion_tokens: int) -> float:
         """
@@ -144,6 +169,10 @@ class LLMClient:
             "deepseek/deepseek-chat": (0.14 / 1_000_000, 0.56 / 1_000_000),
             "deepseek/deepseek-v3": (0.55 / 1_000_000, 2.19 / 1_000_000),
             "deepseek/deepseek-v3.2": (0.55 / 1_000_000, 2.19 / 1_000_000),  # Approximate
+            "google/gemini-pro": (0.50 / 1_000_000, 1.50 / 1_000_000),  # Approximate
+            "google/gemini-flash": (0.075 / 1_000_000, 0.30 / 1_000_000),  # Approximate
+            "google/gemini-flash-1.5": (0.075 / 1_000_000, 0.30 / 1_000_000),  # Approximate
+            "google/gemini-3-flash-preview": (0.075 / 1_000_000, 0.30 / 1_000_000),  # Approximate
         }
         
         # Find matching model

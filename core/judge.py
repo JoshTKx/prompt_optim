@@ -108,22 +108,67 @@ Provide your evaluation in JSON format as specified."""
                         lines = lines[:-1]
                     response_text = "\n".join(lines).strip()
             
-            # Try to parse JSON
-            try:
-                judgment = json.loads(response_text)
-            except json.JSONDecodeError as e:
-                # If JSON parsing fails, try to extract JSON from the response
-                logger.warning(f"JSON parse error: {e}, attempting to extract JSON from response")
-                # Try to find JSON object in the response
+            # Try to parse JSON with repair attempts
+            judgment = None
+            parse_attempts = [
+                response_text,  # Try original first
+                self._repair_json(response_text),  # Try repaired version
+            ]
+            
+            for attempt_text in parse_attempts:
+                try:
+                    judgment = json.loads(attempt_text)
+                    break
+                except json.JSONDecodeError as e:
+                    continue
+            
+            # If still failed, try to extract JSON object using better regex
+            if judgment is None:
+                logger.warning(f"JSON parse error after repair attempts, trying extraction")
+                # Better regex that handles nested objects (but still limited for strings)
                 import re
+                # Try to find JSON object boundaries more intelligently
+                # Look for opening brace followed by content
                 json_match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', response_text, re.DOTALL)
                 if json_match:
                     try:
-                        judgment = json.loads(json_match.group(0))
+                        extracted = json_match.group(0)
+                        # Try to repair the extracted JSON
+                        extracted = self._repair_json(extracted)
+                        judgment = json.loads(extracted)
                     except:
-                        raise ValueError(f"Could not parse JSON from judge response: {str(e)}")
-                else:
-                    raise ValueError(f"Could not parse JSON from judge response: {str(e)}")
+                        pass
+            
+            # If still failed, try with retry to LLM with more tokens
+            if judgment is None:
+                logger.warning(f"JSON parse failed, retrying judge with increased max_tokens")
+                try:
+                    # Retry with more tokens to avoid truncation
+                    retry_response = self.llm_client.complete(
+                        model=self.model,
+                        prompt=eval_prompt,
+                        system_prompt=self.system_prompt,
+                        temperature=OptimizationConfig.JUDGE_TEMPERATURE,
+                        max_tokens=OptimizationConfig.JUDGE_MAX_TOKENS * 2,  # Double tokens
+                        json_mode=False
+                    )
+                    
+                    # Clean and parse retry response
+                    retry_text = retry_response.strip()
+                    if retry_text.startswith("```"):
+                        parts = retry_text.split("```")
+                        if len(parts) >= 3:
+                            retry_text = parts[1]
+                            if retry_text.startswith("json"):
+                                retry_text = retry_text[4:]
+                            retry_text = retry_text.strip()
+                    
+                    # Try parsing retry
+                    retry_text = self._repair_json(retry_text)
+                    judgment = json.loads(retry_text)
+                except Exception as retry_error:
+                    logger.error(f"JSON parse error even after retry: {retry_error}")
+                    raise ValueError(f"Could not parse JSON from judge response: {str(retry_error)}")
             
             # Estimate cost
             estimated_cost = self.llm_client.estimate_cost(
@@ -220,6 +265,87 @@ Provide your evaluation in JSON format as specified."""
             critical_issues=critical_issues,
             high_priority_suggestions=high_priority_suggestions
         )
+    
+    def _repair_json(self, content: str) -> str:
+        """Attempt to repair common JSON issues including unterminated strings."""
+        import re
+        
+        # Fix trailing commas in objects and arrays
+        content = re.sub(r',(\s*[}\]])', r'\1', content)
+        
+        # Track state
+        depth = 0
+        array_depth = 0
+        in_string = False
+        escape_next = False
+        last_complete_pos = -1
+        
+        for i, char in enumerate(content):
+            if escape_next:
+                escape_next = False
+                continue
+            
+            if char == '\\':
+                escape_next = True
+                continue
+            
+            if char == '"' and not escape_next:
+                in_string = not in_string
+                continue
+            
+            if not in_string:
+                if char == '{':
+                    depth += 1
+                elif char == '}':
+                    depth -= 1
+                    if depth == 0:
+                        last_complete_pos = i
+                        break
+                elif char == '[':
+                    array_depth += 1
+                elif char == ']':
+                    array_depth -= 1
+        
+        # If we found a complete JSON object, use it
+        if last_complete_pos > 0 and depth == 0:
+            return content[:last_complete_pos + 1]
+        
+        # If we're in an unterminated string, try to fix it
+        if in_string:
+            # Find the last complete key-value pair or array element
+            # Look for pattern: ...", "key": "value that got cut off
+            last_quote = content.rfind('"')
+            if last_quote > 0:
+                # Check what comes before this quote
+                # Look for : "pattern (start of a value)
+                colon_quote_pattern = content.rfind(': "')
+                if colon_quote_pattern > 0 and colon_quote_pattern < last_quote:
+                    # We have an unterminated string value
+                    # Try to close it and the structure
+                    safe_pos = colon_quote_pattern + 2  # Right after : "
+                    # Close the string
+                    content = content[:safe_pos] + '""'
+                    # Close any open structures
+                    temp_depth = depth
+                    temp_array_depth = array_depth
+                    while temp_depth > 0:
+                        content += '}'
+                        temp_depth -= 1
+                    while temp_array_depth > 0:
+                        content += ']'
+                        temp_array_depth -= 1
+                    return content
+        
+        # If JSON is incomplete but not in a string, try to close structures
+        if not in_string and (depth > 0 or array_depth > 0):
+            while depth > 0:
+                content += '}'
+                depth -= 1
+            while array_depth > 0:
+                content += ']'
+                array_depth -= 1
+        
+        return content
     
     def _format_rules(self, rules: List) -> str:
         """Format rules for prompt."""

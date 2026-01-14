@@ -1,48 +1,181 @@
 {
   "id": "GAP-EXT-001",
-  "name": "Standard NER",
+  "name": "Scientific Research Grant Entity Extraction",
   "category": "gaps",
   "archetype": "B1_extraction",
-  "difficulty": "easy",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to extract named entities",
-    "initial_prompt": "Extract all named entities from the text.",
+    "description": "Test model's ability to extract and classify scientific research entities including principal investigators, institutions, grant numbers, funding amounts, research areas, publication references, equipment specifications, collaboration networks, and temporal milestones from complex grant proposals and research documentation with nested affiliations, multi-institutional partnerships, and interdisciplinary contexts",
+    "initial_prompt": "extract info",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Apple Inc. is headquartered in Cupertino, California. Tim Cook is the CEO.",
+      "input": "NSF Grant DEB-2045789 (FY2023-2026) awarded $1,847,500 to Principal Investigator Dr. Yuki Tanaka-Morrison (Stanford University, Dept. of Earth Systems Science & Hopkins Marine Station) in collaboration with Co-PI Prof. Maria Elena Gutierrez, Ph.D. (Universidad Nacional Aut\u00f3noma de M\u00e9xico) for interdisciplinary research on deep-sea hydrothermal vent ecosystems. Equipment allocation includes Remotely Operated Vehicle (ROV) Jason Jr. ($385,000) and Mass Spectrometer Thermo Scientific Q Exactive HF-X ($520,000). Project involves 3 postdoctoral researchers, 7 graduate students across 4 institutions.",
       "expected_output": {
         "type": "structured",
         "format": "json",
         "validation": "entity_extractor",
         "constraints": [
           "valid_json_parse",
-          "entity_format_correct"
+          "entity_format_correct",
+          "extracts_grant_numbers_with_agency_prefix",
+          "extracts_fiscal_year_ranges",
+          "extracts_total_funding_amounts",
+          "extracts_pi_names_with_hyphenated_surnames",
+          "extracts_academic_titles_and_credentials",
+          "extracts_institutional_affiliations_with_departments",
+          "extracts_dual_affiliations",
+          "extracts_international_institutions",
+          "extracts_copi_designations",
+          "extracts_research_focus_areas",
+          "extracts_equipment_names_with_models",
+          "extracts_equipment_costs",
+          "extracts_personnel_counts_by_role",
+          "extracts_multi_institutional_counts",
+          "distinguishes_person_from_institution",
+          "handles_nested_parenthetical_affiliations",
+          "f1_score_minimum_0.94"
+        ]
+      }
+    },
+    {
+      "input": "The Phase II SBIR contract N68335-23-C-0412 between Advanced Robotics Systems, Inc. (Palo Alto, CA; CAGE Code 7K9J5) and Naval Research Laboratory totaling $2.1M over 24 months (Q3 2023 - Q2 2025) supports development of autonomous underwater navigation systems. Technical POC: Dr. James Chen, CTO (james.chen@advrobotics.com, +1-650-555-0199). Government Contracting Officer: Ms. Patricia O'Brien GS-14. Deliverables include TRL-7 prototype by Month 18, final Technical Data Package (TDP) conforming to MIL-STD-31000A, and 3 peer-reviewed publications in IEEE Oceanic Engineering or equivalent (Impact Factor \u22653.5).",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "extracts_contract_types",
+          "extracts_contract_numbers_with_agency_format",
+          "extracts_company_names_with_legal_form",
+          "extracts_company_locations",
+          "extracts_cage_codes",
+          "extracts_government_agencies",
+          "extracts_contract_values",
+          "extracts_contract_durations_in_months",
+          "extracts_quarter_based_timelines",
+          "extracts_technical_poc_with_title",
+          "extracts_email_addresses",
+          "extracts_phone_numbers",
+          "extracts_government_employee_grades",
+          "extracts_trl_levels_with_milestones",
+          "extracts_military_standards",
+          "extracts_publication_requirements",
+          "extracts_journal_names",
+          "extracts_impact_factor_thresholds",
+          "distinguishes_corporate_vs_government_roles",
+          "handles_technical_acronyms",
+          "f1_score_minimum_0.94"
+        ]
+      }
+    },
+    {
+      "input": "European Research Council (ERC) Starting Grant agreement no. 101039847 - Project QUANTUM-NEURAL commenced January 1, 2024 with \u20ac1,500,000 funding over 60 months. Host Institution: \u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne (EPFL), Switzerland. PI: Dr. Alessandro Bianchi (ORCID: 0000-0002-1234-5678) previously at Max Planck Institute for Quantum Optics. Research outputs must comply with Horizon Europe Open Access mandates. Secondment planned: 6 months at Tsinghua University (Beijing) with Prof. Wei Zhang's Quantum Computing Lab. Patent applications expected in jurisdictions: EP, US, CN, JP. Cited prior work: Nature 615, 238-242 (2023); Phys. Rev. Lett. 128, 180501 (2022).",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "extracts_funding_agency_names",
+          "extracts_grant_types",
+          "extracts_grant_agreement_numbers",
+          "extracts_project_acronyms",
+          "extracts_start_dates",
+          "extracts_funding_in_euros",
+          "extracts_duration_in_months",
+          "extracts_host_institutions_with_acronyms",
+          "extracts_country_locations",
+          "extracts_orcid_identifiers",
+          "extracts_previous_affiliations",
+          "extracts_compliance_requirements",
+          "extracts_secondment_durations",
+          "extracts_secondment_institutions",
+          "extracts_collaborator_labs",
+          "extracts_patent_jurisdictions",
+          "extracts_publication_citations_with_doi_format",
+          "extracts_journal_volume_page_year",
+          "distinguishes_current_vs_previous_institutions",
+          "handles_international_multi_entity_grants",
+          "f1_score_minimum_0.94"
+        ]
+      }
+    },
+    {
+      "input": "NIH R01 GM145623-01A1 (amended continuation, original R01 GM098234) awarded to Multiple-PI team: Lead PI Prof. Sarah Kim, M.D., Ph.D. (Johns Hopkins School of Medicine, Dept. of Molecular Biology & Genetics + Institute for NanoBioTechnology - joint appointment 70%/30%); Co-PI Dr. Robert J. Martinez-Lee (University of California San Francisco, Quantitative Biosciences Institute). Budget: Direct costs $487,920/year, F&A rate 62% (on-campus), total project period costs $3,847,662 over 5 years. Vertebrate animal protocol #MO23H156 approved by IACUC. Human subjects determination: Exempt under 45 CFR 46.104(d)(4). Subaward to Cold Spring Harbor Laboratory ($145,000, PI: Dr. Chen) for cryo-EM facility access. Key personnel effort: Kim 4.8 calendar months, Martinez-Lee 3.6 calendar months. Biosafety Level: BSL-2. Required registrations: ClinicalTrials.gov (if clinical data collected), PHS Animal Welfare Assurance A3461-01.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "extracts_nih_grant_numbers_with_suffix",
+          "extracts_grant_amendment_types",
+          "extracts_predecessor_grant_numbers",
+          "extracts_multiple_pi_designations",
+          "extracts_lead_pi_vs_copi",
+          "extracts_dual_credentials",
+          "extracts_department_affiliations",
+          "extracts_institute_affiliations",
+          "extracts_joint_appointment_percentages",
+          "extracts_hyphenated_compound_surnames",
+          "extracts_direct_costs_annual",
+          "extracts_fna_rates_with_type",
+          "extracts_total_project_costs",
+          "extracts_project_periods",
+          "extracts_protocol_numbers_with_type",
+          "extracts_regulatory_committee_names",
+          "extracts_cfr_exemption_categories",
+          "extracts_subaward_amounts_and_institutions",
+          "extracts_facility_access_purposes",
+          "extracts_effort_in_calendar_months",
+          "extracts_biosafety_levels",
+          "extracts_registration_requirements",
+          "extracts_assurance_numbers",
+          "distinguishes_institutional_vs_departmental_entities",
+          "handles_complex_budget_structures",
+          "f1_score_minimum_0.94"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "hybrid",
-    "validators": ["entity_extractor", "f1_scorer"],
+    "validators": [
+      "entity_extractor",
+      "f1_scorer",
+      "type_classifier"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
       "minimum_score": 4,
-      "f1_threshold": 0.8
+      "f1_threshold": 0.94,
+      "required_validators": [
+        "entity_extractor",
+        "f1_scorer"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may miss entities or extract incorrectly. Optimizer must specify entity types and format.",
-  
+  "optimization_challenge": "Models will struggle with research-specific entity types (grant numbers with agency prefixes and suffixes, ORCID identifiers, protocol numbers, CAGE codes), fail to distinguish between PI roles (Lead PI vs Co-PI vs technical POC), miss nested institutional affiliations (joint appointments, dual departments, international collaborations), incorrectly classify researchers vs institutions vs equipment, fail on complex funding structures (direct costs vs F&A rates, subawards, equipment allocations), miss regulatory references (CFR exemptions, MIL-STD specifications, biosafety levels), confuse personnel effort calculations, fail to extract technical specifications (TRL levels, impact factors, BSL designations), and struggle with multi-format citations (journal citations, grant lineage, patent jurisdictions). Optimizer must specify comprehensive research entity taxonomy (GRANT_NUMBER, FUNDING_AGENCY, PI_ROLE, RESEARCHER, INSTITUTION, DEPARTMENT, FUNDING_AMOUNT, EQUIPMENT, PROTOCOL_NUMBER, REGULATORY_REFERENCE, PUBLICATION_CITATION, EFFORT_ALLOCATION, TECHNICAL_SPECIFICATION, COLLABORATION, TIMELINE), provide examples of agency-specific number formats, handle percentage-based affiliations, distinguish current vs previous affiliations, extract nested budget components, recognize international institution formats, and maintain high precision on role-based and regulatory entities.",
   "metadata": {
-    "source": "CoNLL-2003",
-    "tags": ["ner", "extraction", "entities"],
+    "source": "regenerated",
+    "tags": [
+      "ner",
+      "scientific_extraction",
+      "grant_identification",
+      "researcher_recognition",
+      "institutional_affiliations",
+      "funding_extraction",
+      "nested_entities",
+      "domain_specific",
+      "regulatory_compliance",
+      "multi_institutional"
+    ],
     "archetype_class": "B_contextual",
-    "domain": "extraction"
+    "domain": "scientific_research"
   }
 }

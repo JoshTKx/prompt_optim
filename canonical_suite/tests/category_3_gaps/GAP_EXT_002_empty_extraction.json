@@ -1,47 +1,136 @@
 {
   "id": "GAP-EXT-002",
-  "name": "Empty Extraction",
+  "name": "Ambiguous Legal Entity and Clause Extraction",
   "category": "gaps",
   "archetype": "B1_extraction",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to return empty list when no entities found",
-    "initial_prompt": "Extract entities from the text. Return empty list if none found.",
+    "description": "Test model's ability to distinguish between actual legal entities (party names, case citations, specific statute numbers, defined terms) versus generic legal terminology, procedural language, clause types, and descriptive legal concepts that should not be extracted as discrete entities",
+    "initial_prompt": "extract entities",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "The weather is nice today.",
+      "input": "The parties agree to binding arbitration under the governing law of the jurisdiction in which the contract was executed. Any disputes shall be resolved through alternative dispute resolution mechanisms before proceeding to litigation.",
       "expected_output": {
         "type": "structured",
         "format": "json",
         "validation": "entity_extractor",
         "constraints": [
           "valid_json_parse",
-          "empty_list_when_no_entities"
+          "empty_list_when_no_entities",
+          "does_not_extract_procedural_terms",
+          "does_not_extract_clause_types",
+          "does_not_extract_generic_legal_mechanisms",
+          "distinguishes_references_from_actual_names",
+          "no_hallucinated_entities"
+        ]
+      }
+    },
+    {
+      "input": "The force majeure clause protects both parties from liability in cases of acts of God, natural disasters, war, terrorism, pandemic, governmental action, or any other unforeseeable circumstances beyond reasonable control.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "empty_list_when_no_entities",
+          "does_not_extract_clause_names",
+          "does_not_extract_event_categories",
+          "does_not_extract_generic_circumstance_descriptors",
+          "distinguishes_defined_terms_from_general_language",
+          "no_hallucinated_entities"
+        ]
+      }
+    },
+    {
+      "input": "Intellectual property rights, including but not limited to patents, trademarks, copyrights, trade secrets, and proprietary information, shall remain with the original owner unless explicitly transferred in writing with consideration.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "empty_list_when_no_entities",
+          "does_not_extract_ip_categories",
+          "does_not_extract_rights_terminology",
+          "does_not_extract_role_descriptors",
+          "distinguishes_categories_from_specific_registrations",
+          "no_hallucinated_entities"
+        ]
+      }
+    },
+    {
+      "input": "The confidentiality obligations shall survive termination of this agreement for a period of five years. Exceptions include information that becomes publicly available through no fault of the receiving party or is independently developed without reference to confidential materials.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "empty_list_when_no_entities",
+          "does_not_extract_obligation_types",
+          "does_not_extract_temporal_durations",
+          "does_not_extract_exception_categories",
+          "does_not_extract_status_descriptors",
+          "no_hallucinated_entities"
+        ]
+      }
+    },
+    {
+      "input": "Pursuant to the indemnification provision, the indemnifying party shall defend, hold harmless, and indemnify the indemnified party against all claims, damages, losses, liabilities, and expenses, including reasonable attorneys' fees, arising from breach of representations and warranties.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "valid_json_parse",
+          "empty_list_when_no_entities",
+          "does_not_extract_provision_types",
+          "does_not_extract_party_role_descriptors",
+          "does_not_extract_liability_categories",
+          "does_not_extract_legal_action_verbs",
+          "distinguishes_defined_parties_from_generic_roles",
+          "no_hallucinated_entities"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "deterministic",
-    "validators": ["entity_extractor"],
+    "validators": [
+      "entity_extractor",
+      "hallucination_detector"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "entity_extractor",
+        "hallucination_detector"
+      ],
+      "all_test_cases_must_pass": true,
+      "zero_tolerance_hallucination": true,
+      "zero_tolerance_generic_term_extraction": true,
+      "must_distinguish_defined_terms_from_descriptors": true
     }
   },
-  
-  "optimization_challenge": "Models may hallucinate entities when none exist. Optimizer must emphasize returning empty list.",
-  
+  "optimization_challenge": "Models frequently misidentify legal terminology, clause types, procedural language, and generic role descriptors as extractable entities. The optimizer must establish rigorous distinction criteria between actual named entities (specific parties, case names, statute numbers, formally defined terms in capital letters or quotation marks) versus standard legal language, obligation types, rights categories, and generic references. Must emphasize that legal vocabulary, even when capitalized for emphasis or as part of standard clause naming conventions, does not constitute a proper entity unless it identifies a specific, named, concrete referent. The optimizer needs to recognize that party role descriptors like 'indemnifying party' or 'receiving party' are functional placeholders, not extractable entities, and that clause names like 'force majeure clause' or 'confidentiality obligations' are categorical descriptors rather than proper nouns.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["extraction", "empty", "hallucination"],
+    "source": "regenerated",
+    "tags": [
+      "extraction",
+      "legal",
+      "entity_disambiguation",
+      "hallucination",
+      "terminology_filtering",
+      "strict_criteria",
+      "contract_language",
+      "defined_terms"
+    ],
     "archetype_class": "B_contextual",
-    "domain": "extraction"
+    "domain": "legal"
   }
 }

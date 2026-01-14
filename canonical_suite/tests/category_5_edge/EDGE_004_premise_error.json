@@ -1,47 +1,108 @@
 {
   "id": "EDGE-004",
-  "name": "Premise Error",
+  "name": "Temporal and Logical Impossibility Detection",
   "category": "edge",
   "archetype": "C2_causal_reasoning",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's handling of questions with false premises",
-    "initial_prompt": "Answer the question accurately.",
+    "description": "Test model's ability to detect and correct logically impossible scenarios, anachronistic business events, technological impossibilities, and causally inconsistent financial timelines",
+    "initial_prompt": "provide information",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "When did Obama meet Washington?",
+      "input": "What was the stock ticker symbol for Amazon when it IPO'd in 1985?",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
         "constraints": [
-          "identifies_premise_error",
-          "corrects_false_assumption"
+          "identifies_temporal_impossibility",
+          "provides_correct_ipo_date",
+          "explains_anachronism",
+          "gives_accurate_ticker_and_year",
+          "contextualizes_company_founding"
+        ]
+      }
+    },
+    {
+      "input": "How many blockchain transactions did Walmart process in their supply chain in 1995?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_technological_anachronism",
+          "explains_blockchain_invention_timeline",
+          "corrects_temporal_assumption",
+          "provides_context_on_walmart_blockchain_adoption",
+          "educational_response_on_technology_history"
+        ]
+      }
+    },
+    {
+      "input": "What percentage of Tesla's revenue in 2008 came from their Cybertruck sales?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_product_timeline_error",
+          "corrects_cybertruck_announcement_date",
+          "explains_tesla_2008_product_lineup",
+          "provides_accurate_revenue_context",
+          "addresses_multiple_temporal_inconsistencies"
+        ]
+      }
+    },
+    {
+      "input": "Which e-commerce platform had higher mobile app downloads in 1998: Shopify or Etsy?",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_multiple_temporal_errors",
+          "corrects_company_founding_dates",
+          "explains_mobile_app_store_timeline",
+          "addresses_compound_impossibility",
+          "provides_accurate_historical_context",
+          "educational_about_ecommerce_evolution"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["premise_checker"],
+    "validators": [
+      "temporal_logic_checker",
+      "factual_accuracy_checker",
+      "impossibility_detector"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 3
+      "minimum_score": 4,
+      "required_validators": [
+        "temporal_logic_checker",
+        "factual_accuracy_checker",
+        "impossibility_detector"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may answer false premises as if true. Optimizer must prompt for premise validation.",
-  
+  "optimization_challenge": "Models often hallucinate plausible-sounding answers to impossible questions, especially when they involve business or technology timelines. The optimizer must teach the model to: (1) validate temporal consistency before answering, (2) cross-check product/technology existence dates, (3) identify compound impossibilities involving multiple anachronisms, (4) explicitly state why the premise is impossible, and (5) provide educationally valuable corrections with accurate historical context. Simple prompts fail because they don't enforce systematic premise validation against known timelines.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["edge", "premise", "reasoning"],
+    "source": "regenerated",
+    "tags": [
+      "edge",
+      "temporal_logic",
+      "anachronism",
+      "business_history",
+      "technology_timeline",
+      "impossibility_detection"
+    ],
     "archetype_class": "C_reasoning",
-    "domain": "general"
+    "domain": "business_technology"
   }
 }

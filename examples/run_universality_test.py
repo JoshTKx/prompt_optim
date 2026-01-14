@@ -34,7 +34,7 @@ if __name__ == "__main__":
     validator = UniversalityValidator()
     report = validator.validate_optimizer(
         test_suite=suite,
-        sample_size=20  # Start with 20 tests for quick validation
+        sample_size=40  # Start with 20 tests for quick validation
     )
     
     # Print results

@@ -1,44 +1,122 @@
 {
   "id": "GAP-SUM-001",
-  "name": "Abstractive Summarization",
+  "name": "Multi-Source Legal Document Synthesis",
   "category": "gaps",
   "archetype": "B3_summarization",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to generate abstractive summaries",
-    "initial_prompt": "Summarize the following text.",
+    "description": "Test model's ability to synthesize complex legal and contractual information from multiple sources into coherent abstractive summaries that avoid verbatim copying while maintaining legal accuracy and nuance",
+    "initial_prompt": "summarize this",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Summarize: The quick brown fox jumps over the lazy dog. The dog was sleeping. The fox was fast.",
+      "input": "Summarize in 3-4 sentences: The merger agreement between DataCore Industries and CloudSync Technologies stipulates a stock-for-stock transaction valued at $847 million, with DataCore shareholders receiving 1.3 shares of the combined entity for each share held. The agreement includes a 45-day go-shop provision allowing DataCore to solicit alternative proposals, a $25 million termination fee if DataCore accepts a superior offer, and requires regulatory approval from the FTC and European Commission. The transaction includes representations and warranties standard for deals of this magnitude, including material adverse change clauses, indemnification provisions capped at 15% of transaction value, and a 24-month post-closing employment requirement for key executives. Closing is anticipated in Q3 2025 subject to shareholder approval from both companies and customary closing conditions.",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
-        "constraints": []
+        "constraints": [
+          "abstractive_not_extractive",
+          "preserves_critical_legal_terms",
+          "no_verbatim_sentences",
+          "maintains_numerical_accuracy",
+          "coherent_synthesis",
+          "appropriate_length",
+          "no_material_omissions"
+        ]
+      }
+    },
+    {
+      "input": "Create an abstractive one-paragraph summary synthesizing the key implications: A commercial lease dispute involves three interrelated issues: (1) Tenant claims landlord breached the covenant of quiet enjoyment by failing to address noise from adjacent construction for 14 months, citing lease Section 8.2 and state property code 42-A-107; (2) Landlord counterclaims for unpaid rent of $127,000 representing seven months at $18,143/month, asserting tenant's withholding was unjustified under the lease's remedy provisions in Section 12.4; (3) Both parties dispute whether the force majeure clause in Section 15.1 applies to COVID-19 related business interruptions, with tenant arguing it excuses four months of rent during mandatory closure periods while landlord maintains the clause explicitly excludes epidemics and pandemics as listed in subsection 15.1(d). Mediation failed after landlord rejected tenant's settlement offer of $85,000 plus lease termination, and trial is scheduled for eight weeks from today with each party seeking attorney fees under Section 19.3.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "abstractive_not_extractive",
+          "synthesizes_multiple_claims",
+          "preserves_legal_relationships",
+          "no_verbatim_copying",
+          "maintains_factual_accuracy",
+          "coherent_single_paragraph",
+          "captures_dispute_essence",
+          "no_citation_verbatim"
+        ]
+      }
+    },
+    {
+      "input": "Provide an abstractive summary that captures essential terms without using original phrasing: This Software as a Service Agreement grants Customer a non-exclusive, non-transferable, worldwide license to access Provider's cloud-based analytics platform for a 36-month term commencing on the Effective Date. Customer shall pay $47,500 monthly in advance, with annual increases tied to CPI not to exceed 4% per annum. Service Level Agreement guarantees 99.5% uptime measured monthly, excluding scheduled maintenance windows not to exceed 8 hours per month with 72-hour notice, and provides service credits of 5% of monthly fees for each 0.5% below threshold, capped at 25% of monthly fees as Customer's sole remedy for downtime. The agreement includes standard confidentiality provisions with 5-year survival, IP ownership clauses specifying Customer owns input data and resulting reports while Provider retains platform IP, limitation of liability capping each party's liability at 12 months of fees except for confidentiality breaches, IP infringement, or gross negligence, and includes a mutual indemnification framework. Either party may terminate for material breach uncured after 30 days written notice, with immediate termination rights for insolvency events, and upon termination Customer receives 90-day data retrieval period before deletion.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "abstractive_not_extractive",
+          "essence_preserved",
+          "completely_different_phrasing",
+          "technical_legal_accuracy_maintained",
+          "no_verbatim_sentences",
+          "no_verbatim_clauses",
+          "captures_business_relationship",
+          "maintains_key_obligations"
+        ]
+      }
+    },
+    {
+      "input": "Synthesize into 2-3 sentences without copying phrases: The appellate court's decision in Martinez v. Oceanview Development Corp addresses three core holdings: First, the court reversed the trial court's summary judgment on the negligence claim, finding that a triable issue exists regarding whether the defendant's failure to install guardrails on the elevated walkway constituted a breach of duty, noting the walkway exceeded the 30-inch threshold in Building Code Section 1013.1 requiring protective barriers and that defendant's actual knowledge of prior incidents created a genuine dispute of material fact. Second, the court affirmed dismissal of the premises liability claim because plaintiff was classified as a trespasser rather than invitee, as the construction site was clearly marked with no-trespassing signage and locked gates, and plaintiff's presence was unauthorized regardless of the alleged shortcut used by other workers. Third, the court remanded the punitive damages question for further proceedings, holding that evidence of five previous similar incidents combined with internal emails suggesting cost-benefit analysis of safety measures could support a finding of conscious disregard if a jury credits plaintiff's evidence at trial.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "abstractive_not_extractive",
+          "synthesizes_judicial_reasoning",
+          "no_verbatim_phrases",
+          "preserves_legal_holdings",
+          "appropriate_brevity",
+          "maintains_case_outcome_clarity",
+          "coherent_synthesis",
+          "no_legal_jargon_verbatim"
+        ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["faithfulness_checker", "coherence_checker"],
+    "validators": [
+      "faithfulness_checker",
+      "coherence_checker",
+      "abstractiveness_checker",
+      "legal_accuracy_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "faithfulness_checker",
+        "abstractiveness_checker",
+        "legal_accuracy_validator"
+      ],
+      "all_test_cases_must_pass": true,
+      "min_abstractiveness_score": 0.8,
+      "no_verbatim_sentences_allowed": true
     }
   },
-  
-  "optimization_challenge": "Models may copy verbatim or miss key points. Optimizer must emphasize abstractive synthesis.",
-  
+  "optimization_challenge": "Models frequently fail with legal content by either copying verbatim clauses and terms, oversimplifying critical legal nuances, omitting material terms, or introducing inaccuracies when paraphrasing. Optimizer must learn to demand genuine synthesis that preserves legal accuracy and completeness while strictly prohibiting any verbatim copying of phrases, clauses, or technical terms. Must balance abstractive rephrasing with maintaining precise numerical values, dates, and legal relationships. Requires explicit instructions about paraphrasing legal terminology, preserving all material terms, maintaining factual precision with numbers and parties, and synthesizing rather than extracting.",
   "metadata": {
-    "source": "XSum",
-    "tags": ["summarization", "abstractive", "generation"],
+    "source": "regenerated",
+    "tags": [
+      "summarization",
+      "abstractive",
+      "legal_documents",
+      "synthesis",
+      "faithfulness",
+      "complexity",
+      "multi_source"
+    ],
     "archetype_class": "B_contextual",
-    "domain": "general"
+    "domain": "legal"
   }
 }

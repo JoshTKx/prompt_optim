@@ -1,47 +1,127 @@
 {
   "id": "GAP-SQL-002",
-  "name": "Complex JOINs",
+  "name": "Cross-Platform Gaming Analytics with Player Behavior Tracking",
   "category": "gaps",
   "archetype": "B2_contextual",
   "difficulty": "hard",
-  
   "task": {
-    "description": "Test model's ability to generate complex SQL with multiple JOINs",
-    "initial_prompt": "Write a SQL query with JOINs.",
+    "description": "Test model's ability to generate complex SQL with hierarchical JOINs, window functions, recursive CTEs, and multi-dimensional aggregations across gaming platform entities with behavioral and temporal constraints",
+    "initial_prompt": "write sql",
     "target_model": "gpt-4o-mini",
-    "context": "Schema:\nusers (id, name)\norders (id, user_id, product_id)\nproducts (id, name, price)"
+    "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Find users who ordered products costing more than $50",
+      "input": "Find all game developers whose titles were played by users who achieved at least 3 different legendary-tier achievements across multiple gaming sessions in the same week during 2024, but only include developers whose games have an average session abandonment rate below 15% when calculated across all difficulty levels. Show developer name, number of elite players, average abandonment rate, and the week with highest elite player activity.",
       "expected_output": {
         "type": "structured",
         "format": "code",
         "validation": "sql_validator",
         "constraints": [
           "valid_sql_syntax",
-          "correct_joins"
+          "window_function_for_week_partitioning",
+          "multi_level_joins_across_sessions_achievements_games",
+          "nested_aggregation_with_having_clause",
+          "temporal_week_grouping_with_year_constraint",
+          "percentage_calculation_with_null_handling",
+          "distinct_achievement_counting_per_user",
+          "correct_filtering_order_for_performance"
+        ]
+      }
+    },
+    {
+      "input": "Identify gaming tournaments that had participants from at least 5 different geographic regions, where each region's top-ranked player used a character class that was nerfed in a patch within 30 days before the tournament, and the total prize pool exceeded $100,000. Exclude tournaments where any match had technical issues flagged by more than 20% of spectators.",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "minimum_six_table_joins",
+          "subquery_for_top_ranked_per_region",
+          "distinct_region_count_validation",
+          "temporal_patch_date_comparison",
+          "percentage_based_exclusion_filter",
+          "correct_grouping_with_multiple_conditions",
+          "handles_null_spectator_data"
+        ]
+      }
+    },
+    {
+      "input": "Generate a ranked leaderboard showing each player's skill progression by calculating the moving average of their match performance scores over their last 10 games, but only for players who have competed in at least 3 different game modes, played against opponents with higher ELO ratings in more than 40% of matches, and have maintained a positive win-loss differential for each consecutive 30-day period in the last 6 months.",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "window_function_with_rows_between_for_moving_average",
+          "self_join_for_opponent_comparison",
+          "recursive_or_complex_cte_for_consecutive_periods",
+          "distinct_game_mode_counting",
+          "percentage_threshold_calculation",
+          "date_range_windowing_logic",
+          "handles_insufficient_match_history",
+          "correct_partition_by_player_and_ordering"
+        ]
+      }
+    },
+    {
+      "input": "List all in-game item creators whose cosmetic items are equipped by players who have both completed the hardest raid difficulty and participated in ranked PvP seasons, where the creator's items have a combined marketplace transaction volume exceeding $50,000 in secondary sales, the creator has released items in at least 4 different item categories, and at least one of their items was featured in a limited-time event that ended within the last 90 days. Include only creators whose item quality ratings show an upward trend over their last 5 releases.",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "seven_or_more_table_joins",
+          "exists_or_in_clause_for_raid_and_pvp_validation",
+          "aggregated_transaction_volume_calculation",
+          "distinct_category_counting",
+          "temporal_event_filtering",
+          "window_function_for_trend_analysis",
+          "correct_lag_or_lead_for_release_comparison",
+          "complex_multi_condition_where_clause",
+          "handles_null_marketplace_data"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "hybrid",
-    "validators": ["sql_validator", "join_checker"],
+    "validators": [
+      "sql_validator",
+      "join_checker",
+      "aggregation_validator",
+      "window_function_validator",
+      "temporal_logic_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "sql_validator",
+        "join_checker",
+        "window_function_validator"
+      ],
+      "minimum_constraints_met": 5
     }
   },
-  
-  "optimization_challenge": "Models may use incorrect JOIN types or miss relationships. Optimizer must scaffold JOIN logic.",
-  
+  "optimization_challenge": "Models fail catastrophically with minimal prompts by omitting window functions entirely, generating incorrect join sequences that miss critical relationship tables, failing to implement moving averages or trend analysis, incorrectly scoping temporal filters (applying them too early or too late in query execution), missing PARTITION BY clauses in analytics functions, and failing to handle edge cases like insufficient match history or null spectator data. Optimizer must learn to explicitly request CTEs for complex multi-step logic, specify exact window function syntax with ROWS BETWEEN for moving calculations, provide schema relationship maps for 6+ table joins, clarify aggregation hierarchy (player-level vs session-level vs tournament-level), handle percentage calculations with zero-division protection, specify temporal calculation methods including date arithmetic and consecutive period validation, and break down nested conditions into readable subqueries. Must also learn to request explicit NULL handling strategies for optional fields like spectator feedback and marketplace transactions.",
   "metadata": {
-    "source": "Spider",
-    "tags": ["sql", "joins", "complex"],
+    "source": "regenerated",
+    "tags": [
+      "sql",
+      "gaming_analytics",
+      "window_functions",
+      "player_behavior",
+      "tournament_analysis",
+      "temporal_queries",
+      "moving_averages",
+      "trend_analysis",
+      "marketplace_analytics"
+    ],
     "archetype_class": "B_contextual",
-    "domain": "coding"
+    "domain": "gaming"
   }
 }

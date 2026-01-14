@@ -1,0 +1,231 @@
+{
+  "id": "GAP-MENTAL_HEALTH-001",
+  "name": "Gap Analysis - Cross-Border Semiconductor Manufacturing Joint Venture",
+  "category": "gaps",
+  "archetype": "B1_extraction",
+  "difficulty": "hard",
+  "task": {
+    "description": "Identify all critical information gaps for comprehensive cross-border semiconductor manufacturing joint venture due diligence and risk assessment",
+    "initial_prompt": "review",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "We're forming a JV with a Taiwanese semiconductor fab to manufacture 7nm chips. They're contributing the facility (valued at $2.8B) and we're providing $1.5B cash plus IP licensing. Production target is 50K wafers/month starting Q3 2025. They mentioned some export control issues were resolved last year. The fab currently runs at 68% utilization with Samsung and MediaTek as anchor customers. Governance will be 60-40 board structure. Local government offered tax incentives through 2030.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "gap_analyzer",
+        "required_domains": [
+          {
+            "domain": "geopolitical_regulatory_compliance",
+            "criticality": "critical",
+            "required_nodes": [
+              "export_control_classification_verification",
+              "CFIUS_filing_requirements_assessment",
+              "deemed_export_restrictions_analysis",
+              "entity_list_screening_completeness",
+              "sanctions_compliance_dual_use_technology",
+              "foreign_direct_investment_restrictions",
+              "technology_transfer_licensing_constraints",
+              "national_security_review_triggers",
+              "regional_trade_agreement_implications",
+              "tariff_classification_impact",
+              "anti_dumping_duty_exposure",
+              "forced_labor_supply_chain_verification"
+            ]
+          },
+          {
+            "domain": "intellectual_property_protection",
+            "criticality": "critical",
+            "required_nodes": [
+              "IP_ownership_allocation_clarity",
+              "background_IP_vs_foreground_IP_definition",
+              "patent_portfolio_validity_verification",
+              "trade_secret_protection_mechanisms",
+              "technology_escrow_arrangements",
+              "IP_indemnification_scope",
+              "third_party_licensing_dependencies",
+              "freedom_to_operate_analysis",
+              "employee_invention_assignment_status",
+              "IP_dispute_resolution_jurisdiction",
+              "semiconductor_mask_work_registration",
+              "design_tool_licensing_transferability"
+            ]
+          },
+          {
+            "domain": "technical_operational_capacity",
+            "criticality": "critical",
+            "required_nodes": [
+              "process_node_yield_rate_verification",
+              "equipment_technology_roadmap_compatibility",
+              "cleanroom_certification_standards_compliance",
+              "EUV_lithography_capability_assessment",
+              "substrate_supplier_qualification_status",
+              "photomask_defect_density_baselines",
+              "metrology_equipment_calibration_records",
+              "wafer_testing_capacity_adequacy",
+              "failure_analysis_lab_capabilities",
+              "process_recipe_documentation_completeness",
+              "critical_spare_parts_inventory_levels",
+              "downtime_root_cause_analysis_history",
+              "contamination_control_incident_tracking"
+            ]
+          },
+          {
+            "domain": "financial_valuation_structure",
+            "criticality": "critical",
+            "required_nodes": [
+              "fab_asset_valuation_methodology",
+              "depreciation_schedule_alignment",
+              "IP_licensing_fair_market_value",
+              "capital_call_obligation_triggers",
+              "profit_distribution_waterfall_mechanics",
+              "transfer_pricing_arm_length_compliance",
+              "currency_hedging_strategy_allocation",
+              "debt_covenant_restrictions_impact",
+              "exit_mechanism_valuation_formulas",
+              "dilution_protection_provisions",
+              "tax_incentive_clawback_conditions",
+              "working_capital_funding_responsibility"
+            ]
+          },
+          {
+            "domain": "supply_chain_customer_dependencies",
+            "criticality": "high",
+            "required_nodes": [
+              "anchor_customer_contract_terms_review",
+              "take_or_pay_obligation_exposure",
+              "single_source_supplier_concentration_risk",
+              "material_supply_agreement_assignment_rights",
+              "logistics_cold_chain_requirements",
+              "customer_qualification_timeline_realism",
+              "alternative_foundry_fallback_options",
+              "raw_material_price_volatility_hedging",
+              "geopolitical_supply_disruption_scenarios",
+              "inventory_consignment_arrangements",
+              "quality_escrow_holdback_provisions"
+            ]
+          },
+          {
+            "domain": "governance_control_mechanisms",
+            "criticality": "critical",
+            "required_nodes": [
+              "deadlock_resolution_procedures",
+              "reserved_matter_voting_thresholds",
+              "management_appointment_authority",
+              "information_rights_audit_access",
+              "related_party_transaction_approval",
+              "competing_business_restrictions",
+              "key_person_retention_requirements",
+              "change_of_control_consent_provisions",
+              "dissolution_liquidation_priority",
+              "dispute_resolution_venue_enforceability",
+              "regulatory_approval_condition_precedents"
+            ]
+          },
+          {
+            "domain": "environmental_sustainability_compliance",
+            "criticality": "high",
+            "required_nodes": [
+              "hazardous_waste_disposal_permits",
+              "water_usage_quota_availability",
+              "carbon_emission_reduction_commitments",
+              "chemical_handling_safety_protocols",
+              "environmental_impact_assessment_completion",
+              "renewable_energy_integration_feasibility",
+              "wastewater_treatment_capacity_adequacy",
+              "air_quality_monitoring_compliance",
+              "environmental_liability_insurance_coverage",
+              "sustainability_reporting_obligations"
+            ]
+          },
+          {
+            "domain": "workforce_labor_relations",
+            "criticality": "medium",
+            "required_nodes": [
+              "skilled_engineer_availability_market",
+              "labor_union_collective_bargaining_status",
+              "employee_transfer_consent_requirements",
+              "immigration_visa_sponsorship_capacity",
+              "compensation_benchmarking_parity",
+              "non_compete_enforceability_jurisdiction",
+              "workforce_training_certification_standards",
+              "occupational_health_safety_record"
+            ]
+          }
+        ],
+        "transaction_critical_flags": [
+          "export_control_resolution_details_missing",
+          "IP_licensing_valuation_unverified",
+          "anchor_customer_contract_terms_unknown",
+          "governance_deadlock_mechanism_undefined",
+          "fab_utilization_rate_documentation_absent",
+          "tax_incentive_conditions_unspecified",
+          "yield_rate_historical_data_missing",
+          "CFIUS_filing_requirement_unassessed",
+          "technology_roadmap_alignment_unconfirmed",
+          "currency_exchange_risk_unaddressed"
+        ],
+        "constraints": [
+          "domain_coverage_complete",
+          "critical_node_recall_90",
+          "transaction_risk_detection_100",
+          "geopolitical_gap_identification_100",
+          "IP_protection_gaps_complete",
+          "technical_verification_gaps_complete",
+          "cross_border_compliance_gaps_complete"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": [
+      "gap_analyzer",
+      "transaction_risk_checker",
+      "completeness_validator"
+    ],
+    "rubric": "five_point_standard",
+    "scoring_criteria": {
+      "5": "All 8 domains identified, 100% of critical nodes captured, all 10 transaction flags detected, appropriate criticality levels assigned, geopolitical and IP gaps fully enumerated with cross-border compliance considerations",
+      "4": "7-8 domains identified, 90%+ of critical nodes captured, 9-10 transaction flags detected, minor criticality misclassifications, comprehensive risk identification including export controls",
+      "3": "6-7 domains identified, 75-89% of critical nodes captured, 7-8 transaction flags detected, some criticality errors, partial coverage of geopolitical or IP risks",
+      "2": "4-5 domains identified, 55-74% of critical nodes captured, 5-6 transaction flags detected, significant gaps in regulatory compliance or IP protection verification",
+      "1": "Fewer than 4 domains identified, <55% critical nodes captured, missed multiple transaction flags including export controls, inadequate for joint venture decision-making"
+    },
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "gap_analyzer",
+        "transaction_risk_checker"
+      ],
+      "mandatory_detections": [
+        "geopolitical_regulatory_compliance domain",
+        "intellectual_property_protection domain",
+        "technical_operational_capacity domain",
+        "at_least_8_transaction_critical_flags",
+        "export_control_resolution_details_missing flag",
+        "CFIUS_filing_requirement_unassessed flag"
+      ]
+    }
+  },
+  "optimization_challenge": "Must learn to: 1) Identify multi-jurisdictional semiconductor JV due diligence gaps spanning geopolitical, technical, IP, and financial dimensions with cross-border complexity, 2) Distinguish between deal-breaker gaps (export controls, IP ownership, CFIUS) vs. operational optimization points, 3) Recognize interdependencies between domains (e.g., export restrictions affecting customer base and technology roadmap), 4) Detect subtle omissions in complex international technology partnerships where partial disclosure creates false security, 5) Prioritize verification needs based on geopolitical risk profile and technology sensitivity, 6) Never miss critical export control violations, IP ownership ambiguities, or regulatory approval requirements that could invalidate the joint venture or trigger sanctions, 7) Understand semiconductor industry-specific technical gaps (yield rates, process nodes, equipment compatibility) that impact financial projections, 8) Identify governance structure weaknesses that could lead to operational deadlock in 60-40 control scenarios",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "gap_analysis",
+      "semiconductor_manufacturing",
+      "joint_venture",
+      "cross_border_transactions",
+      "export_controls",
+      "IP_licensing",
+      "geopolitical_risk",
+      "technology_transfer",
+      "multi_domain_extraction"
+    ],
+    "archetype_class": "B_contextual",
+    "domain": "semiconductor_manufacturing"
+  }
+}

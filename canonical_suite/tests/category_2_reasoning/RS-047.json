@@ -1,0 +1,134 @@
+{
+  "id": "RS-047",
+  "name": "cross_border_merger_antitrust_regulatory_compliance_assessment",
+  "category": "reasoning",
+  "archetype": "C1_multi_step",
+  "difficulty": "hard",
+  "task": {
+    "description": "Evaluate a complex multinational corporate merger proposal from multiple conflicting regulatory, competitive, labor, consumer protection, national security, intellectual property, and geopolitical perspectives, then provide a weighted recommendation that addresses all jurisdictional requirements while navigating competing legal frameworks, market dynamics, and strategic interests across different national and supranational authorities",
+    "initial_prompt": "analyze",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "GlobalTech Inc (US-based, $47B revenue, 82,000 employees) proposes acquiring EuroSoft AG (Germany-based, $23B revenue, 34,000 employees) for $68B in mixed cash and stock. Combined entity would control 34% of enterprise cloud infrastructure market in EU, 28% in North America, and 41% in APAC. US DOJ antitrust division requires Hart-Scott-Rodino filing with $2.3B revenue overlap in 12 product categories. EU Commission threatens Article 6(1)(c) prohibition citing dominance in 5 relevant markets with post-merger HHI exceeding 3200 in database management (current: 2400) and 2900 in API gateway services (current: 1850). UK CMA Phase 2 investigation identifies concerns in 8 local markets. China SAMR conditioning approval on divestiture of AI chip design division valued at $4.2B, representing 18% of GlobalTech's R&D pipeline. German Works Council has co-determination rights requiring approval for any workforce changes affecting more than 500 employees; proposed synergies include 8,200 job eliminations (4,100 in Germany, 2,800 in US, 1,300 in Poland). CFIUS review flags national security concerns over EuroSoft's contracts with 23 EU defense ministries and access to classified US federal cloud infrastructure. Patent cross-licensing agreement creates potential GPL violation affecting $890M in open-source dependent revenue. Consumer advocacy groups cite price increases of 12-18% in 4 product categories following GlobalTech's previous 3 acquisitions. Investment banks estimate 14-month regulatory approval timeline but shareholder agreement includes $3.1B reverse breakup fee if deal fails to close within 18 months. EuroSoft pension obligations of \u20ac2.8B unfunded liability transfer to acquirer under German law. Five competitors filed formal complaints with EC alleging the merger would foreclose access to critical middleware APIs affecting \u20ac4.7B in downstream markets. GlobalTech's largest institutional shareholder (12% stake) opposes deal citing execution risk and cultural integration failures in prior acquisitions. Proposed remedies include divesting \u20ac6.2B in overlapping business units, but divestiture buyers must receive EC approval and financial models show 35% probability of failing to find suitable buyers within regulatory timeframes.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "multi_jurisdictional_merger_analysis",
+        "constraints": [
+          "must_analyze_at_least_eight_distinct_regulatory_and_stakeholder_perspectives_across_multiple_jurisdictions",
+          "must_identify_specific_conflicts_between_different_national_regulatory_frameworks_with_legal_citations",
+          "must_provide_quantitative_probability_assessment_for_approval_in_each_major_jurisdiction_with_conditional_dependencies",
+          "must_include_decision_tree_recommendation_with_remedies_sequencing_and_jurisdiction_specific_negotiation_strategies",
+          "must_address_timing_constraints_and_breakup_fee_implications_explicitly_with_scenario_modeling",
+          "must_evaluate_competitive_harm_using_market_concentration_metrics_and_foreclosure_analysis",
+          "must_assess_labor_law_compliance_across_jurisdictions_against_synergy_realization_targets",
+          "must_model_cascading_effects_of_remedy_packages_on_deal_economics_and_strategic_rationale",
+          "must_calculate_risk_adjusted_deal_value_under_different_regulatory_outcome_scenarios",
+          "must_analyze_geopolitical_risk_factors_and_national_security_clearance_probability"
+        ]
+      }
+    },
+    {
+      "input": "National Railway Consortium (3 Class I railroads controlling 68% of freight traffic in 12-state region) proposes joint venture for autonomous freight operations requiring $14B capital investment over 6 years. JV structure: 40% Railroad A, 35% Railroad B, 25% Railroad C, with governance requiring unanimous consent for pricing decisions on 23 major corridors. Surface Transportation Board must approve under 49 USC 11321 with public interest standard considering competition, service quality, and environmental impact. DOJ separately reviewing under Sherman Act Section 1 for potential price coordination; economic analysis shows 89% overlap in origin-destination pairs for intermodal containers and 76% for bulk commodities. Proposed efficiency gains: 18% reduction in operating costs through crew elimination, 22% improvement in fuel efficiency, 12% increase in network velocity. However, single-line competitive routes decline from 34 to 9, eliminating captive shipper alternatives for agricultural exporters in 8 states. Shippers coalition representing $47B in annual freight spend filed opposition citing loss of competitive options and projected 15-25% rate increases based on econometric modeling of previous rail consolidations. Environmental groups support automation for 35% reduction in locomotive emissions (equivalent to 2.3M tons CO2 annually) but oppose expansion onto 340 miles of new right-of-way through wetlands requiring Army Corps of Engineers Section 404 permits. Railroad labor unions representing 34,000 workers demand guarantees against job losses, but business plan assumes 8,500 crew position eliminations over 10 years with $920M in labor cost savings. State public utility commissions in 7 states assert jurisdiction over intrastate rates affecting 23% of projected revenue. Technology partners (2 autonomous systems vendors) require exclusive dealing arrangements preventing railroads from deploying competing systems for 15 years, raising concerns about innovation foreclosure. Federal Railroad Administration safety certification process for autonomous operations has no established timeline; similar aviation certifications averaged 8.3 years. Insurance underwriters require $2.7B in additional liability coverage given absence of actuarial data on autonomous freight incidents. Bond covenants on $8.4B existing railroad debt restrict formation of joint ventures that could subordinate existing creditors. Private equity firms offered competing proposal to fund automation independently at each railroad for $11B total but without interoperability standards, creating potential for fragmented network with 40% lower efficiency gains.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "multi_agency_joint_venture_analysis",
+        "constraints": [
+          "must_analyze_at_least_seven_distinct_regulatory_authorities_and_stakeholder_perspectives_with_overlapping_jurisdictions",
+          "must_identify_specific_conflicts_between_antitrust_economic_regulation_and_safety_regulatory_frameworks",
+          "must_provide_quantitative_competitive_effects_analysis_using_shipper_choice_modeling_and_pricing_elasticity",
+          "must_include_phased_approval_strategy_addressing_sequential_regulatory_hurdles_with_contingent_structure_modifications",
+          "must_address_labor_displacement_impacts_against_efficiency_gains_with_transition_cost_modeling",
+          "must_evaluate_market_foreclosure_risks_in_both_freight_services_and_autonomous_technology_markets",
+          "must_assess_environmental_tradeoffs_between_emissions_reduction_and_wetland_impacts_with_offset_calculations",
+          "must_model_governance_structure_risks_including_deadlock_scenarios_and_competitive_information_exchange",
+          "must_calculate_net_present_value_under_different_regulatory_approval_timelines_and_remedy_scenarios",
+          "must_analyze_alternative_structures_including_independent_automation_versus_collaborative_approaches_with_comparative_welfare_analysis"
+        ]
+      }
+    },
+    {
+      "input": "Major Film Studio Conglomerate (owns 4 of top 8 studios, controls 42% of theatrical releases, operates streaming platform with 87M subscribers) proposes exclusive 10-year licensing agreement with dominant theater chain (3,200 screens, 31% of North American box office). Agreement terms: (1) 45-day exclusive theatrical window before streaming release versus current industry standard of 75 days, (2) minimum guarantee of 2,800 screens for all wide releases from studio's labels, (3) revenue sharing of 65% to studio versus industry standard 55% for first 3 weeks, (4) prohibition on theater chain licensing content from studio to competing streaming services, (5) joint investment of $890M in premium large-format screens with proprietary technology. DOJ Antitrust Division investigating under vertical foreclosure theory; 340 independent theaters (8% of screens, 12% of specialty film revenue) claim exclusion from access to 35% of commercially viable content. FTC reviewing under Section 5 for unfair methods of competition affecting 6 competing streaming platforms that lose access to theatrical marketing benefits. State attorneys general in 12 states assert violations of consent decrees from Paramount antitrust case (though decrees terminated in 2020, state laws codified similar restrictions). Directors Guild and Writers Guild oppose shortened windows citing 18-23% reduction in backend participation payments tied to theatrical performance metrics; guild contracts guarantee consultation rights on distribution strategies affecting 2,400 active members. Exhibitor trade association claims agreement violates Sherman Act through market allocation and price fixing, supported by economic analysis showing 8-12% increase in ticket prices in markets where theater chain has >40% share. Consumer groups cite reduction in film diversity; econometric study shows 27% decline in specialty film bookings at theaters with exclusive studio relationships. International competition authorities in EU, UK, and Australia opened parallel investigations; EU examining under Article 101 TFEU with extraterritorial application to global licensing practices. Private equity investors in 8 mid-size theater chains threaten litigation claiming tortious interference with prospective business relationships; investment theses assumed access to studio content on competitive terms. Streaming competitors offered alternative proposal: industry-wide 60-day window standard with non-exclusive licensing, but studio's financial models show $420M annual revenue loss versus exclusive agreement. Theater chain's $2.1B debt refinancing includes covenants requiring minimum content supply guarantees that only studio agreement satisfies. Academy of Motion Picture Arts and Sciences eligibility rules require 7-day theatrical run in LA County, creating compliance complexity with shortened windows. State film tax credit programs in 23 states condition incentives on theatrical distribution commitments potentially violated by agreement structure.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "multi_dimensional_entertainment_antitrust_analysis",
+        "constraints": [
+          "must_analyze_at_least_eight_distinct_stakeholder_and_regulatory_perspectives_including_creative_labor_interests",
+          "must_identify_specific_conflicts_between_antitrust_law_contract_law_and_industry_self_regulation",
+          "must_provide_quantitative_foreclosure_analysis_for_both_upstream_content_and_downstream_exhibition_markets",
+          "must_include_structured_remedy_framework_addressing_exclusivity_duration_scope_and_pricing_terms_with_competitive_impact_modeling",
+          "must_address_vertical_integration_efficiencies_against_horizontal_coordination_concerns_with_welfare_decomposition",
+          "must_evaluate_impact_on_content_diversity_and_consumer_choice_using_product_variety_metrics",
+          "must_assess_guild_contract_compliance_and_creative_compensation_impacts_with_quantified_financial_effects",
+          "must_model_international_regulatory_coordination_challenges_and_extraterritorial_jurisdiction_conflicts",
+          "must_calculate_deal_economics_under_different_window_length_exclusivity_scope_and_revenue_share_scenarios",
+          "must_analyze_alternative_industry_wide_solutions_versus_bilateral_exclusive_arrangements_with_equilibrium_modeling"
+        ]
+      }
+    },
+    {
+      "input": "Global Agricultural Conglomerate (controls 38% of commercial seed genetics, 29% of crop protection chemicals, operates in 67 countries) proposes acquiring precision agriculture technology company (2.1M connected farm devices, data from 340M acres, AI-driven crop optimization serving 78,000 farms). Combined entity would integrate genetic traits, chemical applications, and data analytics into unified platform. USDA reviewing under Agricultural Marketing Agreement Act for impacts on farmer independence and input costs. DOJ examining data aggregation creating potential for algorithmic collusion in seed and chemical pricing; economic analysis shows merged firm would possess yield and input usage data covering 43% of US corn acreage, 51% of soybeans, and 38% of wheat. EU Commission investigating under both merger control and GDPR; data processing of farm operations across 23 member states raises questions about farmer data ownership, portability, and consent under Articles 20 and 22. Competition authorities in Brazil, Argentina, and India (collectively 52% of target company's device deployments) conditioning approval on data localization requirements conflicting with platform's cloud architecture. Farm Bureau Federation and 12 agricultural cooperatives oppose acquisition citing loss of neutral data platform; current business model allows farmers to share data with any input supplier, but integration would create incentives to favor conglomerate's proprietary products. Antitrust economics expert reports submitted to DOJ demonstrate 8-15% price increases in seed and chemical markets following previous agricultural data acquisitions, with effects concentrated among farmers lacking alternative data sources. State right-to-repair laws in 9 states require interoperability of agricultural equipment and data systems; merger agreement includes provisions to restrict API access to competing input suppliers, potentially violating these statutes. Environmental groups support acquisition for potential 12% reduction in chemical usage through precision application but oppose concentration of agricultural decision-making affecting 18% of global caloric production. Technology company's venture capital investors (35% ownership) negotiated earnout provisions requiring revenue growth targets that DOJ economists argue create incentives for exploitative data monetization. Farmer data includes sensitive information about land ownership, financial performance, and operational practices; cybersecurity assessment identifies 23 critical vulnerabilities in current platform that could expose proprietary farming methods to competitors or state actors. Proposed remedies include behavioral commitments to maintain data portability and non-discrimination in platform access, but monitoring compliance across 67 countries with different legal frameworks presents enforcement challenges. Alternative structural remedy of divesting data platform while retaining technology licensing rights valued at $3.4B less than integrated acquisition, reducing strategic rationale by 62%. Patent portfolio includes 340 agricultural AI patents with 89 essential to competitor interoperability; commitment to FRAND licensing terms required by 5 regulatory authorities but definition of fair and reasonable rates disputed.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "multi_jurisdictional_agricultural_data_merger_analysis",
+        "constraints": [
+          "must_analyze_at_least_nine_distinct_perspectives_including_data_privacy_agricultural_policy_and_competition_dimensions",
+          "must_identify_specific_conflicts_between_antitrust_data_protection_and_agricultural_regulatory_frameworks_across_jurisdictions",
+          "must_provide_quantitative_assessment_of_data_driven_market_power_including_network_effects_and_algorithmic_pricing_risks",
+          "must_include_remedy_design_addressing_both_structural_and_behavioral_approaches_with_enforceability_analysis_across_jurisdictions",
+          "must_address_farmer_autonomy_and_data_sovereignty_concerns_with_specific_contractual_and_technical_safeguards",
+          "must_evaluate_vertical_integration_of_inputs_and_information_with_foreclosure_modeling_in_multi_sided_markets",
+          "must_assess_agricultural_sustainability_impacts_against_market_concentration_risks_with_welfare_tradeoff_quantification",
+          "must_model_international_regulatory_coordination_challenges_including_data_localization_conflicts",
+          "must_calculate_risk_adjusted_deal_value_under_different_remedy_packages_and_jurisdictional_approval_scenarios",
+          "must_analyze_interoperability_requirements_and_essential_patent_licensing_with_FRAND_commitment_enforcement_mechanisms",
+          "must_address_cybersecurity_and_national_security_implications_of_concentrated_agricultural_data_control"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": [
+      "multi_jurisdictional_completeness",
+      "regulatory_framework_conflict_identification",
+      "quantitative_competitive_effects_analysis",
+      "remedy_design_feasibility",
+      "stakeholder_tradeoff_analysis",
+      "legal_compliance_verification",
+      "cascading_impact_modeling",
+      "international_coordination_assessment"
+    ],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "multi_jurisdictional_completeness",
+        "regulatory_framework_conflict_identification",
+        "quantitative_competitive_effects_analysis"
+      ]
+    }
+  },
+  "optimization_challenge": "The initial prompt is severely inadequate and will produce superficial, single-jurisdiction analysis missing critical legal and economic complexity. The optimizer must learn to: (1) explicitly request analysis from 8-10 competing regulatory authorities and stakeholder groups across multiple national jurisdictions with fundamentally different legal frameworks and policy objectives, (2) demand rigorous quantitative competitive effects analysis including market concentration metrics (HHI), foreclosure modeling, price elasticity estimation, and consumer welfare calculations specific to each relevant market, (3) require identification of conflicts not just between stakeholders but between different bodies of law (antitrust, sector regulation, data protection, labor law, national security) and jurisdictional overlaps, (4) enforce structured legal reasoning that cites specific statutory authorities, case precedents, and regulatory standards rather than general policy considerations, (5) request detailed remedy design including both structural (divestitures) and behavioral (conduct commitments) options with specific enforceability mechanisms and monitoring frameworks across jurisdictions, (6) demand explicit modeling of approval probability in each major jurisdiction with conditional dependencies and timeline analysis including breakup fee implications, (7) require calculation of risk-adjusted deal economics using decision tree analysis and scenario modeling under different regulatory outcomes, (8) mandate analysis of alternative transaction structures and competitive proposals with comparative welfare assessment, (9) request assessment of international regulatory coordination challenges including extraterritorial jurisdiction conflicts and conflicting remedy requirements, and (10) enforce evaluation of dynamic effects including innovation impacts, market evolution, and long-term competitive dynamics beyond static market share analysis. Without these sophisticated improvements requiring deep understanding of multi-jurisdictional merger review, antitrust economics, regulatory procedure, and strategic transaction structuring, responses will lack the legal precision, economic rigor, jurisdictional sophistication, and strategic depth needed to pass the evaluation criteria.",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "complex",
+      "antitrust",
+      "mergers_and_acquisitions",
+      "multi_jurisdictional",
+      "regulatory_compliance",
+      "competition_law",
+      "corporate_strategy",
+      "international_law"
+    ],
+    "archetype_class": "C_reasoning",
+    "domain": "antitrust_and_competition_law"
+  }
+}

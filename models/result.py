@@ -28,6 +28,8 @@ class OptimizationResult(BaseModel):
     convergence_reason: Optional[str] = None
     timestamp: datetime = Field(default_factory=datetime.now)
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata including enhancement results")
+    current_prompt: Optional[str] = Field(default=None, description="Final prompt from last iteration")
+    current_score: Optional[float] = Field(default=None, description="Final score from last iteration")
     
     @property
     def num_iterations(self) -> int:

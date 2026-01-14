@@ -1,44 +1,110 @@
 {
   "id": "EDGE-005",
-  "name": "Unicode Edge Cases",
+  "name": "Mathematical Notation and Symbolic Edge Cases",
   "category": "edge",
   "archetype": "A1_simple",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's handling of unicode and special characters",
-    "initial_prompt": "Process the input text.",
+    "description": "Test model's handling of mathematical symbols, scientific notation, subscripts, superscripts, Greek letters, special operators, and mixed symbolic-textual expressions in financial and scientific computing contexts",
+    "initial_prompt": "analyze",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Count characters in: café 🎉 中文",
+      "input": "Parse and evaluate this portfolio formula: \u03b1\u2081\u03b2\u00b2 + \u03b3\u00b3 = 0.05 where \u03b1\u2081=0.02, \u03b2=1.5, \u03b3=0.1. Extract all variables with their subscripts/superscripts preserved.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "correctness_checker",
+        "constraints": [
+          "preserves_subscripts",
+          "preserves_superscripts",
+          "distinguishes_\u03b11_from_\u03b1",
+          "correct_variable_extraction",
+          "maintains_symbolic_integrity",
+          "performs_accurate_calculation"
+        ]
+      }
+    },
+    {
+      "input": "Count distinct operators in: \u222b\u2080^\u221e e^(-x\u00b2)dx \u2248 \u221a\u03c0 \u2260 \u2211\u1d62\u208c\u2081^n x\u1d62 \u2264 \u220f\u2c7c\u208c\u2081^m y\u2c7c \u2208 \u211d\u207a",
       "expected_output": {
         "type": "structured",
         "format": "text",
         "validation": "correctness_checker",
-        "constraints": []
+        "constraints": [
+          "recognizes_mathematical_operators",
+          "distinguishes_integral_from_sum_from_product",
+          "handles_bounds_notation",
+          "counts_operators_not_variables",
+          "recognizes_set_notation",
+          "differentiates_similar_symbols"
+        ]
+      }
+    },
+    {
+      "input": "Extract chemical formulas preserving notation: H\u2082SO\u2084 (concentration: 10\u207b\u00b3 M) reacts with Ca\u00b2\u207a ions at \u0394G\u00b0 = -42.5 kJ\u00b7mol\u207b\u00b9",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "entity_extractor",
+        "constraints": [
+          "preserves_subscripts_in_formulas",
+          "preserves_superscripts_in_charges",
+          "handles_scientific_notation",
+          "extracts_units_correctly",
+          "maintains_degree_symbol",
+          "no_character_corruption"
+        ]
+      }
+    },
+    {
+      "input": "Normalize these equivalent representations: \u00bd vs 1/2, \u2153 vs 1/3, \u00b2 vs ^2, \u00d7 vs *, \u2265 vs >=, \u2192 vs ->, \u221e vs inf. List which are semantically identical.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "correctness_checker",
+        "constraints": [
+          "recognizes_unicode_fractions",
+          "understands_semantic_equivalence",
+          "handles_operator_variants",
+          "distinguishes_representation_from_meaning",
+          "correct_normalization_logic",
+          "preserves_mathematical_semantics"
+        ]
       }
     }
   ],
-  
   "evaluation": {
-    "method": "deterministic",
-    "validators": ["correctness_checker"],
+    "method": "hybrid",
+    "validators": [
+      "correctness_checker",
+      "unicode_aware_checker"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 3
+      "minimum_score": 4,
+      "required_validators": [
+        "correctness_checker",
+        "unicode_aware_checker"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may miscount unicode characters. Optimizer must clarify character vs byte counting.",
-  
+  "optimization_challenge": "Models may fail to distinguish subscripts from regular text, corrupt superscripts, treat equivalent symbols as different, misparse mathematical notation, or lose semantic meaning during normalization. Optimizer must ensure preservation of symbolic notation, require distinction between visual representation and semantic meaning, handle mixed unicode mathematical symbols, and maintain precision in scientific/financial contexts.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["edge", "unicode", "encoding"],
+    "source": "regenerated",
+    "tags": [
+      "edge",
+      "mathematical_notation",
+      "symbolic_processing",
+      "subscripts",
+      "superscripts",
+      "scientific_notation",
+      "unicode_symbols"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "finance_and_scientific_computing"
   }
 }

@@ -1,0 +1,136 @@
+{
+  "id": "IF-087",
+  "name": "Multi-National Space Launch Services Orchestration Framework with Orbital Mechanics and Regulatory Cascade Validation",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "hard",
+  "task": {
+    "description": "Generate a comprehensive space launch services orchestration framework that includes multi-stage mission sequencing with propulsion system dependency cascades, international space law compliance workflows across ITU/COPUOS/national space agencies, orbital slot allocation approval chains with frequency coordination dependencies, payload integration schedules with mass budget reconciliation and center-of-gravity validation, launch window calculation with celestial mechanics constraints and ground station visibility requirements, range safety protocols across FAA/EASA/Roscosmos standards with debris mitigation planning, and insurance underwriting matrices with liability cap routing logic across primary/excess/reinsurance layers",
+    "initial_prompt": "create launch plan",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "Generate a complete launch orchestration framework for mission CONSTELLATION-2025-LEO-941 with the following requirements: 7-stage mission sequence (pre-launch operations, liftoff, first stage separation, second stage burn, payload fairing jettison, orbital insertion, payload deployment) with 24 system dependencies where telemetry_downlink_activation requires stage_separation_complete AND antenna_deployment_successful AND ground_station_acquisition >= 85_percent_signal_strength, 14 international regulatory approvals including conditional dependencies where frequency_coordination excludes if geostationary_interference_zone overlaps OR if protected_astronomy_bands conflict with downlink_frequencies, orbital slot allocation chain requiring 5 approval levels (national space agency, ITU Radio Regulations Board, COPUOS Space Debris Mitigation, host nation overflight clearance, international GNSS interference assessment) with jurisdiction-specific timelines in calendar days, payload integration manifest with 8 customer payloads totaling 4850kg where cumulative_mass <= launch_vehicle_capacity AND center_of_gravity_offset <= 12cm from nominal axis with individual payload power budgets summing to <= 3200W, launch window calculator with 3 celestial constraints (sun_angle >= 15_degrees for solar panel efficiency, earth_shadow_avoidance for battery thermal, ascending_node_alignment within 0.3_degrees for constellation phasing) producing daily windows over 45-day period, range safety compliance for FAA Part 450, EASA CS-LV, Roscosmos GOST-R standards with debris casualty expectation <= 1e-6 and 9-sigma impact dispersion analysis, and insurance layering with 5 coverage tiers (primary launch $280M, primary in-orbit $420M, excess launch $150M, war/terrorism $75M, third-party liability $500M) with aggregate deductibles and reinstatement provisions triggering at partial loss >= 40_percent.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "launch_framework_validator",
+        "constraints": [
+          "Must include mission_id, stage_sequence, system_dependency_graph object, regulatory_approval_workflow, orbital_slot_allocation_chain array, payload_integration_manifest, launch_window_analysis, range_safety_compliance, and insurance_layering_structure",
+          "Mission stages must have stage_id, duration_seconds, predecessor_stages array, system_activities array, telemetry_requirements, and completion_criteria with measurable sensor thresholds",
+          "System dependencies must define conditional logic with telemetry operators (AND, OR, >=, signal_strength_percentage) forming directed acyclic graphs with no circular dependencies and supporting real-time state validation",
+          "Regulatory approval workflow must map approval_type to governing_authority, required_documentation array, review_timeline_calendar_days, conditional_exclusions with frequency/orbital overlap detection, and approval_dependencies with cascading invalidation",
+          "Orbital slot allocation chain must specify approval_level, reviewing_organization, submission_requirements array, timeline_calendar_days, appeal_process, coordination_parameters, and prerequisite_approvals with international treaty compliance validation",
+          "Payload integration manifest must include payload_id, customer_name, mass_kg, dimensions, power_requirement_watts, center_of_gravity_coordinates, separation_sequence_order, and interface_verification_status with cumulative budget validation where total_mass <= vehicle_capacity AND total_power <= bus_capacity AND cg_offset <= tolerance",
+          "Launch window analysis must define celestial_constraints array with constraint_type, threshold_value, units, calculation_method, and daily_window_results with start_time, duration_minutes, constraint_satisfaction_status forming valid launch opportunities",
+          "Range safety compliance must reference safety_standard, regulation_section, casualty_expectation_threshold, debris_analysis_method, impact_dispersion_sigma, exclusion_zones array, and flight_termination_system_requirements",
+          "All system dependency graphs must pass topological sort validation with no cycles and support temporal sequencing",
+          "Regulatory frequency coordination must support spectral overlap detection with ITU Radio Regulations Article 5 frequency allocations",
+          "Schema must be valid JSON with proper nesting (max depth 8 levels)",
+          "Must include at least 26 distinct top-level or nested fields across all sections",
+          "Insurance layering structure must map coverage_type to coverage_limit_usd, premium_rate_percentage, deductible_amount, attachment_point, participating_insurers array, reinstatement_provisions, and exclusions with valid underwriting logic",
+          "Payload mass and power budgets must mathematically validate with inequality constraints and provide margin calculations",
+          "Orbital slot allocation must account for ITU coordination arc and NGSO constellation filing procedures",
+          "Launch window celestial mechanics must use ephemeris data with J2000 epoch references and account for orbital precession"
+        ]
+      }
+    },
+    {
+      "input": "Generate a rideshare mission orchestration framework for RIDESHARE-POLAR-2025-SSO-318 with adaptive payload manifest based on customer commitment milestones, 12 primary payloads (6 earth observation satellites 150-220kg each, 4 IoT constellation nodes 85kg each, 2 technology demonstrators 45kg each) with cross-payload RF deconfliction where primary_mission_downlink_X_band must not interfere with secondary_payload_uplink_S_band requiring >= 25dB isolation, 19 export control validations including ITAR/EAR cascades where payload_containing_US_components requires State_Department_DSP83 AND Commerce_Department_BIS748 AND if destination_country on Country_Group_D then denial_presumption applies unless specific_license_exception, multi-national launch provider consortium with 3 entities (US launch services provider, European payload integrator, Japanese ground segment operator) having change approval rights over mission parameters affecting \u0394v budget exceeding 15 m/s, technology transfer restrictions with deemed export controls for foreign national access to flight software and propulsion algorithms requiring facility access logs and security clearance verification, orbital debris mitigation plan with 25-year deorbit commitment requiring residual propellant >= 12kg OR deployable deorbit device with drag_area >= 3.2 m\u00b2 AND probability_of_successful_deorbit >= 0.9, and COSPAR planetary protection categorization with bioburden reduction requirements where microbial_load <= 300_spores per m\u00b2 for Category II missions to Mars-crossing orbits.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "launch_framework_validator",
+        "constraints": [
+          "Must include adaptive_manifest_triggers with customer_commitment_milestones and payload_substitution_criteria including payment_schedule_adherence and technical_readiness_level",
+          "Multi-payload configuration must specify payload_id, payload_type, mass_kg, dimensions, rf_frequencies array with center_frequency_mhz and bandwidth_mhz, power_profile, separation_delta_v, and rf_deconfliction_analysis with isolation_requirement_db and mitigation_measures",
+          "Export control validations must support cascading logic where regulatory determinations (ITAR/EAR classification, ECCN codes, USML categories) trigger specific license requirements with conditional denial_presumptions based on destination_country and end_use, including deemed_export_controls for foreign_national_access",
+          "Multi-national consortium structure must enumerate consortium_member, jurisdiction, role_responsibility, approval_authority_scope with parameter_type and threshold_trigger_value, liability_allocation_percentage, and dispute_resolution_forum",
+          "Technology transfer restrictions must specify controlled_technology_categories array, access_control_requirements, foreign_national_restrictions with citizenship_verification_method, facility_security_measures, training_records, and audit_trail_requirements",
+          "Orbital debris mitigation must include deorbit_commitment_years, deorbit_method options with residual_propellant_kg OR deployable_device_specifications including drag_area_m2 and reliability_probability, casualty_risk_assessment, and post_mission_disposal_orbit with perigee_altitude_km",
+          "COSPAR planetary protection must categorize mission_category (I-V), target_body, bioburden_limits with microbial_load_spores_per_m2, sterilization_procedures, documentation_requirements, and probability_of_contamination thresholds",
+          "RF deconfliction analysis must validate frequency separation and isolation requirements across all payload pairs with interference_margin_db calculations",
+          "Export control logic must properly model AND/OR conditions with country group lookups and license exception applicability",
+          "Consortium approval thresholds must specify cumulative vs per-event triggering for mission parameter changes with \u0394v impact quantification",
+          "Technology transfer controls must map specific technologies to access restriction levels with clearance_type requirements",
+          "Must include launch_service_agreement with performance_guarantees, payload_accommodation_interfaces, and mission_success_criteria",
+          "Orbital debris deorbit methods must be mutually exclusive options with feasibility validation against mission orbit and spacecraft capabilities",
+          "COSPAR categorization must reference COSPAR Policy on Planetary Protection and NASA NPR 8020.12D with proper target body classification",
+          "Deemed export controls must account for both physical and electronic access to controlled technical data"
+        ]
+      }
+    },
+    {
+      "input": "Generate a multi-orbit constellation deployment framework MEGACONSTELLATION-2025-HYBRID-LEO-MEO-847 spanning 3 orbital regimes (550km LEO shell with 1200 satellites, 1150km LEO shell with 720 satellites, 8000km MEO shell with 180 satellites) with phased deployment over 84 months using 16 dedicated launches and 9 rideshare opportunities, inter-satellite link topology optimization requiring each satellite maintain 4 optical crosslinks with link_budget_margin >= 3dB and handoff_latency <= 50ms during constellation reconfiguration, 31 frequency coordination filings across ITU regions with non-geostationary satellite orbit (NGSO) processing requiring equivalent power flux density (EPFD) validation where downlink_epfd <= -165 dBW/m\u00b2/40kHz for GSO protection AND uplink_epfd <= -155 dBW/m\u00b2/40kHz with statistical worst-case geometry analysis, multi-jurisdiction space debris liability framework across Outer Space Treaty, Liability Convention, national space legislation (US 51 USC 50914, UK Space Industry Act 2018, Luxembourg Space Resources Law) with insurance requirements varying by launch mass and orbital regime, autonomous collision avoidance system with conjunction screening against 28,000 tracked objects where probability_of_collision >= 1e-4 triggers automated maneuver with \u0394v budget allocation and ground operator notification within 4 hours, space traffic management integration with US Space Force 18th Space Defense Squadron, EU SST, and commercial providers requiring TLE sharing cadence and maneuver notification protocols, and end-of-life disposal strategy with 95% deorbit success rate requiring satellite_design_for_demise with component_melting_points and casualty_area <= 8 m\u00b2 for uncontrolled reentry OR controlled_reentry to South Pacific Ocean Uninhabited Area with impact_dispersion <= 50km radius.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "launch_framework_validator",
+        "constraints": [
+          "Must include multi_orbit_constellation_architecture with orbital_shell_id, altitude_km, inclination_degrees, number_of_planes, satellites_per_plane, phasing_strategy, and deployment_schedule with launch_id, launch_date, satellites_deployed, and cumulative_constellation_percentage",
+          "Inter-satellite link topology must specify link_type (optical/RF), number_of_links_per_satellite, link_budget with margin_db, handoff_protocol, reconfiguration_latency_ms, routing_algorithm, and network_availability_percentage with failure_mode_analysis",
+          "ITU frequency coordination must enumerate filing_id, ITU_region, orbital_regime, frequency_bands array, EPFD_limits with downlink_epfd_limit_dbw_m2_40khz and uplink_epfd_limit_dbw_m2_40khz, validation_methodology, worst_case_geometry_scenarios, and GSO_protection_compliance with specific satellite positions tested",
+          "Multi-jurisdiction liability framework must map jurisdiction to applicable_treaty (Outer_Space_Treaty/Liability_Convention), national_legislation_reference with statute_citation, insurance_requirement_formula based on launch_mass_kg and orbital_regime, coverage_limits, and cross_waiver_agreements between launch provider and satellite operator",
+          "Autonomous collision avoidance must define conjunction_screening_cadence_hours, probability_of_collision_threshold, catalog_sources array (18_SPDS, EU_SST, commercial), maneuver_decision_algorithm, delta_v_budget_allocation_m_s_per_year, notification_timeline_hours, and maneuver_execution_authority (autonomous vs ground_approval_required)",
+          "Space traffic management integration must specify data_sharing_agreements with organization_name, TLE_sharing_frequency_hours, maneuver_notification_advance_time_hours, close_approach_alert_thresholds, and coordination_protocols for active debris removal or mega-constellation interactions",
+          "End-of-life disposal must detail disposal_method options (atmospheric_reentry_uncontrolled with design_for_demise_analysis OR atmospheric_reentry_controlled with target_area_coordinates), success_probability >= 0.95, component_survivability_analysis with melting_points and casualty_area_m2 for uncontrolled, OR impact_dispersion_radius_km and exclusion_zone_notification for controlled reentry",
+          "Constellation architecture must validate that total satellites across all shells matches deployment schedule cumulative total",
+          "Inter-satellite link topology must form a connected graph with redundancy allowing >= 2 path diversity for any satellite pair",
+          "EPFD validation must demonstrate compliance across statistical distribution of NGSO-GSO geometries with Monte Carlo analysis or analytical worst-case",
+          "Liability insurance requirements must account for third-party damage, on-orbit collisions, and reentry casualty risk with jurisdiction-specific minimums",
+          "Collision avoidance \u0394v budget must be feasible given propellant capacity and mission lifetime with margin for end-of-life disposal",
+          "Must include ground_segment_architecture with gateway_earth_stations, teleport_locations, regulatory_licenses, and network_operations_center specifications",
+          "Space traffic management must address both routine operations and emergency maneuver coordination with latency requirements",
+          "End-of-life disposal casualty area calculations must reference NASA-STD-8719.14 or ISO 24113 methodologies",
+          "ITU filings must account for Advance Publication (API), coordination requests, and notification procedures under Radio Regulations Article 9",
+          "Deployment schedule must optimize for constellation coverage build-up with minimum viable constellation milestones"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "deterministic",
+    "validators": [
+      "json_structure_validator",
+      "launch_framework_validator",
+      "dependency_graph_validator",
+      "orbital_mechanics_validator",
+      "frequency_coordination_validator",
+      "dag_validation_cascade",
+      "rf_interference_validator",
+      "multi_jurisdiction_space_law_validator",
+      "celestial_mechanics_validator",
+      "mass_budget_validator"
+    ],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "json_structure_validator",
+        "launch_framework_validator",
+        "dependency_graph_validator",
+        "orbital_mechanics_validator"
+      ]
+    }
+  },
+  "optimization_challenge": "The initial prompt is catastrophically underspecified and will produce generic launch outlines missing critical orbital mechanics, international space law compliance, and system interdependencies. The optimizer must learn to: (1) explicitly define complex mission stage dependencies using formal logic notation with support for telemetry state operators, signal strength thresholds, and real-time validation forming directed acyclic graphs with no circular dependencies, (2) specify complete international regulatory approval chains with ITU frequency coordination, COPUOS debris mitigation, national space agency licensing, and cascading failure propagation where upstream denials invalidate downstream approvals, (3) enumerate payload integration manifests with precise mass budget reconciliation, center-of-gravity validation, power allocation, and RF deconfliction requiring mathematical inequality constraints that sum to vehicle capacity limits, (4) detail launch window calculations with celestial mechanics constraints including solar angle requirements, earth shadow avoidance, orbital node alignment with ephemeris precision, and multi-day opportunity analysis, (5) structure multi-jurisdictional export control frameworks with ITAR/EAR cascading logic where component origin, destination country, and end-use determine license requirements with deemed export provisions for foreign national access, (6) define orbital debris mitigation with quantitative 25-year deorbit commitments requiring either residual propellant budgets OR deployable device specifications with reliability thresholds and casualty risk assessments meeting NASA-STD-8719.14, (7) specify insurance layering across primary/excess/reinsurance with coverage limits, attachment points, aggregate deductibles, and reinstatement provisions triggered by partial loss thresholds, (8) provide concrete EPFD validation for NGSO constellations protecting GSO satellites with statistical worst-case geometry analysis and ITU Radio Regulations Article 22 compliance, (9) enumerate autonomous collision avoidance with probability thresholds, \u0394v budget allocation, conjunction screening cadence, and space traffic management data sharing protocols across US Space Force, EU SST, and commercial providers, and (10) detail end-of-life disposal with design-for-demise component analysis or controlled reentry targeting with impact dispersion requirements. Without these improvements, outputs will fail regulatory submission to ITU and national space agencies, contain logically inconsistent mission sequences that cannot execute, produce payload manifests with mass/power/CG violations causing launch vehicle performance shortfalls, create orbital debris non-compliance resulting in license denial, generate insurance structures with coverage gaps exposing operators to catastrophic liability, or develop constellation architectures with RF interference causing mission failure and regulatory enforcement actions.",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "complex",
+      "space_launch_services",
+      "orbital_mechanics",
+      "international_space_law",
+      "frequency_coordination",
+      "payload_integration",
+      "export_controls",
+      "debris_mitigation",
+      "constellation_deployment",
+      "insurance_underwriting"
+    ],
+    "archetype_class": "A_directive",
+    "domain": "aerospace_space_operations"
+  }
+}

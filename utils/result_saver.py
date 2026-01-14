@@ -15,12 +15,12 @@ def save_optimization_result(
     output_dir: Optional[Path] = None
 ) -> Path:
     """
-    Save optimization result to JSON file.
+    Save optimization result to JSON file, organized by test ID in subdirectories.
     
     Args:
         result: OptimizationResult to save
         run_id: Run identifier
-        prompt_id: Optional prompt identifier
+        prompt_id: Optional prompt identifier (e.g., "prompt_EDGE-001" or "prompt_IF-001")
         output_dir: Output directory (defaults to outputs/optimization_runs/)
     
     Returns:
@@ -29,7 +29,33 @@ def save_optimization_result(
     if output_dir is None:
         output_dir = Path(__file__).parent.parent / "outputs" / "optimization_runs"
     
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # Extract test ID from prompt_id to organize into folders
+    # Format: "prompt_EDGE-001_abc12345" -> "EDGE-001"
+    # Format: "prompt_GAP-MENTAL_HEALTH-001_def67890" -> "GAP-MENTAL_HEALTH-001"
+    test_id = None
+    if prompt_id:
+        # Remove "prompt_" prefix if present
+        test_id_str = prompt_id.replace("prompt_", "")
+        # Split by underscore - test_id is everything except the last part (which is run_id)
+        parts = test_id_str.split("_")
+        if len(parts) >= 2:
+            # Rejoin all parts except the last one (run_id) to get the full test_id
+            # This handles cases like "GAP-MENTAL_HEALTH-001" which may have underscores
+            test_id = "_".join(parts[:-1])
+        elif len(parts) == 1:
+            # If no underscore, the whole thing is the test_id
+            test_id = parts[0]
+    
+    # Create subdirectory based on test_id
+    if test_id:
+        test_dir = output_dir / test_id
+        test_dir.mkdir(parents=True, exist_ok=True)
+        save_dir = test_dir
+    else:
+        # If no test_id, save to a "misc" folder
+        misc_dir = output_dir / "misc"
+        misc_dir.mkdir(parents=True, exist_ok=True)
+        save_dir = misc_dir
     
     # Create filename
     if prompt_id:
@@ -37,7 +63,7 @@ def save_optimization_result(
     else:
         filename = f"optimization_{run_id}.json"
     
-    filepath = output_dir / filename
+    filepath = save_dir / filename
     
     # Convert result to dict (Pydantic model)
     result_dict = result.model_dump(mode='json')

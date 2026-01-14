@@ -1,47 +1,118 @@
 {
   "id": "EDGE-003",
-  "name": "Contradictory Context",
+  "name": "Conflicting Multi-Source Intelligence",
   "category": "edge",
   "archetype": "C3_ambiguity_handling",
   "difficulty": "hard",
-  
   "task": {
-    "description": "Test model's handling of contradictory information",
-    "initial_prompt": "Answer based on the context provided.",
+    "description": "Test model's ability to navigate contradictory information across multiple authoritative sources with varying credibility levels and temporal dimensions",
+    "initial_prompt": "answer the question",
     "target_model": "gpt-4o-mini",
-    "context": "The sky is green. The sky is blue."
+    "context": null
   },
-  
   "test_cases": [
     {
-      "input": "What color is the sky?",
+      "input": "What is the current zoning classification for the property at 450 Market Street? Context: The city planning department website lists it as R-3 (residential multi-family). The county assessor's records show C-2 (commercial). A building permit issued last month references M-1 (light industrial). The property deed from 2018 states R-3.",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
         "constraints": [
-          "identifies_contradiction",
-          "handles_ambiguity"
+          "identifies_all_three_conflicting_classifications",
+          "evaluates_temporal_relevance_of_sources",
+          "assesses_jurisdictional_authority_hierarchy",
+          "explains_why_contradictions_exist",
+          "provides_methodology_for_resolution",
+          "avoids_arbitrary_selection",
+          "acknowledges_need_for_verification"
+        ]
+      }
+    },
+    {
+      "input": "What was the final acquisition price? Context: The press release announced $847 million. SEC filings report $892 million including earnouts. The acquiring company's quarterly earnings call stated $850 million. Industry analysts calculated $875 million based on disclosed terms. The target company's internal memo mentioned $900 million total consideration.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_all_five_different_figures",
+          "distinguishes_between_valuation_methodologies",
+          "evaluates_source_reliability_and_regulatory_requirements",
+          "explains_potential_accounting_differences",
+          "addresses_earnout_and_contingent_consideration_complexity",
+          "does_not_average_or_pick_randomly",
+          "provides_nuanced_explanation_of_discrepancies"
+        ]
+      }
+    },
+    {
+      "input": "When does the patent expire? Context: The original filing date was March 15, 2008, suggesting expiration in 2028. The USPTO database shows an expiration of 2029 due to patent term adjustment. A continuation application filed in 2011 has a 2031 expiration. Legal correspondence mentions 2027 due to terminal disclaimer. Industry databases list 2028.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_all_conflicting_dates",
+          "explains_patent_law_complexities_causing_discrepancies",
+          "evaluates_which_source_represents_enforceable_term",
+          "addresses_continuation_vs_original_patent_distinction",
+          "explains_terminal_disclaimer_impact",
+          "recognizes_need_for_legal_verification",
+          "does_not_select_date_without_reasoning",
+          "acknowledges_multiple_patents_may_exist"
+        ]
+      }
+    },
+    {
+      "input": "What is the maximum payload capacity? Context: The manufacturer's specification sheet states 2,400 kg. The operator's manual lists 2,200 kg for safety. Engineering drawings show structural limit of 2,600 kg. Regulatory certification documents approve 2,300 kg. Field testing reports achieved 2,500 kg without failure.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_all_five_different_capacity_values",
+          "distinguishes_between_theoretical_structural_operational_and_regulatory_limits",
+          "evaluates_safety_margins_and_their_purposes",
+          "explains_why_different_stakeholders_specify_different_values",
+          "addresses_legal_vs_practical_vs_engineering_perspectives",
+          "provides_context_dependent_answer",
+          "does_not_choose_highest_or_lowest_arbitrarily",
+          "acknowledges_use_case_determines_applicable_limit"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["contradiction_detector"],
+    "validators": [
+      "contradiction_detector",
+      "reasoning_checker",
+      "source_hierarchy_evaluator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 3
+      "minimum_score": 4,
+      "required_validators": [
+        "contradiction_detector",
+        "reasoning_checker",
+        "source_hierarchy_evaluator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may pick one side arbitrarily. Optimizer must prompt for contradiction identification.",
-  
+  "optimization_challenge": "Models typically fail by selecting the first mentioned value, choosing based on perceived authority without analysis, averaging contradictory numbers, or ignoring the systemic reasons for discrepancies. Optimizer must teach the model to: explicitly enumerate all contradictions, analyze why different authoritative sources would provide different information, evaluate temporal and jurisdictional hierarchies, distinguish between different types of measurements or definitions, explain the context-dependency of truth claims, and provide reasoning frameworks rather than arbitrary selections. Must handle cases where multiple answers may be simultaneously correct depending on perspective or use case.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["edge", "contradiction", "reasoning"],
+    "source": "regenerated",
+    "tags": [
+      "edge",
+      "contradiction",
+      "multi_source_evaluation",
+      "contextual_truth",
+      "authority_hierarchy",
+      "temporal_reasoning",
+      "domain_expertise"
+    ],
     "archetype_class": "C_reasoning",
-    "domain": "general"
+    "domain": "cross_domain_professional"
   }
 }

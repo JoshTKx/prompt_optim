@@ -16,9 +16,10 @@ class LLMConfig:
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
     
     # Model Selection (OpenRouter format: provider/model-name)
-    JUDGE_MODEL: str = os.getenv("JUDGE_MODEL", "deepseek/deepseek-chat")
-    REVISER_MODEL: str = os.getenv("REVISER_MODEL", "anthropic/claude-3.5-sonnet")
-    TARGET_MODEL: str = os.getenv("TARGET_MODEL", "openai/gpt-4o-mini")
+    JUDGE_MODEL: str = os.getenv("JUDGE_MODEL", "deepseek/deepseek-v3.2")
+    REVISER_MODEL: str = os.getenv("REVISER_MODEL", "anthropic/claude-4.5-sonnet")
+    TARGET_MODEL: str = os.getenv("TARGET_MODEL", "google/gemini-3-flash-preview")
+    CHECKER_MODEL: str = os.getenv("CHECKER_MODEL", "deepseek/deepseek-v3.2")
     
     # Optional headers for OpenRouter
     HTTP_REFERER: Optional[str] = os.getenv("HTTP_REFERER")  # Your site URL

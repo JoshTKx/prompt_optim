@@ -78,7 +78,19 @@ class ContextLogger:
     
     def error(self, message: str, **kwargs):
         """Log error message with context."""
-        self.logger.error(message, extra=self._add_context(kwargs))
+        # Extract special logging parameters that can't be in extra
+        exc_info = kwargs.pop('exc_info', None)
+        stack_info = kwargs.pop('stack_info', None)
+        stacklevel = kwargs.pop('stacklevel', None)
+        
+        # Pass remaining kwargs as extra context
+        self.logger.error(
+            message,
+            extra=self._add_context(kwargs),
+            exc_info=exc_info,
+            stack_info=stack_info,
+            stacklevel=stacklevel
+        )
     
     def debug(self, message: str, **kwargs):
         """Log debug message with context."""

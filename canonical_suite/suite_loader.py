@@ -30,9 +30,20 @@ class CanonicalTestSuite:
         
         # Load all JSON files recursively
         for json_file in test_path.rglob("*.json"):
+            # Skip manifest files
+            if "MANIFEST" in json_file.name.upper():
+                logger.debug(f"Skipping manifest file: {json_file}")
+                continue
+            
             try:
                 with open(json_file, "r") as f:
                     data = json.load(f)
+                    
+                    # Skip if this looks like a manifest (has 'total_tests' or 'tests' but not 'id')
+                    if ("total_tests" in data or "tests" in data) and "id" not in data:
+                        logger.debug(f"Skipping manifest-like file: {json_file}")
+                        continue
+                    
                     test_case = CanonicalTestCase(**data)
                     test_cases.append(test_case)
                     logger.debug(f"Loaded test case: {test_case.id}")

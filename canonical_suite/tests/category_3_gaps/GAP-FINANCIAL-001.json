@@ -1,0 +1,208 @@
+{
+  "id": "GAP-FINANCIAL-001",
+  "name": "Gap Analysis - Complex Cross-Border M&A Legal Due Diligence",
+  "category": "gaps",
+  "archetype": "B1_extraction",
+  "difficulty": "hard",
+  "task": {
+    "description": "Identify all critical information gaps for comprehensive legal due diligence assessment in a cross-border merger and acquisition transaction involving multiple jurisdictions and regulatory frameworks",
+    "initial_prompt": "review",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "Our tech startup is acquiring a European SaaS company. They have customers in multiple countries and some IP. The deal needs to close quickly. We've reviewed their financials and they look profitable. There might be some employee contracts we need to look at.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "gap_analyzer",
+        "constraints": [
+          "domain_coverage_complete",
+          "critical_node_recall_95",
+          "safety_detection_100",
+          "cross_jurisdictional_completeness",
+          "regulatory_risk_identification_100"
+        ],
+        "required_domains": [
+          "corporate_structure_ownership",
+          "intellectual_property_rights",
+          "regulatory_compliance_licenses",
+          "employment_labor_matters",
+          "data_privacy_security",
+          "commercial_contracts",
+          "litigation_disputes",
+          "tax_structure_liabilities",
+          "real_estate_assets",
+          "environmental_compliance",
+          "antitrust_competition_issues",
+          "financial_obligations_debt"
+        ],
+        "critical_nodes": [
+          "target_company_jurisdiction_incorporation",
+          "subsidiary_entities_locations",
+          "ownership_structure_capitalization_table",
+          "ip_portfolio_patents_trademarks_copyrights",
+          "ip_ownership_verification_inventor_assignments",
+          "open_source_software_dependencies_licenses",
+          "gdpr_compliance_status_dpo_appointment",
+          "data_processing_agreements_inventory",
+          "cross_border_data_transfer_mechanisms",
+          "customer_contract_change_of_control_provisions",
+          "material_customer_concentration_risk",
+          "supplier_dependency_single_source_risks",
+          "employee_headcount_by_jurisdiction",
+          "employment_contracts_notice_periods_severance",
+          "works_council_consultation_requirements",
+          "pending_threatened_litigation",
+          "regulatory_investigations_violations",
+          "tax_residency_transfer_pricing_documentation",
+          "vat_gst_compliance_across_jurisdictions",
+          "outstanding_debt_change_of_control_triggers",
+          "shareholder_agreements_drag_along_rights",
+          "antitrust_filing_requirements_hsr_eu_merger_regulation",
+          "foreign_investment_screening_cfius_equivalent",
+          "material_adverse_change_mac_triggers",
+          "warranty_indemnification_exposure"
+        ],
+        "safety_critical_nodes": [
+          "sanctions_compliance_ofac_screening",
+          "anti_bribery_corruption_fcpa_violations",
+          "export_control_itar_ear_restrictions",
+          "whistleblower_complaints_unreported",
+          "data_breach_incidents_undisclosed",
+          "regulatory_enforcement_actions_pending",
+          "fraudulent_misrepresentation_indicators",
+          "insider_trading_concerns",
+          "conflict_of_interest_related_party_transactions",
+          "environmental_contamination_liabilities",
+          "product_safety_recalls_risks",
+          "cybersecurity_vulnerabilities_critical"
+        ],
+        "nice_to_have": [
+          "brand_reputation_assessment",
+          "customer_satisfaction_metrics",
+          "employee_retention_statistics",
+          "insurance_coverage_adequacy",
+          "corporate_governance_best_practices",
+          "esg_sustainability_initiatives",
+          "future_product_roadmap",
+          "competitive_landscape_analysis"
+        ]
+      }
+    },
+    {
+      "input": "We're buying a manufacturing plant in Southeast Asia. The facility produces electronic components for export. Local partner owns 40% and wants to exit. Equipment seems old but functional. They mentioned some permits expired but are being renewed.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "gap_analyzer",
+        "constraints": [
+          "domain_coverage_complete",
+          "critical_node_recall_95",
+          "safety_detection_100",
+          "operational_risk_identification_complete",
+          "environmental_regulatory_gaps_zero_tolerance"
+        ],
+        "required_domains": [
+          "corporate_structure_ownership",
+          "real_estate_property_rights",
+          "environmental_permits_compliance",
+          "manufacturing_operating_licenses",
+          "employment_labor_matters",
+          "supply_chain_dependencies",
+          "intellectual_property_trade_secrets",
+          "export_import_compliance",
+          "tax_customs_duties",
+          "equipment_assets_condition",
+          "product_liability_quality",
+          "joint_venture_partnership_agreements"
+        ],
+        "critical_nodes": [
+          "land_ownership_vs_leasehold_status",
+          "land_use_zoning_compliance",
+          "title_deed_encumbrances_mortgages",
+          "joint_venture_agreement_exit_terms",
+          "partner_consent_requirements_transaction",
+          "right_of_first_refusal_preemption_rights",
+          "environmental_impact_assessment_validity",
+          "hazardous_waste_management_permits",
+          "air_water_emissions_compliance_status",
+          "factory_operating_license_current_status",
+          "expired_permits_list_renewal_timeline_certainty",
+          "regulatory_penalties_for_expired_permits",
+          "employee_social_security_contributions_current",
+          "foreign_worker_permits_quotas",
+          "union_agreements_collective_bargaining",
+          "equipment_maintenance_records_age_analysis",
+          "machinery_safety_certifications",
+          "export_licenses_destination_countries",
+          "tariff_classifications_customs_valuations",
+          "transfer_pricing_intercompany_transactions",
+          "product_quality_certifications_iso_standards",
+          "customer_audit_compliance_reports",
+          "supply_chain_sole_source_dependencies"
+        ],
+        "safety_critical_nodes": [
+          "environmental_contamination_soil_water_testing",
+          "hazardous_material_storage_violations",
+          "worker_safety_incidents_osha_equivalent",
+          "child_labor_forced_labor_audit_findings",
+          "corruption_facilitation_payments_history",
+          "sanction_screening_customers_suppliers",
+          "product_defect_recall_history",
+          "fire_safety_building_code_violations",
+          "emergency_response_preparedness_gaps",
+          "toxic_substance_exposure_worker_health",
+          "illegal_dumping_waste_disposal_practices",
+          "bribery_of_officials_permit_acquisition"
+        ],
+        "nice_to_have": [
+          "energy_efficiency_metrics",
+          "renewable_energy_utilization",
+          "community_relations_social_license",
+          "technology_upgrade_roadmap",
+          "disaster_recovery_business_continuity",
+          "supply_chain_diversification_plans"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": [
+      "gap_analyzer",
+      "safety_checker",
+      "regulatory_compliance_checker"
+    ],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "gap_analyzer",
+        "safety_checker",
+        "regulatory_compliance_checker"
+      ],
+      "domain_coverage_threshold": 0.95,
+      "critical_node_recall_threshold": 0.95,
+      "safety_node_recall_threshold": 1.0,
+      "cross_jurisdictional_completeness": 1.0
+    }
+  },
+  "optimization_challenge": "Must learn to: 1) Recognize multi-jurisdictional complexity requiring country-specific legal analysis, 2) Identify regulatory compliance gaps across different legal systems simultaneously, 3) Detect time-sensitive deal-breaker issues like expired permits or change-of-control triggers, 4) Never miss safety-critical legal risks including sanctions, corruption, environmental violations, and labor abuses, 5) Distinguish between transactional legal risks and operational compliance gaps, 6) Recognize interdependencies between legal domains (e.g., IP ownership affecting product liability, employment law affecting deal structure), 7) Identify missing documentation that could derail regulatory approvals or closing conditions, 8) Detect subtle indicators of fraudulent concealment or material misrepresentation",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "gap_analysis",
+      "legal",
+      "safety_critical",
+      "mergers_acquisitions",
+      "cross_border",
+      "regulatory_compliance",
+      "due_diligence",
+      "multi_jurisdictional"
+    ],
+    "archetype_class": "B_contextual",
+    "domain": "legal"
+  }
+}

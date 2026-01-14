@@ -1,44 +1,125 @@
 {
   "id": "RS-005",
-  "name": "Tokenization Trap",
+  "name": "Financial Time Zone and Calendar Complexity",
   "category": "reasoning",
   "archetype": "C3_ambiguity_handling",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to handle tokenization-sensitive tasks",
-    "initial_prompt": "Count the letters in the given word.",
+    "description": "Test model's ability to handle time zone conversions, calendar system differences, business day calculations across international markets, daylight saving time transitions, and temporal reasoning in financial trading and settlement contexts",
+    "initial_prompt": "calculate time",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "How many letters are in the word 'strawberry'?",
+      "input": "A forex trader in New York (EST/EDT) executes a EUR/JPY trade at 2:47 PM local time on March 10, 2024. The trade must settle T+2 business days following TARGET2 (European) calendar rules, but the counterparty bank in Tokyo operates on JST and follows Japanese national holidays. What is the exact settlement timestamp in all three time zones (New York, Frankfurt, Tokyo)? Account for any DST transitions and provide the settlement date considering both holiday calendars.",
       "expected_output": {
         "type": "structured",
         "format": "text",
         "validation": "correctness_checker",
-        "constraints": []
+        "constraints": [
+          "correctly_identifies_dst_transition_march_2024",
+          "applies_target2_business_day_rules",
+          "checks_japanese_national_holidays",
+          "calculates_t_plus_2_accurately",
+          "converts_across_all_three_timezones",
+          "handles_weekend_exclusions",
+          "provides_timestamps_with_timezone_indicators",
+          "accounts_for_different_holiday_calendars"
+        ]
+      }
+    },
+    {
+      "input": "A multinational corporation schedules quarterly earnings calls at \"9:00 AM Eastern Time\" for Q1 (February 15), Q2 (May 15), Q3 (August 15), and Q4 (November 15) in 2024. For investors in London, Singapore, and S\u00e3o Paulo, what are the local times for each call? Identify which calls occur at significantly different local times due to DST transitions, and calculate the total variation in local meeting times across the year for the Singapore office.",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "correctness_checker",
+        "constraints": [
+          "converts_to_gmt_bst_for_london",
+          "converts_to_sgt_for_singapore",
+          "converts_to_brt_for_sao_paulo",
+          "identifies_dst_transitions_in_us",
+          "identifies_dst_transitions_in_brazil",
+          "recognizes_singapore_no_dst",
+          "calculates_time_variation_correctly",
+          "handles_spring_and_fall_transitions",
+          "provides_all_four_quarterly_conversions"
+        ]
+      }
+    },
+    {
+      "input": "A cryptocurrency exchange processes a Bitcoin withdrawal request submitted at Unix timestamp 1709856420. The exchange has a 72-hour security hold period, but only counts hours when both US markets (NYSE) and Korean markets (KRX) are simultaneously open for trading. The request was submitted during standard trading hours. When is the earliest the withdrawal can be processed? Provide the answer as both a Unix timestamp and human-readable datetime in UTC, EST, and KST, explaining your calculation of overlapping market hours.",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "correctness_checker",
+        "constraints": [
+          "converts_unix_timestamp_to_datetime",
+          "identifies_nyse_trading_hours",
+          "identifies_krx_trading_hours",
+          "calculates_overlapping_hours_across_timezones",
+          "accounts_for_weekend_non_trading_days",
+          "accumulates_72_hours_correctly",
+          "provides_unix_timestamp_output",
+          "provides_utc_est_kst_conversions",
+          "shows_detailed_calculation_methodology",
+          "handles_timezone_offset_kst_utc_plus_9"
+        ]
+      }
+    },
+    {
+      "input": "An international legal contract specifies that a payment is due \"30 calendar days after the Effective Date, with time calculated according to the International Date Line, excluding the Effective Date itself.\" The Effective Date is November 28, 2024, 11:45 PM in Samoa (UTC-11 before the date line). A party in Kiribati (UTC+14, after the date line) claims the payment deadline. Due to the International Date Line, these locations have a 25-hour time difference despite being geographically close. What is the payment due date and time in both locations, and in UTC? If the contract also specifies \"business days only\" using the combined holiday calendars of both nations, how does this change the deadline?",
+      "expected_output": {
+        "type": "structured",
+        "format": "text",
+        "validation": "correctness_checker",
+        "constraints": [
+          "handles_international_dateline_complexity",
+          "calculates_30_calendar_days_correctly",
+          "excludes_effective_date_from_count",
+          "converts_samoa_time_to_utc",
+          "converts_kiribati_time_correctly",
+          "recognizes_25_hour_difference_across_dateline",
+          "identifies_samoa_national_holidays",
+          "identifies_kiribati_national_holidays",
+          "recalculates_with_business_day_constraint",
+          "provides_both_calendar_and_business_day_answers",
+          "explains_dateline_impact_on_calculation"
+        ]
       }
     }
   ],
-  
   "evaluation": {
-    "method": "deterministic",
-    "validators": ["correctness_checker"],
+    "method": "hybrid",
+    "validators": [
+      "correctness_checker",
+      "temporal_reasoning_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "correctness_checker",
+        "temporal_reasoning_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may count tokens instead of characters. Optimizer must clarify 'letters' vs 'tokens'.",
-  
+  "optimization_challenge": "Models frequently confuse time zone abbreviations (EST vs EDT, GMT vs BST), fail to account for daylight saving time transitions with correct dates, misunderstand business day calculations across different calendar systems (Western vs TARGET2 vs Asian markets), incorrectly handle the International Date Line, and conflate calendar days with business days. They often fail to state assumptions about which timezone standard is being used, which holiday calendar applies, or how to handle edge cases like DST transitions during the calculation period. Optimizer must enforce explicit specification of timezone standards (with UTC offsets), DST transition handling, business day calendar selection, holiday calendar sources, and require step-by-step temporal calculations with clearly stated assumptions about market hours and date conventions.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["tokenization", "counting", "reasoning"],
+    "source": "regenerated",
+    "tags": [
+      "time_zones",
+      "temporal_reasoning",
+      "financial_markets",
+      "calendar_systems",
+      "daylight_saving_time",
+      "international_date_line",
+      "business_days",
+      "settlement_cycles"
+    ],
     "archetype_class": "C_reasoning",
-    "domain": "general"
+    "domain": "finance_international_trading"
   }
 }

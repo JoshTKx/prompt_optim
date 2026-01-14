@@ -1,44 +1,129 @@
 {
   "id": "RS-002",
-  "name": "Causal Judgment",
+  "name": "Advanced Causal Inference in Multi-Agent Competitive Environments",
   "category": "reasoning",
   "archetype": "C2_causal_reasoning",
   "difficulty": "hard",
-  
   "task": {
-    "description": "Test model's ability to reason about causality",
-    "initial_prompt": "Determine if there is a causal relationship and explain why.",
+    "description": "Test model's ability to perform sophisticated causal reasoning in competitive multi-agent scenarios involving strategic behavior, Matthew effects, network externalities, gaming dynamics, and complex temporal dependencies where agents actively respond to and anticipate each other's actions",
+    "initial_prompt": "analyze",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Every time I wear my red shirt, my team wins. Does wearing the red shirt cause my team to win?",
+      "input": "A competitive esports league discovers that teams who secure early sponsorships (within first 3 months of formation) win 65% more tournaments over their first two years compared to teams who gain sponsorships later. League organizers want to create an accelerator program to help new teams get early sponsors. However, sponsors actively scout for teams showing early promise, teams with sponsor visibility attract better players mid-season, and successful early tournament performance both attracts sponsors and predicts future success. Analyze whether early sponsorship causes winning, considering talent signaling, resource accumulation dynamics, Matthew effects, sponsor selection strategies, player migration patterns, and the possibility that both sponsorship and success are downstream of unobservable team quality or network connections.",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
-        "constraints": []
+        "constraints": [
+          "identifies_strategic_selection_by_sponsors",
+          "recognizes_matthew_effect_dynamics",
+          "analyzes_player_migration_as_mediator",
+          "distinguishes_signaling_vs_causation",
+          "considers_unobservable_confounders",
+          "evaluates_cumulative_advantage_mechanisms",
+          "discusses_network_effects_in_player_recruitment",
+          "questions_intervention_effectiveness",
+          "proposes_quasi_experimental_approaches"
+        ]
+      }
+    },
+    {
+      "input": "A music streaming platform observes that songs added to curated playlists with 500K+ followers receive 40x more streams than similar songs not playlisted. The platform uses algorithmic signals (early engagement velocity, skip rates, completion rates) to decide playlist additions, and playlist inclusion leads to algorithmic promotion in recommendation feeds. Artists are now purchasing bot streams to manipulate early engagement metrics. Evaluate whether playlist inclusion causes popularity, considering feedback loops between algorithmic selection and user behavior, gaming of metrics, social proof dynamics, quality confounding, platform recommendation amplification, and the temporal sequence of user discovery versus editorial selection.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_algorithmic_feedback_loops",
+          "recognizes_gaming_and_manipulation_effects",
+          "analyzes_social_proof_mechanisms",
+          "evaluates_recommendation_amplification",
+          "distinguishes_organic_vs_induced_engagement",
+          "considers_quality_as_common_cause",
+          "discusses_temporal_precedence_ambiguity",
+          "addresses_platform_incentive_misalignment",
+          "warns_against_causal_interpretation_of_gamed_metrics"
+        ]
+      }
+    },
+    {
+      "input": "A legal technology company finds that law firms using their AI contract analysis tool close deals 30% faster and report 20% higher client satisfaction. However, the tool requires significant upfront training investment and integration with existing systems, so primarily large firms with dedicated innovation teams adopt it. Additionally, firms that adopt new technology tend to hire from top law schools, invest more in associate training, and have younger partnership structures. The company wants to market the tool as causally responsible for efficiency gains. Analyze whether the AI tool causes better outcomes, considering firm selection into technology adoption, correlated organizational practices, client type differences, learning curves, complementary investments in human capital, and the possibility that forward-thinking firm culture drives both technology adoption and performance.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_organizational_selection_bias",
+          "analyzes_complementary_investment_patterns",
+          "recognizes_culture_as_common_cause",
+          "evaluates_client_composition_differences",
+          "considers_adoption_barrier_effects",
+          "discusses_correlated_best_practices",
+          "distinguishes_tool_effects_from_firm_capabilities",
+          "addresses_generalizability_across_firm_types",
+          "recommends_stratification_or_matching_approaches"
+        ]
+      }
+    },
+    {
+      "input": "An agricultural economics study reveals that farms adopting precision irrigation technology see 35% yield increases and 25% water reduction within two growing seasons. The technology is expensive, so early adopters are larger farms with better access to credit and existing relationships with equipment dealers. These farms also tend to have higher soil quality (which influenced their historical size), employ agronomists, participate in extension programs, and are located in regions with better water infrastructure. Additionally, equipment dealers strategically target high-potential farms for demonstrations. Government agencies want to subsidize technology adoption to boost regional agricultural output. Analyze equipment causality while considering farm size effects, soil quality confounding, management sophistication, dealer targeting strategies, regional infrastructure advantages, credit access disparities, and knowledge spillovers from extension programs.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "identifies_multiple_structural_confounders",
+          "analyzes_dealer_strategic_targeting",
+          "recognizes_credit_access_as_selection_mechanism",
+          "evaluates_soil_quality_historical_effects",
+          "considers_management_capability_confounding",
+          "discusses_regional_infrastructure_clustering",
+          "distinguishes_technology_from_complementary_inputs",
+          "addresses_knowledge_spillover_effects",
+          "evaluates_heterogeneous_treatment_effects",
+          "questions_subsidy_policy_effectiveness_without_addressing_confounders"
+        ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["reasoning_checker"],
+    "validators": [
+      "reasoning_checker",
+      "causality_analyzer",
+      "confound_detection",
+      "strategic_behavior_analyzer"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "reasoning_checker",
+        "causality_analyzer",
+        "confound_detection"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may confuse correlation with causation. Optimizer must prompt for careful analysis.",
-  
+  "optimization_challenge": "Models must develop sophisticated causal reasoning that accounts for strategic agent behavior, Matthew effects and cumulative advantage dynamics, gaming and manipulation of selection criteria, correlated organizational practices as confounders, multi-level selection mechanisms (individual, organizational, and regional), feedback loops between outcomes and future treatment assignment, complementary investments that covary with treatment, and the fundamental challenge of distinguishing treatment effects from selection on unobservables. The optimizer must train models to recognize when agents strategically respond to measurement and selection criteria, identify common causes operating at multiple levels of analysis, evaluate heterogeneous treatment effects across different adopter types, and understand that observational associations in competitive environments are particularly prone to severe selection bias that cannot be addressed without quasi-experimental designs, instrumental variables, or explicit randomization.",
   "metadata": {
-    "source": "CausalBench",
-    "tags": ["causality", "reasoning", "correlation"],
+    "source": "regenerated",
+    "tags": [
+      "causality",
+      "strategic_behavior",
+      "matthew_effects",
+      "selection_bias",
+      "multi_level_confounding",
+      "gaming_dynamics",
+      "cumulative_advantage",
+      "organizational_economics",
+      "competitive_environments",
+      "quasi_experimental_design"
+    ],
     "archetype_class": "C_reasoning",
-    "domain": "logic"
+    "domain": "multi_domain_competitive_systems"
   }
 }

@@ -1,60 +1,161 @@
 {
   "id": "IF-001",
-  "name": "JSON Constraints",
+  "name": "Strict JSON-LD Generation with Advanced Schema.org Vocabulary and Semantic Validation",
   "category": "instruction_following",
   "archetype": "A3_constraint_heavy",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to output only valid JSON without markdown fencing",
-    "initial_prompt": "Generate a list of 5 cities in JSON format.",
+    "description": "Test model's ability to output valid JSON-LD with multiple @context declarations, nested schema.org types, reverse properties, language-tagged strings, typed values with custom datatypes, graph containers, indexed collections, and strict semantic web compliance without any markdown or extraneous formatting",
+    "initial_prompt": "data",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "List 5 major cities in Europe",
+      "input": "Create a JSON-LD document representing 4 performing arts events using schema.org vocabulary. Each event must include @type as Event with subtypes (TheaterEvent, MusicEvent, DanceEvent, ComedyEvent), @id as absolute URIs, nested organizer and performer objects with sameAs properties linking to social profiles, location with geo coordinates and PostalAddress in separate graph nodes, offers with priceSpecification using multi-currency typed values, eventStatus as enumerated vocabulary terms (EventScheduled, EventPostponed, EventRescheduled, EventCancelled), superEvent relationships forming a hierarchy, and multilingual name/description properties with @language tags (en, es, fr). Must use @graph container, reverse properties for subEvent, and custom @context with prefixed terms.",
       "expected_output": {
         "type": "structured",
         "format": "json",
         "validation": "valid_json_parse",
         "constraints": [
           "no_markdown_fencing",
-          "array_length_equals_5"
+          "valid_jsonld_structure",
+          "context_declaration_with_schema_org",
+          "exactly_4_event_objects",
+          "absolute_uri_ids",
+          "nested_type_hierarchy",
+          "graph_container_used",
+          "reverse_properties_present",
+          "language_tagged_strings_three_languages",
+          "typed_values_with_datatypes",
+          "geo_coordinates_decimal_format",
+          "enumerated_vocabulary_terms",
+          "sameas_external_references",
+          "multi_currency_price_specification",
+          "hierarchical_event_relationships",
+          "no_trailing_commas"
         ]
       }
     },
     {
-      "input": "List 5 capitals in Asia",
+      "input": "Generate JSON-LD for 5 renewable energy facilities with custom @context aliasing. Each facility needs @type as Place with subtype (SolarPowerPlant, WindFarm, HydroelectricPlant, GeothermalPlant, BiomassPlant), containedInPlace with nested administrative areas (city, state, country) as separate nodes, energyOutput as QuantitativeValue with unitCode from UN/CEFACT, operationalStatus as controlled vocabulary, installation date as ISO 8601 with timezone, fundingSource as FundingAgency with nested Grant objects containing amount in typed currency values, environmentalImpact as PropertyValue with measurementTechnique, and employee roster with indexed @list maintaining order. Include @base declaration and use compacted term definitions with @type coercion for dates and numbers.",
       "expected_output": {
         "type": "structured",
         "format": "json",
         "validation": "valid_json_parse",
         "constraints": [
           "no_markdown_fencing",
-          "array_length_equals_5"
+          "custom_context_with_aliasing",
+          "base_declaration_present",
+          "exactly_5_facility_objects",
+          "type_coercion_for_dates_numbers",
+          "nested_administrative_hierarchy",
+          "quantitative_value_with_unitcode",
+          "iso8601_datetime_with_timezone",
+          "indexed_list_preserving_order",
+          "typed_currency_amounts",
+          "controlled_vocabulary_status",
+          "property_value_with_measurement_technique",
+          "funding_grant_nested_structure",
+          "compact_iris_used",
+          "no_duplicate_keys",
+          "proper_escape_sequences"
+        ]
+      }
+    },
+    {
+      "input": "Build JSON-LD structure for 3 archaeological excavation sites with embedded @context per node. Each site requires @type as ArchaeologicalSite (custom extension of Place), spatial coverage using GeoShape with polygon coordinates in GeoJSON format, temporal coverage with start/end dates in different calendar systems (Gregorian, Julian) as typed values, stratigraphic layers as ordered @list with depth measurements, artifacts discovered as CreativeWork subtypes (Sculpture, Photograph, VisualArtwork) with dateCreated uncertainty ranges, contributors with Role objects specifying contributor type and temporal validity, funding sources with reverse hasFunded property, and preservation status using SKOS concept URIs. Must use @vocab for default namespace, @version 1.1 features including @nest and @protected, and demonstrate @included for auxiliary data.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "valid_json_parse",
+        "constraints": [
+          "no_markdown_fencing",
+          "jsonld_version_1_1_features",
+          "embedded_context_per_node",
+          "exactly_3_site_objects",
+          "vocab_default_namespace",
+          "geoshape_polygon_geojson_format",
+          "multiple_calendar_system_dates",
+          "ordered_list_stratigraphic_layers",
+          "date_uncertainty_ranges",
+          "role_objects_with_temporal_validity",
+          "reverse_properties_funding",
+          "skos_concept_uris",
+          "nest_keyword_used",
+          "protected_keyword_used",
+          "included_auxiliary_data",
+          "custom_schema_extension",
+          "decimal_precision_coordinates"
+        ]
+      }
+    },
+    {
+      "input": "Construct JSON-LD for 6 competitive esports tournaments with framed output structure. Include @type as SportsEvent with game property linking to VideoGame objects, participants as SportsTeam with nested athlete member rosters (minimum 5 per team), tournament bracket structure using reverse isPartOf properties forming tree hierarchy, match results with scores as QuantitativeValue arrays, prize pool distribution with MonetaryAmount in multiple cryptocurrencies (BTC, ETH) and fiat currencies requiring precise decimal notation, broadcasting rights as BroadcastService with video streaming URLs, sponsorship as Organization with logo ImageObject including contentUrl and encodingFormat, and aggregateRating from multiple rating systems. Must use @container with @type, @language, and @index simultaneously, scoped contexts for game-specific terminology, and node objects with shared @id references preventing duplication.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "valid_json_parse",
+        "constraints": [
+          "no_markdown_fencing",
+          "framed_jsonld_structure",
+          "exactly_6_tournament_objects",
+          "container_multiple_keywords",
+          "scoped_contexts_present",
+          "shared_id_references_no_duplication",
+          "nested_team_rosters_minimum_five",
+          "tree_hierarchy_reverse_properties",
+          "quantitative_value_arrays",
+          "cryptocurrency_precise_decimals",
+          "multiple_currency_monetary_amounts",
+          "broadcast_service_streaming_urls",
+          "image_object_encoding_format",
+          "aggregate_rating_multiple_systems",
+          "videogame_linked_data",
+          "no_null_values",
+          "consistent_property_ordering",
+          "uri_scheme_validation"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "deterministic",
-    "validators": ["json_parser", "constraint_checker"],
+    "validators": [
+      "json_parser",
+      "jsonld_validator",
+      "schema_org_validator",
+      "constraint_checker",
+      "semantic_validator",
+      "uri_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
       "minimum_score": 4,
-      "required_validators": ["json_parser"]
+      "required_validators": [
+        "json_parser",
+        "jsonld_validator",
+        "schema_org_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models often wrap JSON in markdown code blocks. Optimizer must add explicit constraint.",
-  
+  "optimization_challenge": "Models struggle with JSON-LD @context declarations and fail to distinguish between compact IRIs, absolute URIs, and terms. They confuse @type for node types versus @type for value types, misuse @graph containers, ignore @language tagging requirements, fail to implement reverse properties correctly, omit @id for node identifiers, improperly structure nested objects breaking schema.org expectations, mishandle typed values with custom datatypes, violate JSON-LD 1.1 features like @nest and @protected, create invalid GeoJSON geometries, use incorrect currency precision for cryptocurrency values, fail to maintain @list ordering semantics, duplicate nodes instead of using shared references, mix up @container keywords, ignore scoped context rules, produce malformed URIs, and add markdown fencing. Optimizer must explicitly teach @context structure and term definitions, distinguish node @type from value @type, mandate reverse property syntax, require language tagging with specific codes, enforce @id usage for all named nodes, detail schema.org vocabulary constraints, specify typed value format with datatype URIs, explain JSON-LD 1.1 advanced features, provide GeoJSON coordinate ordering rules, require exact decimal precision for financial values, clarify @list versus @set semantics, demonstrate node reference patterns, teach @container combinations, enforce scoped context inheritance, validate URI schemes, and eliminate all formatting violations.",
   "metadata": {
-    "source": "IFEval",
-    "tags": ["formatting", "constraints", "json"],
+    "source": "regenerated",
+    "tags": [
+      "formatting",
+      "constraints",
+      "jsonld",
+      "semantic_web",
+      "schema_org",
+      "linked_data",
+      "rdf",
+      "vocabulary",
+      "graph_structures",
+      "multilingual"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "performing_arts_energy_archaeology_esports"
   }
 }

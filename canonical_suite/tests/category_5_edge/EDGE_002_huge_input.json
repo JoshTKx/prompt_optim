@@ -1,44 +1,118 @@
 {
   "id": "EDGE-002",
-  "name": "Huge Input",
+  "name": "Massive Legal Document Processing",
   "category": "edge",
   "archetype": "B2_contextual",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's handling of very large inputs",
-    "initial_prompt": "Summarize the following text.",
+    "description": "Test model's ability to process extremely large legal documents with complex cross-references, nested clauses, and technical terminology while maintaining accuracy and completeness",
+    "initial_prompt": "analyze",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Summarize: The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.",
+      "input": "Analyze this 7500-word merger and acquisition agreement including: recitals, definitions (150+ terms), representations and warranties across 12 sections, indemnification provisions with nested conditions, termination clauses with multi-party obligations, schedules A-F with detailed asset listings, and exhibit references to financial statements. Identify all material obligations, contingent liabilities, and termination triggers.",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
         "validation": "llm_judge",
-        "constraints": []
+        "constraints": [
+          "handles_extremely_large_input",
+          "preserves_cross_references",
+          "identifies_all_material_obligations",
+          "maintains_nested_clause_hierarchy",
+          "no_definition_confusion",
+          "tracks_multi_party_obligations",
+          "complete_contingent_liability_extraction"
+        ]
+      }
+    },
+    {
+      "input": "Process this 12,000-word intellectual property licensing agreement containing: grant of rights section with territorial restrictions across 47 jurisdictions, royalty calculation formulas with quarterly adjustments and currency conversions, sublicensing terms with approval matrices, quality control specifications (8 pages), audit rights with procedural requirements, dispute resolution mechanisms including arbitration clauses, and termination provisions with survival obligations. Extract all financial obligations, geographic limitations, and compliance requirements.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "handles_maximum_input_size",
+          "extracts_all_financial_formulas",
+          "maps_geographic_restrictions",
+          "preserves_procedural_dependencies",
+          "identifies_survival_obligations",
+          "no_jurisdictional_conflation",
+          "maintains_calculation_accuracy"
+        ]
+      }
+    },
+    {
+      "input": "Review this 9500-word commercial real estate lease with: base rent and operating expense escalations tied to CPI and market conditions, tenant improvement allowance calculations, co-tenancy clauses with sales thresholds, exclusive use provisions across 15 retail categories, common area maintenance allocations with detailed methodologies, landlord and tenant repair obligations by building system, default and cure provisions with notice requirements, assignment and subletting restrictions with landlord discretion standards, and options to extend with fair market value determination procedures. Summarize all monetary obligations, tenant rights, and landlord approval requirements.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "handles_very_large_complex_input",
+          "calculates_all_monetary_components",
+          "distinguishes_conditional_obligations",
+          "preserves_threshold_dependencies",
+          "tracks_approval_discretion_standards",
+          "no_timeline_confusion",
+          "maintains_calculation_methodologies"
+        ]
+      }
+    },
+    {
+      "input": "Parse this 10,500-word software development and services agreement including: detailed scope of work with 23 deliverables and acceptance criteria, payment milestones tied to completion percentages, intellectual property ownership allocation between custom and pre-existing work, source code escrow provisions with release triggers, service level agreements with response times and penalty calculations, change order procedures with impact assessment requirements, confidentiality obligations with carve-outs, limitation of liability with multiple caps and exceptions, and warranty provisions with remediation hierarchies. Identify all performance metrics, payment triggers, and risk allocation mechanisms.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "llm_judge",
+        "constraints": [
+          "handles_maximum_technical_input",
+          "extracts_all_performance_metrics",
+          "maps_payment_to_deliverables",
+          "distinguishes_IP_categories",
+          "preserves_trigger_conditions",
+          "calculates_penalty_structures",
+          "no_remediation_hierarchy_loss",
+          "maintains_exception_carveouts"
+        ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "llm_judge",
-    "validators": ["length_checker"],
+    "validators": [
+      "length_checker",
+      "completeness_checker",
+      "cross_reference_validator",
+      "nested_structure_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 3
+      "minimum_score": 4,
+      "required_validators": [
+        "length_checker",
+        "completeness_checker",
+        "cross_reference_validator"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may truncate or fail on large inputs. Optimizer must handle length limits gracefully.",
-  
+  "optimization_challenge": "Models frequently fail with massive legal documents by: truncating mid-analysis, losing track of cross-references between sections, conflating similar but distinct defined terms, dropping nested conditions in complex clauses, failing to maintain calculation formulas across long contexts, and missing obligations buried in lengthy provisions. Optimizer must develop strategies for: chunking and reassembling complex documents, maintaining definition registries across token windows, preserving hierarchical clause structures, tracking multi-party and conditional obligations, handling cross-references to exhibits and schedules, and ensuring no material terms are lost despite extreme input length.",
   "metadata": {
-    "source": "Custom",
-    "tags": ["edge", "length", "robustness"],
+    "source": "regenerated",
+    "tags": [
+      "edge",
+      "extreme_length",
+      "legal_documents",
+      "cross_references",
+      "token_limits",
+      "complex_structures",
+      "nested_clauses"
+    ],
     "archetype_class": "B_contextual",
-    "domain": "general"
+    "domain": "legal"
   }
 }

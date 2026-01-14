@@ -1,47 +1,143 @@
 {
   "id": "GAP-SQL-001",
-  "name": "Schema Adherence",
+  "name": "Global Supply Chain Network Schema Adherence",
   "category": "gaps",
   "archetype": "B2_contextual",
-  "difficulty": "medium",
-  
+  "difficulty": "hard",
   "task": {
-    "description": "Test model's ability to generate SQL that adheres to provided schema",
-    "initial_prompt": "Generate a SQL query based on the schema and question.",
+    "description": "Test model's ability to generate SQL for a complex global supply chain network with multi-modal transportation, inventory tracking across distribution centers, supplier performance analytics, and geospatial routing while strictly adhering to schema constraints and handling temporal state transitions",
+    "initial_prompt": "query",
     "target_model": "gpt-4o-mini",
-    "context": "Schema:\nusers (id, name, email)\norders (id, user_id, amount, date)"
+    "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Find all users who have placed orders over $100",
+      "input": "Identify distribution centers experiencing inventory turnover degradation: where the average days-to-ship has increased by more than 25% in the current quarter versus the prior quarter, but only for products with reorder points above 1000 units and suppliers rated 4-star or higher. Include center name, region, country, current average days-to-ship, previous quarter average, degradation percentage, and count of affected high-value SKUs (unit cost > $500). Exclude centers that opened less than 180 days ago.",
       "expected_output": {
         "type": "structured",
         "format": "code",
         "validation": "sql_validator",
         "constraints": [
           "valid_sql_syntax",
-          "schema_compliant"
+          "schema_compliant",
+          "correct_multi_table_joins",
+          "quarter_based_temporal_comparison",
+          "percentage_increase_calculation_correct",
+          "multiple_nested_aggregations",
+          "conditional_aggregation_for_high_value_skus",
+          "supplier_rating_filter_correct",
+          "center_age_exclusion_logic",
+          "reorder_point_threshold_applied",
+          "no_hallucinated_columns",
+          "no_hallucinated_tables"
+        ]
+      }
+    },
+    {
+      "input": "For each transportation route between origin and destination distribution centers, calculate the rolling 90-day average delay percentage (actual transit time vs scheduled transit time) and the standard deviation of delays, segmented by transport mode (air, ocean, rail, truck). Only include routes with at least 20 completed shipments in the period. Show origin center, destination center, transport mode, average delay percentage, standard deviation, shipment count, and rank routes by worst average delay within each transport mode.",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "schema_compliant",
+          "window_function_for_ranking",
+          "standard_deviation_calculation",
+          "percentage_delay_calculation_correct",
+          "rolling_window_temporal_logic",
+          "transport_mode_segmentation",
+          "shipment_threshold_filtering",
+          "partition_by_mode_for_ranking",
+          "multi_level_aggregation",
+          "no_hallucinated_columns",
+          "no_hallucinated_tables"
+        ]
+      }
+    },
+    {
+      "input": "Find suppliers at risk of contract termination: those with premium or strategic partnership tiers where on-time delivery rate has fallen below 85% in the last 6 months, and where at least 3 different product categories they supply have experienced stockouts (inventory level reached zero) at distribution centers in high-demand regions (North America, Europe, East Asia). Display supplier name, partnership tier, country of origin, current on-time delivery rate, number of stockout incidents, affected product categories, and total shipment volume in last 6 months.",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "schema_compliant",
+          "complex_temporal_aggregation",
+          "correct_multi_table_joins_across_hierarchy",
+          "delivery_rate_calculation_with_threshold",
+          "stockout_detection_logic",
+          "category_counting_with_minimum_threshold",
+          "region_filtering_with_multiple_values",
+          "tier_filtering_correct",
+          "aggregation_across_multiple_dimensions",
+          "distinct_counting_for_categories",
+          "no_hallucinated_columns",
+          "no_hallucinated_tables"
+        ]
+      }
+    },
+    {
+      "input": "Detect phantom inventory discrepancies: products that show positive inventory levels in the system but have had zero outbound shipments and zero inbound receipts for more than 120 consecutive days, occurring only in distribution centers that have processed at least 500 shipments total in the last year. Show product SKU, product name, distribution center, current recorded inventory quantity, days since last movement, center total shipment count, and supplier name. Exclude products marked as discontinued or seasonal.",
+      "expected_output": {
+        "type": "structured",
+        "format": "code",
+        "validation": "sql_validator",
+        "constraints": [
+          "valid_sql_syntax",
+          "schema_compliant",
+          "correct_outer_joins_or_not_exists",
+          "null_handling_for_no_movements",
+          "consecutive_days_calculation",
+          "multi_level_join_through_relationships",
+          "center_activity_threshold_filtering",
+          "temporal_filtering_on_movements",
+          "date_difference_calculation",
+          "exclusion_of_product_status_flags",
+          "inventory_positivity_check",
+          "shipment_count_aggregation",
+          "no_hallucinated_columns",
+          "no_hallucinated_tables"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "hybrid",
-    "validators": ["sql_validator", "schema_checker"],
+    "validators": [
+      "sql_validator",
+      "schema_checker",
+      "query_correctness",
+      "temporal_logic_validator"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "sql_validator",
+        "schema_checker"
+      ],
+      "all_test_cases_must_pass": true
     }
   },
-  
-  "optimization_challenge": "Models may hallucinate columns or use incorrect table names. Optimizer must emphasize schema constraints.",
-  
+  "optimization_challenge": "Models must handle complex supply chain schemas with multi-dimensional hierarchies (suppliers->products->inventory->shipments->distribution_centers), temporal state transitions (inventory movements, shipment status changes), geospatial relationships (routes, regions), and performance degradation detection across time windows. Common failures include: hallucinating columns for calculated metrics like delay percentages or inventory turnover, incorrect temporal range calculations for quarter-over-quarter or rolling window comparisons, missing critical join paths through inventory movement tables, wrong aggregation levels when combining supplier/product/center dimensions, improper handling of NULL values when detecting absence of activity, incorrect window function partitioning for rankings within categories, failure to apply exclusion filters at appropriate query stages, incorrect calculation of consecutive time periods without events, and missing DISTINCT clauses when counting categories or product types. Optimizer must enforce strict schema validation with no hallucinated entities, verify complex temporal logic including rolling windows and quarter comparisons, ensure proper join chain construction through multi-level hierarchies, validate that aggregations correctly handle nested conditions and thresholds, implement proper NULL handling for detecting inactivity or missing relationships, correctly partition window functions by relevant dimensions, and handle edge cases like newly opened centers, discontinued products, and multi-region filtering.",
   "metadata": {
-    "source": "Spider",
-    "tags": ["sql", "schema", "database"],
+    "source": "regenerated",
+    "tags": [
+      "sql",
+      "schema",
+      "supply-chain",
+      "logistics",
+      "temporal-queries",
+      "window-functions",
+      "complex-joins",
+      "inventory-analytics",
+      "performance-degradation",
+      "geospatial",
+      "multi-modal-transport"
+    ],
     "archetype_class": "B_contextual",
-    "domain": "coding"
+    "domain": "logistics"
   }
 }

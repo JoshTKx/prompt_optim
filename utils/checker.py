@@ -3,6 +3,7 @@ from typing import Dict, Any, Optional, List
 from utils.llm_client import LLMClient
 from utils.cost_tracker import CostTracker
 from models.specification import OutputSpecification
+from config.llm_config import LLMConfig
 from utils.logging_utils import setup_logging, get_correlation_id
 from utils.metrics import get_metrics_collector
 from utils.negative_constraints import get_negative_constraints_library
@@ -18,6 +19,7 @@ class Checker:
     def __init__(self, llm_client: LLMClient, cost_tracker: CostTracker):
         self.llm_client = llm_client
         self.cost_tracker = cost_tracker
+        self.model = LLMConfig.CHECKER_MODEL
         self.negative_constraints = get_negative_constraints_library()
         
         # Load checker system prompt
@@ -142,9 +144,9 @@ VIOLATIONS DETECTED:
 Return ONLY the corrected output. If no fixes needed, return the original output unchanged."""
 
         try:
-            # Use a fast, cheap model for checking (e.g., GPT-4o-mini)
+            # Use configured checker model
             checked = self.llm_client.complete(
-                model="openai/gpt-4o-mini",  # Fast and cheap for checking
+                model=self.model,
                 prompt=checker_prompt,
                 system_prompt=self.system_prompt,
                 temperature=0.1,  # Low temperature for consistency
@@ -153,7 +155,7 @@ Return ONLY the corrected output. If no fixes needed, return the original output
             
             # Estimate cost
             estimated_cost = self.llm_client.estimate_cost(
-                model="openai/gpt-4o-mini",
+                model=self.model,
                 prompt_tokens=500,
                 completion_tokens=200
             )

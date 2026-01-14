@@ -1,0 +1,225 @@
+{
+  "total_tests": 31,
+  "generated_at": "1768376527.2810674",
+  "difficulty": "hard",
+  "regenerated": true,
+  "tests": [
+    {
+      "id": "IF-002",
+      "name": "Multi-Domain Lexical Minefield Navigation",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF_002_negative_constraint.json"
+    },
+    {
+      "id": "IF-001",
+      "name": "Strict JSON-LD Generation with Advanced Schema.org Vocabulary and Semantic Validation",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF_001_json_constraints.json"
+    },
+    {
+      "id": "IF-004",
+      "name": "Asymmetric Character-Word Hybrid Constraints",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF_004_length_constraints.json"
+    },
+    {
+      "id": "IF-005",
+      "name": "Conditional Formatting in Scientific Research Publications",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF_005_case_constraints.json"
+    },
+    {
+      "id": "IF-3047",
+      "name": "Enterprise-Grade Smart City Infrastructure Management System with Multi-Jurisdictional Compliance",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF-3047.json"
+    },
+    {
+      "id": "RS-001",
+      "name": "Cross-Border Supply Chain Priority Resolution with Regulatory Conflicts",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "file": "category_2_reasoning/RS_001_boolean_expressions.json"
+    },
+    {
+      "id": "RS-002",
+      "name": "Advanced Causal Inference in Multi-Agent Competitive Environments",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "file": "category_2_reasoning/RS_002_causal_judgment.json"
+    },
+    {
+      "id": "IF-087",
+      "name": "Multi-National Space Launch Services Orchestration Framework with Orbital Mechanics and Regulatory Cascade Validation",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF-087.json"
+    },
+    {
+      "id": "IF-003",
+      "name": "Multi-Domain Financial Instrument & Derivative Contract Structuring",
+      "category": "instruction_following",
+      "difficulty": "hard",
+      "file": "category_1_instruction/IF_003_format_switching.json"
+    },
+    {
+      "id": "RS-003",
+      "name": "Financial Regulatory Compliance Ambiguity Detection",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "file": "category_2_reasoning/RS_003_ambiguity_detection.json"
+    },
+    {
+      "id": "RS-005",
+      "name": "Financial Time Zone and Calendar Complexity",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "file": "category_2_reasoning/RS_005_tokenization_trap.json"
+    },
+    {
+      "id": "RS-004",
+      "name": "Tournament Scheduling and Resource Allocation",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "file": "category_2_reasoning/RS_004_math_olympiad.json"
+    },
+    {
+      "id": "GAP-MENTAL_HEALTH-001",
+      "name": "Gap Analysis - Cross-Border Semiconductor Manufacturing Joint Venture",
+      "category": "gaps",
+      "difficulty": "hard",
+      "file": "category_3_gaps/GAP-MENTAL_HEALTH-001.json"
+    },
+    {
+      "id": "GAP-EXT-001",
+      "name": "Scientific Research Grant Entity Extraction",
+      "category": "gaps",
+      "difficulty": "hard",
+      "file": "category_3_gaps/GAP_EXT_001_standard_ner.json"
+    },
+    {
+      "id": "RS-047",
+      "name": "cross_border_merger_antitrust_regulatory_compliance_assessment",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "file": "category_2_reasoning/RS-047.json"
+    },
+    {
+      "id": "GAP-EXT-002",
+      "name": "Ambiguous Legal Entity and Clause Extraction",
+      "category": "gaps",
+      "difficulty": "hard",
+      "file": "category_3_gaps/GAP_EXT_002_empty_extraction.json"
+    },
+    {
+      "id": "GAP-SQL-001",
+      "name": "Global Supply Chain Network Schema Adherence",
+      "category": "gaps",
+      "difficulty": "hard",
+      "file": "category_3_gaps/GAP_SQL_001_schema_adherence.json"
+    },
+    {
+      "id": "GAP-SQL-002",
+      "name": "Cross-Platform Gaming Analytics with Player Behavior Tracking",
+      "category": "gaps",
+      "difficulty": "hard",
+      "file": "category_3_gaps/GAP_SQL_002_complex_joins.json"
+    },
+    {
+      "id": "GAP-SUM-001",
+      "name": "Multi-Source Legal Document Synthesis",
+      "category": "gaps",
+      "difficulty": "hard",
+      "file": "category_3_gaps/GAP_SUM_001_abstractive.json"
+    },
+    {
+      "id": "SEC-047",
+      "name": "Advanced Jailbreak Resistance in Financial Trading Systems",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC-047.json"
+    },
+    {
+      "id": "SEC-087",
+      "name": "Legal Document Classifier with Multi-Vector Injection Attacks",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC-087.json"
+    },
+    {
+      "id": "SEC-002",
+      "name": "Authority Escalation via Context Manipulation",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC_002_role_reversal.json"
+    },
+    {
+      "id": "SEC-089",
+      "name": "Industrial Chemical Plant Safety Interlock Configuration Validator",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC-089.json"
+    },
+    {
+      "id": "SEC-003",
+      "name": "Multi-Layer Encoding Obfuscation in Financial Systems",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC_003_encoding_attacks.json"
+    },
+    {
+      "id": "SEC-004",
+      "name": "Financial Account Data Exposure in Multi-Turn Conversations",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC_004_pii_leakage.json"
+    },
+    {
+      "id": "EDGE-001",
+      "name": "Malformed Financial Transaction Inputs",
+      "category": "edge",
+      "difficulty": "hard",
+      "file": "category_5_edge/EDGE_001_empty_input.json"
+    },
+    {
+      "id": "EDGE-004",
+      "name": "Temporal and Logical Impossibility Detection",
+      "category": "edge",
+      "difficulty": "hard",
+      "file": "category_5_edge/EDGE_004_premise_error.json"
+    },
+    {
+      "id": "EDGE-003",
+      "name": "Conflicting Multi-Source Intelligence",
+      "category": "edge",
+      "difficulty": "hard",
+      "file": "category_5_edge/EDGE_003_contradictory_context.json"
+    },
+    {
+      "id": "EDGE-002",
+      "name": "Massive Legal Document Processing",
+      "category": "edge",
+      "difficulty": "hard",
+      "file": "category_5_edge/EDGE_002_huge_input.json"
+    },
+    {
+      "id": "EDGE-005",
+      "name": "Mathematical Notation and Symbolic Edge Cases",
+      "category": "edge",
+      "difficulty": "hard",
+      "file": "category_5_edge/EDGE_005_unicode_edge.json"
+    },
+    {
+      "id": "SEC-005",
+      "name": "Unicode Homoglyph Command Injection",
+      "category": "security",
+      "difficulty": "hard",
+      "file": "category_4_security/SEC_005_invisible_text.json"
+    }
+  ]
+}

@@ -1,46 +1,126 @@
 {
   "id": "IF-004",
-  "name": "Length Constraints",
+  "name": "Asymmetric Character-Word Hybrid Constraints",
   "category": "instruction_following",
+  "difficulty": "hard",
   "archetype": "A3_constraint_heavy",
-  "difficulty": "medium",
-  
   "task": {
-    "description": "Test model's ability to follow exact length constraints",
-    "initial_prompt": "Write a summary in exactly 3 sentences.",
+    "description": "Test model's ability to simultaneously track character counts, word counts, and structural requirements across diverse domains with asymmetric constraint patterns that require independent verification",
+    "initial_prompt": "write about",
     "target_model": "gpt-4o-mini",
     "context": null
   },
-  
   "test_cases": [
     {
-      "input": "Summarize quantum computing in exactly 3 sentences.",
+      "input": "Explain quantum computing applications in exactly 4 sentences where sentence 1 has exactly 95 characters (including spaces and punctuation), sentence 2 has exactly 16 words, sentence 3 has exactly 120 characters (including spaces and punctuation), and sentence 4 has exactly 22 words.",
       "expected_output": {
         "type": "unstructured",
         "format": "text",
-        "validation": "length_checker",
+        "validation": "hybrid_length_checker",
         "constraints": [
-          "sentence_count_equals_3"
+          "sentence_count_equals_4",
+          "sentence_1_exactly_95_characters_with_spaces",
+          "sentence_2_exactly_16_words",
+          "sentence_3_exactly_120_characters_with_spaces",
+          "sentence_4_exactly_22_words",
+          "all_sentences_complete",
+          "proper_punctuation_included_in_count"
+        ]
+      }
+    },
+    {
+      "input": "Describe sustainable urban agriculture in exactly 3 paragraphs where paragraph 1 contains exactly 18 words and ends with a question mark, paragraph 2 contains exactly 140 characters (including spaces), and paragraph 3 contains exactly 28 words with at least two hyphenated terms.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "hybrid_length_checker",
+        "constraints": [
+          "paragraph_count_equals_3",
+          "paragraph_1_exactly_18_words",
+          "paragraph_1_ends_with_question_mark",
+          "paragraph_2_exactly_140_characters_with_spaces",
+          "paragraph_3_exactly_28_words",
+          "paragraph_3_contains_minimum_2_hyphenated_terms",
+          "paragraphs_properly_separated"
+        ]
+      }
+    },
+    {
+      "input": "Explain copyright law for digital content in exactly 5 sentences where sentences alternate between character and word constraints: sentence 1 has exactly 85 characters, sentence 2 has exactly 19 words, sentence 3 has exactly 110 characters, sentence 4 has exactly 24 words, and sentence 5 has exactly 95 characters. All character counts include spaces and punctuation.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "hybrid_length_checker",
+        "constraints": [
+          "sentence_count_equals_5",
+          "sentence_1_exactly_85_characters_with_spaces",
+          "sentence_2_exactly_19_words",
+          "sentence_3_exactly_110_characters_with_spaces",
+          "sentence_4_exactly_24_words",
+          "sentence_5_exactly_95_characters_with_spaces",
+          "all_sentences_complete",
+          "alternating_constraint_pattern_verified",
+          "character_counts_include_all_punctuation"
+        ]
+      }
+    },
+    {
+      "input": "Describe competitive e-sports tournament structures in exactly 6 bullet points with the following exact constraints: bullet 1 has 14 words, bullet 2 has 75 characters, bullet 3 has 21 words, bullet 4 has 105 characters, bullet 5 has 17 words, and bullet 6 has 90 characters. Character counts include all spaces and punctuation.",
+      "expected_output": {
+        "type": "unstructured",
+        "format": "text",
+        "validation": "hybrid_length_checker",
+        "constraints": [
+          "bullet_point_count_equals_6",
+          "bullet_1_exactly_14_words",
+          "bullet_2_exactly_75_characters_with_spaces",
+          "bullet_3_exactly_21_words",
+          "bullet_4_exactly_105_characters_with_spaces",
+          "bullet_5_exactly_17_words",
+          "bullet_6_exactly_90_characters_with_spaces",
+          "proper_bullet_formatting",
+          "mixed_constraint_types_all_satisfied",
+          "no_deviation_tolerance"
         ]
       }
     }
   ],
-  
   "evaluation": {
     "method": "deterministic",
-    "validators": ["length_checker"],
+    "validators": [
+      "hybrid_length_checker",
+      "character_counter",
+      "word_counter",
+      "structure_checker"
+    ],
     "rubric": "five_point_standard",
     "pass_criteria": {
-      "minimum_score": 4
+      "minimum_score": 4,
+      "required_validators": [
+        "hybrid_length_checker",
+        "character_counter",
+        "word_counter"
+      ],
+      "all_test_cases_must_pass": true,
+      "strict_counting": true,
+      "zero_tolerance_deviation": true,
+      "character_count_includes_spaces_and_punctuation": true,
+      "must_distinguish_character_vs_word_constraints": true
     }
   },
-  
-  "optimization_challenge": "Models often exceed or fall short of exact counts. Optimizer must emphasize precision.",
-  
+  "optimization_challenge": "Models catastrophically fail when character counts and word counts are mixed within the same response, often confusing which constraint applies to which element. The optimizer must teach models to: (1) clearly distinguish between character-based and word-based constraints, (2) count spaces and punctuation in character limits, (3) independently verify each constraint type before responding, (4) handle asymmetric patterns where adjacent elements use different measurement units, (5) maintain awareness that 'exactly 95 characters' and 'exactly 19 words' require completely different counting mechanisms. Models tend to convert everything to word counts or ignore character limits entirely when both types appear together. The optimizer must implement dual-track verification strategies and emphasize that character counts are non-negotiable even when word counts are also present.",
   "metadata": {
-    "source": "IFEval",
-    "tags": ["length", "constraints", "precision"],
+    "source": "regenerated",
+    "tags": [
+      "hybrid_constraints",
+      "character_count",
+      "word_count",
+      "asymmetric_requirements",
+      "mixed_measurement_units",
+      "precision_counting",
+      "multi_metric_constraints"
+    ],
     "archetype_class": "A_directive",
-    "domain": "general"
+    "domain": "technology_law_agriculture_sports"
   }
 }

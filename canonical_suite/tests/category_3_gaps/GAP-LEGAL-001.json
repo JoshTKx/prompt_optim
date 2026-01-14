@@ -1,0 +1,373 @@
+{
+  "id": "GAP-LEGAL-001",
+  "name": "Gap Analysis - Cross-Border M&A Due Diligence",
+  "category": "gaps",
+  "archetype": "B1_extraction",
+  "difficulty": "hard",
+  "task": {
+    "description": "Identify all critical information gaps for comprehensive cross-border merger and acquisition due diligence assessment",
+    "initial_prompt": "analyze",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "We're a mid-sized manufacturing company looking to acquire a German supplier for \u20ac45M. They have 280 employees, operate in 3 EU countries, and mentioned some pending litigation. The deal needs to close in 90 days. Our board wants a recommendation next month.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "gap_analyzer",
+        "required_domains": [
+          {
+            "domain": "financial_verification",
+            "critical_items": [
+              "audited_financials_last_3_years",
+              "revenue_recognition_policies",
+              "hidden_liabilities_assessment",
+              "working_capital_requirements",
+              "debt_structure_and_covenants",
+              "off_balance_sheet_obligations",
+              "tax_loss_carryforwards",
+              "currency_exposure_analysis",
+              "ebitda_normalization_adjustments",
+              "quality_of_earnings_review"
+            ]
+          },
+          {
+            "domain": "legal_and_regulatory_compliance",
+            "critical_items": [
+              "pending_litigation_details",
+              "regulatory_approvals_required",
+              "antitrust_clearance_jurisdictions",
+              "material_contracts_review",
+              "compliance_violations_history",
+              "environmental_liabilities",
+              "product_liability_exposure",
+              "export_control_restrictions",
+              "data_protection_gdpr_compliance",
+              "corporate_structure_ownership_chain"
+            ]
+          },
+          {
+            "domain": "operational_and_commercial",
+            "critical_items": [
+              "customer_concentration_risk",
+              "supplier_dependency_analysis",
+              "production_capacity_utilization",
+              "technology_infrastructure_assessment",
+              "inventory_obsolescence_review",
+              "key_performance_metrics_validation",
+              "sales_pipeline_quality",
+              "competitive_positioning_analysis",
+              "margin_sustainability_factors",
+              "synergy_realization_feasibility"
+            ]
+          },
+          {
+            "domain": "human_capital_and_labor",
+            "critical_items": [
+              "employee_contracts_terms",
+              "works_council_consultation_requirements",
+              "key_employee_retention_risk",
+              "pension_obligations_unfunded_liabilities",
+              "collective_bargaining_agreements",
+              "labor_dispute_history",
+              "change_of_control_provisions",
+              "redundancy_costs_estimation",
+              "management_team_assessment",
+              "cultural_integration_challenges"
+            ]
+          },
+          {
+            "domain": "intellectual_property_and_assets",
+            "critical_items": [
+              "patent_portfolio_validity",
+              "trademark_registrations_status",
+              "trade_secrets_protection_mechanisms",
+              "ip_infringement_risks",
+              "licensing_agreements_transferability",
+              "technology_ownership_clarity",
+              "r_and_d_pipeline_valuation",
+              "third_party_ip_dependencies",
+              "asset_ownership_verification",
+              "encumbrances_on_assets"
+            ]
+          },
+          {
+            "domain": "cross_border_complexities",
+            "critical_items": [
+              "foreign_investment_restrictions",
+              "transfer_pricing_arrangements",
+              "withholding_tax_implications",
+              "currency_controls_repatriation",
+              "multi_jurisdictional_tax_structuring",
+              "customs_and_tariff_impacts",
+              "political_risk_assessment",
+              "local_ownership_requirements",
+              "bilateral_treaty_protections",
+              "post_brexit_operational_impacts"
+            ]
+          },
+          {
+            "domain": "transaction_structure_and_mechanics",
+            "critical_items": [
+              "asset_vs_stock_purchase_implications",
+              "escrow_and_holdback_mechanisms",
+              "earn_out_provisions_triggers",
+              "representations_and_warranties_scope",
+              "indemnification_caps_and_baskets",
+              "closing_conditions_satisfaction",
+              "financing_contingencies",
+              "break_fee_provisions",
+              "post_closing_adjustment_methodology",
+              "seller_warranties_insurance_viability"
+            ]
+          },
+          {
+            "domain": "strategic_and_execution_risks",
+            "critical_items": [
+              "deal_rationale_validation",
+              "alternative_scenarios_evaluation",
+              "integration_planning_readiness",
+              "key_stakeholder_alignment",
+              "communication_strategy_gaps",
+              "regulatory_approval_timeline_realism",
+              "financing_terms_certainty",
+              "management_bandwidth_assessment",
+              "exit_strategy_if_deal_fails",
+              "valuation_sensitivity_analysis"
+            ]
+          }
+        ],
+        "constraints": [
+          "domain_coverage_complete",
+          "critical_node_recall_95",
+          "cross_border_complexity_detection_100",
+          "timeline_risk_flagging_required",
+          "regulatory_jurisdiction_mapping_accurate"
+        ]
+      }
+    },
+    {
+      "input": "Small tech startup acquiring a competitor. Target company has $2M ARR, 15 employees, some open source dependencies, and the founder wants to stay on. We're paying mostly in stock. Need to close before our Series B in 6 weeks.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "gap_analyzer",
+        "required_domains": [
+          {
+            "domain": "financial_and_valuation",
+            "critical_items": [
+              "revenue_quality_and_churn_analysis",
+              "cash_burn_rate",
+              "customer_acquisition_cost_trends",
+              "stock_valuation_methodology",
+              "dilution_impact_on_cap_table",
+              "earnout_milestone_achievability",
+              "runway_post_acquisition"
+            ]
+          },
+          {
+            "domain": "technology_and_ip",
+            "critical_items": [
+              "code_repository_audit",
+              "open_source_license_compliance",
+              "ip_assignment_from_contractors",
+              "technology_stack_compatibility",
+              "security_vulnerabilities_assessment",
+              "data_privacy_compliance",
+              "api_dependencies_risks"
+            ]
+          },
+          {
+            "domain": "legal_and_corporate",
+            "critical_items": [
+              "founder_employment_agreement_terms",
+              "equity_vesting_schedules",
+              "accelerated_vesting_triggers",
+              "non_compete_enforceability",
+              "material_contract_assignments",
+              "corporate_good_standing_verification",
+              "cap_table_cleanup_requirements"
+            ]
+          },
+          {
+            "domain": "commercial_and_product",
+            "critical_items": [
+              "customer_contract_portability",
+              "product_roadmap_alignment",
+              "competitive_differentiation_sustainability",
+              "integration_complexity_estimation",
+              "brand_transition_strategy",
+              "service_level_commitment_continuity"
+            ]
+          },
+          {
+            "domain": "execution_and_integration",
+            "critical_items": [
+              "series_b_investor_approval_requirement",
+              "team_retention_incentives",
+              "cultural_fit_assessment",
+              "communication_plan_to_customers",
+              "regulatory_filing_requirements",
+              "post_close_integration_timeline"
+            ]
+          }
+        ],
+        "constraints": [
+          "domain_coverage_complete",
+          "critical_node_recall_90",
+          "startup_specific_risks_identified",
+          "timeline_pressure_acknowledged",
+          "stock_deal_complications_flagged"
+        ]
+      }
+    },
+    {
+      "input": "Private equity firm buying a family-owned restaurant chain with 47 locations across the Southeast. $85M enterprise value, current owners retiring, heavy real estate component. Some locations are franchised, others company-owned. The CFO just left last month.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "gap_analyzer",
+        "required_domains": [
+          {
+            "domain": "financial_and_accounting",
+            "critical_items": [
+              "store_level_profitability_analysis",
+              "same_store_sales_growth_trends",
+              "quality_of_earnings_given_cfo_departure",
+              "real_estate_lease_vs_owned_breakdown",
+              "franchise_royalty_streams_sustainability",
+              "working_capital_normalization",
+              "debt_service_coverage_ratios",
+              "capex_requirements_deferred_maintenance"
+            ]
+          },
+          {
+            "domain": "real_estate_and_assets",
+            "critical_items": [
+              "property_appraisals_current_values",
+              "lease_terms_renewal_options_rent_escalations",
+              "environmental_site_assessments",
+              "zoning_compliance_verification",
+              "sale_leaseback_opportunities",
+              "landlord_consent_requirements",
+              "property_condition_reports",
+              "title_searches_encumbrances"
+            ]
+          },
+          {
+            "domain": "franchise_and_commercial",
+            "critical_items": [
+              "franchise_agreement_terms_transferability",
+              "franchisee_relationship_quality",
+              "brand_reputation_assessment",
+              "supplier_contract_economics",
+              "menu_pricing_power_analysis",
+              "local_market_saturation_risks",
+              "competitive_landscape_shifts"
+            ]
+          },
+          {
+            "domain": "operational_excellence",
+            "critical_items": [
+              "food_safety_compliance_history",
+              "labor_cost_management_systems",
+              "inventory_management_effectiveness",
+              "technology_pos_systems_adequacy",
+              "operational_playbook_documentation",
+              "multi_unit_management_structure",
+              "quality_control_consistency"
+            ]
+          },
+          {
+            "domain": "human_resources_and_management",
+            "critical_items": [
+              "management_transition_plan_post_owner_exit",
+              "key_employee_identification_retention",
+              "labor_relations_unionization_risks",
+              "wage_and_hour_compliance_exposure",
+              "employee_turnover_rates_benchmarking",
+              "training_programs_effectiveness",
+              "benefits_and_compensation_structure"
+            ]
+          },
+          {
+            "domain": "legal_and_compliance",
+            "critical_items": [
+              "health_department_violations_history",
+              "liquor_license_transferability",
+              "employment_litigation_exposure",
+              "ada_compliance_status",
+              "insurance_claims_history",
+              "regulatory_changes_impact_minimum_wage",
+              "tax_compliance_verification"
+            ]
+          },
+          {
+            "domain": "growth_and_value_creation",
+            "critical_items": [
+              "unit_expansion_potential",
+              "digital_ordering_delivery_capabilities",
+              "menu_innovation_opportunities",
+              "operational_efficiency_improvements",
+              "exit_strategy_options_timeline",
+              "comparable_transaction_multiples",
+              "organic_vs_acquisition_growth_plan"
+            ]
+          }
+        ],
+        "constraints": [
+          "domain_coverage_complete",
+          "critical_node_recall_92",
+          "real_estate_complexity_addressed",
+          "franchise_mixed_model_risks_identified",
+          "management_transition_risk_prioritized",
+          "pe_value_creation_thesis_supportable"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "llm_judge",
+    "validators": [
+      "gap_analyzer",
+      "cross_border_complexity_checker",
+      "timeline_risk_assessor"
+    ],
+    "rubric": "five_point_standard",
+    "scoring_criteria": {
+      "5": "Identifies all required domains with 90%+ critical items per domain across all test cases, flags all cross-border complexities, timeline risks, and structural complications",
+      "4": "Identifies 85%+ of domains with 80%+ critical items across test cases, flags primary cross-border and timeline risks, recognizes deal-specific structural issues",
+      "3": "Identifies 70%+ of domains with 70%+ critical items, flags some cross-border complexities and timeline concerns, partial structural risk awareness",
+      "2": "Identifies 50%+ of domains with 60%+ critical items, minimal cross-border or timeline risk detection, superficial structural analysis",
+      "1": "Identifies fewer than 50% of domains or misses critical deal-breaker risks, no cross-border sophistication, timeline blindness"
+    },
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "gap_analyzer",
+        "cross_border_complexity_checker"
+      ],
+      "domain_coverage_threshold": 0.85,
+      "critical_item_recall_threshold": 0.8
+    }
+  },
+  "optimization_challenge": "Must learn to: 1) Adapt gap analysis framework to widely different M&A contexts (cross-border industrial, tech acqui-hire, PE restaurant buyout) with context-specific critical items, 2) Recognize that deal structure (stock vs cash, earnouts, real estate components) fundamentally changes risk profile and required diligence, 3) Identify jurisdiction-specific complexities (EU works councils, GDPR, foreign investment restrictions) that non-experts often miss, 4) Detect timeline pressure as risk multiplier requiring prioritization of deal-breaker issues, 5) Understand that management transitions and key person dependencies create asymmetric information risks requiring deeper diligence, 6) Distinguish between nice-to-know diligence items and critical deal-breaker gaps that could emerge post-close",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "gap_analysis",
+      "mergers_and_acquisitions",
+      "due_diligence",
+      "cross_border_transactions",
+      "private_equity",
+      "tech_acquisition",
+      "real_estate_intensive",
+      "regulatory_complexity",
+      "financial_analysis"
+    ],
+    "archetype_class": "B_contextual",
+    "domain": "corporate_finance_ma"
+  }
+}

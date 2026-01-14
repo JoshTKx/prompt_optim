@@ -1,6 +1,7 @@
 """Canonical test case models."""
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
+from config.llm_config import LLMConfig
 
 
 class ExpectedOutput(BaseModel):
@@ -47,7 +48,7 @@ class CanonicalTestCase(BaseModel):
     @property
     def target_model(self) -> str:
         """Extract target model from task."""
-        model = self.task.get("target_model", "openai/gpt-4o-mini")
+        model = self.task.get("target_model", LLMConfig.TARGET_MODEL)
         # Convert legacy model names to OpenRouter format
         if model == "gpt-4o-mini":
             model = "openai/gpt-4o-mini"
@@ -55,6 +56,14 @@ class CanonicalTestCase(BaseModel):
             model = "deepseek/deepseek-chat"
         elif model.startswith("claude") and not model.startswith("anthropic/"):
             model = f"anthropic/{model}"
+        elif model.startswith("gemini") and not model.startswith("google/"):
+            # Handle Gemini model names
+            if model == "gemini" or model == "gemini-pro":
+                model = "google/gemini-pro"
+            elif model == "gemini-flash":
+                model = "google/gemini-flash-1.5"
+            else:
+                model = f"google/{model}"
         return model
     
     @property

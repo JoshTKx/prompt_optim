@@ -1,0 +1,125 @@
+{
+  "id": "IF-3847",
+  "name": "Distributed Clinical Trial Data Management System with Regulatory Compliance and Real-time Monitoring",
+  "category": "instruction_following",
+  "archetype": "A3_constraint_heavy",
+  "difficulty": "hard",
+  "task": {
+    "description": "Generate a comprehensive JSON schema for a distributed clinical trial data management system that includes multi-site patient enrollment tracking, adverse event reporting with severity classifications, regulatory compliance for FDA 21 CFR Part 11 and GDPR, real-time vital signs monitoring with alert thresholds, electronic consent management with versioning, and data anonymization policies with encryption specifications",
+    "initial_prompt": "clinical trial system",
+    "target_model": "gpt-4o-mini",
+    "context": null
+  },
+  "test_cases": [
+    {
+      "input": "Generate the complete schema for clinical trial protocol 'ONCX-2024-789' with the following requirements: patient enrollment across 12 international sites with stratification criteria, adverse event reporting system with 5 severity grades and causality assessment, FDA 21 CFR Part 11 compliant audit trail with digital signatures, real-time vital signs monitoring for heart rate/blood pressure/temperature with customizable alert thresholds per patient cohort, electronic informed consent with version control and withdrawal tracking, GDPR-compliant data anonymization with field-level encryption specifications, and scheduled data export jobs with validation checksums.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "clinical_schema_validator",
+        "constraints": [
+          "Must include 'protocol_id' field at root level with exact value 'ONCX-2024-789'",
+          "Must include 'enrollment' object with 'sites' array containing minimum 12 site objects, each with 'site_id', 'location', 'principal_investigator', 'enrollment_cap', and 'stratification_criteria' fields",
+          "Must include 'adverse_events' object with 'severity_grades' array containing exactly 5 levels (Grade 1-5), 'causality_categories' array with minimum 4 assessment types, and 'reporting_requirements' with time windows",
+          "Must include 'compliance' object with nested 'fda_21cfr11' and 'gdpr' objects, each containing minimum 6 specific requirement fields",
+          "Must include 'audit_trail' object with fields: timestamp (ISO 8601 format), user_id, action_type, resource_modified, digital_signature, reason_for_change, previous_value, new_value",
+          "Must include 'vital_signs_monitoring' object with 'parameters' array containing at least 3 vital sign types (heart_rate, blood_pressure, temperature), each with 'alert_thresholds' object containing 'critical_low', 'warning_low', 'warning_high', 'critical_high' numeric values and 'cohort_overrides' array",
+          "Must include 'informed_consent' object with 'versions' array containing minimum 2 version objects with 'version_number', 'effective_date', 'content_hash', 'approval_signatures', and 'withdrawal_tracking' object with 'withdrawal_date', 'reason', 'data_retention_policy' fields",
+          "Must include 'data_anonymization' object with 'field_mappings' array specifying minimum 8 fields with 'field_name', 'anonymization_method' (hashing/pseudonymization/masking/encryption), 'encryption_algorithm', and 'key_rotation_policy'",
+          "Must include 'data_exports' object with 'scheduled_jobs' array containing objects with 'schedule_cron', 'export_format', 'destination', 'validation_checksum_algorithm', and 'retention_period' fields",
+          "Must include at least 20 distinct top-level or nested object properties across the entire schema",
+          "Schema must include 'patient_cohorts' array with minimum 3 cohort objects containing 'cohort_id', 'inclusion_criteria', 'exclusion_criteria', 'target_enrollment' fields",
+          "All timestamp fields must explicitly specify ISO 8601 format requirement",
+          "Schema must be valid parseable JSON with proper nesting, no trailing commas, and balanced brackets",
+          "Must include 'regulatory_submissions' object with 'submission_types' array containing minimum 3 types and 'tracking' object with status workflow",
+          "Adverse events object must include 'sae_notification' (Serious Adverse Event) with 'immediate_notification_threshold' and 'escalation_contacts' array"
+        ]
+      }
+    },
+    {
+      "input": "Generate the complete schema for clinical trial protocol 'CARDIO-2025-456' focusing on: pediatric patient enrollment with guardian consent requirements, medication dosing schedules with weight-based calculations, laboratory test tracking with reference ranges that vary by age group, device integration for continuous glucose monitoring with calibration requirements, and multi-language support for consent forms across 8 languages with translation verification audit.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "clinical_schema_validator",
+        "constraints": [
+          "Must include 'protocol_id' field with value 'CARDIO-2025-456'",
+          "Must include 'patient_demographics' object with 'age_category' field supporting pediatric classifications (neonate/infant/child/adolescent) and 'guardian_information' object with 'relationship', 'consent_capacity_verification', 'legal_authority_documentation' fields",
+          "Must include 'medication_administration' object with 'dosing_schedules' array containing 'weight_based_calculation' object with 'formula', 'min_dose', 'max_dose', 'adjustment_factors', and 'administration_route' fields",
+          "Must include 'laboratory_tests' object with 'test_panels' array containing minimum 5 test types, each with 'reference_ranges' array that includes 'age_group', 'lower_bound', 'upper_bound', 'units', and 'critical_values' fields",
+          "Must include 'device_integration' object with 'continuous_glucose_monitor' containing 'calibration_requirements' object with 'frequency', 'calibration_method', 'acceptable_variance_percentage', 'quality_control_checks' array",
+          "Must include 'informed_consent' object with 'multilingual_support' containing 'supported_languages' array with exactly 8 language codes, 'translation_verification' object with 'translator_certification', 'back_translation_required', 'verification_audit_trail' fields",
+          "Must include 'guardian_consent' object separate from patient consent with 'dual_signature_requirements', 'legal_capacity_verification', 'witness_requirements' fields",
+          "Schema must include at least 18 distinct nested object properties",
+          "Must include 'safety_monitoring' object with 'data_safety_monitoring_board' configuration including 'review_schedule', 'stopping_rules', 'interim_analysis_triggers'",
+          "Laboratory tests must include 'specimen_tracking' with 'collection_timestamp', 'processing_timestamp', 'storage_conditions', 'chain_of_custody' fields",
+          "Device integration must include 'data_synchronization' object with 'sync_frequency', 'offline_storage_capacity', 'conflict_resolution_strategy' fields",
+          "Must be valid parseable JSON with all arrays and objects properly closed"
+        ]
+      }
+    },
+    {
+      "input": "Generate the complete schema for decentralized clinical trial protocol 'NEURO-DCT-2024-123' with: remote patient monitoring via wearable devices transmitting data every 15 minutes, telemedicine visit scheduling with timezone handling across 6 continents, electronic patient-reported outcomes (ePRO) with conditional branching logic, blockchain-based data integrity verification, machine learning model integration for early efficacy signal detection with confidence intervals, and federated data analysis across sites without central data aggregation.",
+      "expected_output": {
+        "type": "structured",
+        "format": "json",
+        "validation": "clinical_schema_validator",
+        "constraints": [
+          "Must include 'protocol_id' field with value 'NEURO-DCT-2024-123'",
+          "Must include 'decentralized_trial_config' object with 'trial_type' field set to 'decentralized' or 'hybrid'",
+          "Must include 'remote_monitoring' object with 'wearable_devices' array containing minimum 3 device types, each with 'device_model', 'data_transmission_frequency' (set to 15 minutes or 900 seconds), 'battery_life_monitoring', 'connectivity_requirements', 'data_quality_metrics' fields",
+          "Must include 'telemedicine' object with 'visit_scheduling' containing 'timezone_handling' object with 'supported_timezones' array covering minimum 6 continents, 'automatic_conversion', 'daylight_saving_handling', 'participant_preference_timezone' fields",
+          "Must include 'patient_reported_outcomes' object with 'questionnaires' array containing 'conditional_branching_logic' object with 'trigger_questions', 'skip_patterns', 'display_conditions', 'validation_rules' arrays",
+          "Must include 'data_integrity' object with 'blockchain_verification' containing 'blockchain_network', 'consensus_mechanism', 'block_hash_algorithm', 'transaction_validation_rules', 'immutability_verification' fields",
+          "Must include 'machine_learning' object with 'efficacy_detection_models' array containing 'model_type', 'training_data_requirements', 'confidence_interval_calculation' object with 'confidence_level' (numeric), 'interval_bounds', 'sample_size_requirements' fields, and 'prediction_threshold' field",
+          "Must include 'federated_analysis' object with 'site_level_computation' containing 'aggregation_method', 'privacy_preservation_technique', 'minimum_site_participation', 'differential_privacy_parameters' object with 'epsilon', 'delta' numeric values",
+          "Must include at least 25 distinct nested properties across the entire schema",
+          "Remote monitoring must include 'data_streaming' object with 'real_time_processing', 'buffer_capacity', 'transmission_retry_policy' with 'max_retries', 'backoff_strategy' fields",
+          "Must include 'participant_engagement' object with 'notification_system' containing 'delivery_channels' array, 'frequency_caps', 'preference_management' fields",
+          "Telemedicine must include 'session_recording' object with 'encryption_in_transit', 'encryption_at_rest', 'retention_policy', 'access_controls' fields",
+          "Must include 'interoperability' object with 'fhir_compliance' containing 'fhir_version', 'supported_resources' array with minimum 5 FHIR resource types",
+          "Schema must be valid parseable JSON with consistent data types and proper nesting throughout",
+          "Machine learning models must include 'model_governance' with 'version_control', 'performance_monitoring', 'bias_detection_metrics' fields"
+        ]
+      }
+    }
+  ],
+  "evaluation": {
+    "method": "deterministic",
+    "validators": [
+      "json_validator",
+      "schema_completeness_validator",
+      "nested_structure_depth_validator",
+      "required_fields_validator",
+      "constraint_compliance_validator",
+      "regulatory_compliance_validator",
+      "data_type_validator"
+    ],
+    "rubric": "five_point_standard",
+    "pass_criteria": {
+      "minimum_score": 4,
+      "required_validators": [
+        "json_validator",
+        "schema_completeness_validator",
+        "required_fields_validator",
+        "constraint_compliance_validator"
+      ]
+    }
+  },
+  "optimization_challenge": "The initial prompt is catastrophically inadequate and provides virtually no actionable information. The optimizer must learn to: (1) explicitly enumerate every required schema component with exact field names, nested structure paths, and cardinality requirements, (2) specify precise data types, formats, and validation rules for each field including ISO 8601 timestamps and numeric ranges, (3) mandate domain-specific regulatory compliance fields with exact terminology (FDA 21 CFR Part 11, GDPR Article references), (4) require minimum array lengths and object property counts at multiple nesting levels, (5) specify conditional logic and branching requirements for complex workflows, (6) define exact technical specifications for encryption algorithms, blockchain parameters, and ML model configurations, (7) enforce cross-field dependencies and relational constraints between objects, (8) provide explicit examples of expected nested structure depth (minimum 4-5 levels), (9) mandate specific medical terminology and standardized coding systems (FHIR resources, severity grades), and (10) require comprehensive audit trail specifications with all change-tracking metadata. Without these extensive improvements covering medical domain knowledge, regulatory requirements, technical specifications, and structural complexity, the model will generate a trivial schema completely unsuitable for clinical trial management that fails regulatory compliance and lacks critical patient safety features.",
+  "metadata": {
+    "source": "regenerated",
+    "tags": [
+      "extremely_complex",
+      "healthcare_compliance",
+      "regulatory_standards",
+      "multi_domain_constraints",
+      "nested_validation",
+      "clinical_trials",
+      "data_privacy",
+      "real_time_monitoring"
+    ],
+    "archetype_class": "A_directive",
+    "domain": "healthcare_clinical_research"
+  }
+}
